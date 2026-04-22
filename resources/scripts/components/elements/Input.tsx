@@ -42,6 +42,9 @@ const inputStyle = css<Props>`
     ${tw`appearance-none outline-none w-full min-w-0`};
     ${tw`p-3 border-2 rounded text-sm transition-all duration-150`};
     ${tw`bg-neutral-600 border-neutral-500 hover:border-neutral-400 text-neutral-200 shadow-none focus:ring-0`};
+    background: color-mix(in srgb, var(--theme-background) 82%, #ffffff 18%);
+    border-color: color-mix(in srgb, var(--theme-component-headers) 70%, #94a3b8 30%);
+    color: #e2e8f0;
 
     & + .input-help {
         ${tw`mt-1 text-xs`};
@@ -55,6 +58,8 @@ const inputStyle = css<Props>`
 
     &:not(:disabled):not(:read-only):focus {
         ${tw`shadow-md border-primary-300 ring-2 ring-primary-400 ring-opacity-50`};
+        border-color: var(--theme-primary-content);
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-primary-content) 30%, transparent);
         ${(props) => props.hasError && tw`border-red-300 ring-red-200`};
     }
 

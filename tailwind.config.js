@@ -1,17 +1,20 @@
 const colors = require('tailwindcss/colors');
 
-const gray = {
-    50: 'hsl(216, 33%, 97%)',
-    100: 'hsl(214, 15%, 91%)',
-    200: 'hsl(210, 16%, 82%)',
-    300: 'hsl(211, 13%, 65%)',
-    400: 'hsl(211, 10%, 53%)',
-    500: 'hsl(211, 12%, 43%)',
-    600: 'hsl(209, 14%, 37%)',
-    700: 'hsl(209, 18%, 30%)',
-    800: 'hsl(209, 20%, 25%)',
-    900: 'hsl(210, 24%, 16%)',
-};
+const withOpacity = (cssVariable) => `rgb(var(${cssVariable}) / <alpha-value>)`;
+
+const dynamicScale = (prefix) => ({
+    50: withOpacity(`--theme-${prefix}-50-rgb`),
+    100: withOpacity(`--theme-${prefix}-100-rgb`),
+    200: withOpacity(`--theme-${prefix}-200-rgb`),
+    300: withOpacity(`--theme-${prefix}-300-rgb`),
+    400: withOpacity(`--theme-${prefix}-400-rgb`),
+    500: withOpacity(`--theme-${prefix}-500-rgb`),
+    600: withOpacity(`--theme-${prefix}-600-rgb`),
+    700: withOpacity(`--theme-${prefix}-700-rgb`),
+    800: withOpacity(`--theme-${prefix}-800-rgb`),
+    900: withOpacity(`--theme-${prefix}-900-rgb`),
+    950: withOpacity(`--theme-${prefix}-950-rgb`),
+});
 
 module.exports = {
     content: [
@@ -24,11 +27,10 @@ module.exports = {
             },
             colors: {
                 black: '#131a20',
-                // "primary" and "neutral" are deprecated, prefer the use of "blue" and "gray"
-                // in new code.
-                primary: colors.blue,
-                gray: gray,
-                neutral: gray,
+                primary: dynamicScale('primary'),
+                blue: dynamicScale('primary'),
+                gray: dynamicScale('neutral'),
+                neutral: dynamicScale('neutral'),
                 cyan: colors.cyan,
             },
             fontSize: {

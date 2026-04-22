@@ -12,6 +12,7 @@ import { history } from '@/components/history';
 import { setupInterceptors } from '@/api/interceptors';
 import AuthenticatedRoute from '@/components/elements/AuthenticatedRoute';
 import { ServerContext } from '@/state/server';
+import { applyThemePaletteVariables } from '@/lib/themeColors';
 import '@/assets/tailwind.css';
 import Spinner from '@/components/elements/Spinner';
 
@@ -54,6 +55,49 @@ const App = () => {
 
     if (!store.getState().settings.data) {
         store.getActions().settings.setSettings(SiteConfiguration!);
+    }
+
+    const theme = SiteConfiguration?.theme;
+    if (theme) {
+        const root = document.documentElement;
+        const body = document.body;
+        root.style.setProperty('--theme-primary-content', theme.primary_content);
+        root.style.setProperty('--theme-secondary-content', theme.secondary_content);
+        root.style.setProperty('--theme-background', theme.background_color);
+        root.style.setProperty('--theme-component-headers', theme.component_headers);
+        root.style.setProperty('--theme-sidebar', theme.sidebar_navigation);
+        body.style.setProperty('--theme-primary-content', theme.primary_content);
+        body.style.setProperty('--theme-secondary-content', theme.secondary_content);
+        body.style.setProperty('--theme-background', theme.background_color);
+        body.style.setProperty('--theme-component-headers', theme.component_headers);
+        body.style.setProperty('--theme-sidebar', theme.sidebar_navigation);
+
+        const extraMap: Record<string, string> = {
+            success_color: '--theme-success',
+            warning_color: '--theme-warning',
+            danger_color: '--theme-danger',
+            info_color: '--theme-info',
+            text_primary: '--theme-text-primary',
+            text_muted: '--theme-text-muted',
+            link_color: '--theme-link',
+            link_hover_color: '--theme-link-hover',
+            card_background: '--theme-card-background',
+            card_border: '--theme-card-border',
+            input_background: '--theme-input-background',
+            input_border: '--theme-input-border',
+            topbar_background: '--theme-topbar-background',
+            topbar_text: '--theme-topbar-text',
+            footer_background: '--theme-footer-background',
+            footer_text: '--theme-footer-text',
+        };
+
+        Object.keys(extraMap).forEach((key) => {
+            const value = (theme as unknown as Record<string, string | undefined>)[key];
+            if (!value) return;
+            root.style.setProperty(extraMap[key], value);
+            body.style.setProperty(extraMap[key], value);
+        });
+        applyThemePaletteVariables(theme);
     }
 
     return (

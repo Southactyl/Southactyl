@@ -36,7 +36,7 @@
             <![endif]-->
         @show
     </head>
-    <body class="hold-transition skin-blue fixed sidebar-mini admin-dark">
+    <body class="hold-transition skin-blue fixed sidebar-mini admin-dark" style="{{ $themeCssInline ?? '' }}">
         <div class="wrapper admin-shell">
             <header class="main-header">
                 <a href="{{ route('index') }}" class="logo admin-brand">
@@ -79,6 +79,11 @@
                         <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.settings') ?: 'active' }}">
                             <a class="admin-nav-link" href="{{ route('admin.settings')}}">
                                 <i class="fa fa-wrench"></i> <span>Settings</span>
+                            </a>
+                        </li>
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.theme') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.theme')}}">
+                                <i class="fa fa-paint-brush"></i> <span>Theme</span>
                             </a>
                         </li>
                         <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.api') ?: 'active' }}">

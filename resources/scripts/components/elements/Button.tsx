@@ -17,9 +17,18 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
         ((!props.isSecondary && !props.color) || props.color === 'primary') &&
         css<Props>`
             ${(props) => !props.isSecondary && tw`bg-primary-500 border-primary-600 border text-primary-50`};
+            ${(props) =>
+                !props.isSecondary &&
+                css`
+                    background: var(--theme-primary-content);
+                    border-color: var(--theme-primary-content);
+                    color: #f8fafc;
+                `};
 
             &:hover:not(:disabled) {
                 ${tw`bg-primary-600 border-primary-700`};
+                background: color-mix(in srgb, var(--theme-primary-content) 90%, #0f172a 10%);
+                border-color: color-mix(in srgb, var(--theme-primary-content) 90%, #0f172a 10%);
             }
         `};
 
@@ -30,6 +39,8 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
 
             &:hover:not(:disabled) {
                 ${tw`bg-neutral-600 border-neutral-700`};
+                background: color-mix(in srgb, var(--theme-component-headers) 70%, #0f172a 30%);
+                border-color: color-mix(in srgb, var(--theme-component-headers) 70%, #1e293b 30%);
             }
         `};
 
@@ -84,6 +95,13 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
                 ${(props) => props.color === 'red' && tw`bg-red-500 border-red-600 text-red-50`};
                 ${(props) => props.color === 'primary' && tw`bg-primary-500 border-primary-600 text-primary-50`};
                 ${(props) => props.color === 'green' && tw`bg-green-500 border-green-600 text-green-50`};
+                ${(props) =>
+                    props.color === 'primary' &&
+                    css`
+                        background: var(--theme-primary-content);
+                        border-color: var(--theme-primary-content);
+                        color: #f8fafc;
+                    `};
             }
         `};
 

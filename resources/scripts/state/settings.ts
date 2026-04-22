@@ -10,6 +10,13 @@ export interface SiteSettings {
     registration: {
         enabled: boolean;
     };
+    theme: {
+        primary_content: string;
+        secondary_content: string;
+        background_color: string;
+        component_headers: string;
+        sidebar_navigation: string;
+    };
 }
 
 export interface SettingsStore {

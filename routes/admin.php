@@ -78,6 +78,19 @@ Route::group(['prefix' => 'settings'], function () {
 
 /*
 |--------------------------------------------------------------------------
+| Theme Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /admin/theme
+|
+*/
+Route::group(['prefix' => 'theme'], function () {
+    Route::get('/', [Admin\ThemeController::class, 'index'])->name('admin.theme');
+    Route::patch('/', [Admin\ThemeController::class, 'update'])->name('admin.theme.update');
+});
+
+/*
+|--------------------------------------------------------------------------
 | User Controller Routes
 |--------------------------------------------------------------------------
 |
