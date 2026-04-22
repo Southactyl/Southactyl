@@ -26,6 +26,7 @@
             {!! Theme::css('vendor/sweetalert/sweetalert.min.css?t={cache-version}') !!}
             {!! Theme::css('vendor/animate/animate.min.css?t={cache-version}') !!}
             {!! Theme::css('css/pterodactyl.css?t={cache-version}') !!}
+            {!! Theme::css('css/admin-dark.css?t={cache-version}') !!}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -35,11 +36,11 @@
             <![endif]-->
         @show
     </head>
-    <body class="hold-transition skin-blue fixed sidebar-mini">
-        <div class="wrapper">
+    <body class="hold-transition skin-blue fixed sidebar-mini admin-dark">
+        <div class="wrapper admin-shell">
             <header class="main-header">
-                <a href="{{ route('index') }}" class="logo">
-                    <span>{{ config('app.name', 'Pterodactyl') }}</span>
+                <a href="{{ route('index') }}" class="logo admin-brand">
+                    <span>Southactyl</span>
                 </a>
                 <nav class="navbar navbar-static-top">
                     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -57,68 +58,68 @@
                                 </a>
                             </li>
                             <li>
-                                <li><a href="{{ route('index') }}" data-toggle="tooltip" data-placement="bottom" title="Exit Admin Control"><i class="fa fa-server"></i></a></li>
+                                <a href="{{ route('index') }}" data-toggle="tooltip" data-placement="bottom" title="Exit Admin Control"><i class="fa fa-server"></i></a>
                             </li>
                             <li>
-                                <li><a href="{{ route('auth.logout') }}" id="logoutButton" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="fa fa-sign-out"></i></a></li>
+                                <a href="{{ route('auth.logout') }}" id="logoutButton" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="fa fa-sign-out"></i></a>
                             </li>
                         </ul>
                     </div>
                 </nav>
             </header>
-            <aside class="main-sidebar">
+            <aside class="main-sidebar admin-sidebar">
                 <section class="sidebar">
-                    <ul class="sidebar-menu">
-                        <li class="header">BASIC ADMINISTRATION</li>
-                        <li class="{{ Route::currentRouteName() !== 'admin.index' ?: 'active' }}">
-                            <a href="{{ route('admin.index') }}">
-                                <i class="fa fa-home"></i> <span>Overview</span>
+                    <ul class="sidebar-menu admin-sidebar-menu">
+                        <li class="header admin-nav-section">Administration</li>
+                        <li class="admin-nav-item {{ Route::currentRouteName() !== 'admin.index' ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.index') }}">
+                                <i class="fa fa-home"></i> <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.settings') ?: 'active' }}">
-                            <a href="{{ route('admin.settings')}}">
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.settings') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.settings')}}">
                                 <i class="fa fa-wrench"></i> <span>Settings</span>
                             </a>
                         </li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.api') ?: 'active' }}">
-                            <a href="{{ route('admin.api.index')}}">
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.api') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.api.index')}}">
                                 <i class="fa fa-gamepad"></i> <span>Application API</span>
                             </a>
                         </li>
-                        <li class="header">MANAGEMENT</li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.databases') ?: 'active' }}">
-                            <a href="{{ route('admin.databases') }}">
+                        <li class="header admin-nav-section">Management</li>
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.databases') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.databases') }}">
                                 <i class="fa fa-database"></i> <span>Databases</span>
                             </a>
                         </li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.locations') ?: 'active' }}">
-                            <a href="{{ route('admin.locations') }}">
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.locations') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.locations') }}">
                                 <i class="fa fa-globe"></i> <span>Locations</span>
                             </a>
                         </li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.nodes') ?: 'active' }}">
-                            <a href="{{ route('admin.nodes') }}">
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.nodes') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.nodes') }}">
                                 <i class="fa fa-sitemap"></i> <span>Nodes</span>
                             </a>
                         </li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.servers') ?: 'active' }}">
-                            <a href="{{ route('admin.servers') }}">
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.servers') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.servers') }}">
                                 <i class="fa fa-server"></i> <span>Servers</span>
                             </a>
                         </li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.users') ?: 'active' }}">
-                            <a href="{{ route('admin.users') }}">
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.users') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.users') }}">
                                 <i class="fa fa-users"></i> <span>Users</span>
                             </a>
                         </li>
-                        <li class="header">SERVICE MANAGEMENT</li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.mounts') ?: 'active' }}">
-                            <a href="{{ route('admin.mounts') }}">
+                        <li class="header admin-nav-section">Service Management</li>
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.mounts') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.mounts') }}">
                                 <i class="fa fa-magic"></i> <span>Mounts</span>
                             </a>
                         </li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.nests') ?: 'active' }}">
-                            <a href="{{ route('admin.nests') }}">
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.nests') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.nests') }}">
                                 <i class="fa fa-th-large"></i> <span>Nests</span>
                             </a>
                         </li>
@@ -159,7 +160,7 @@
                     <strong><i class="fa fa-fw {{ $appIsGit ? 'fa-git-square' : 'fa-code-fork' }}"></i></strong> {{ $appVersion }}<br />
                     <strong><i class="fa fa-fw fa-clock-o"></i></strong> {{ round(microtime(true) - LARAVEL_START, 3) }}s
                 </div>
-                Copyright &copy; 2015 - {{ date('Y') }} <a href="https://pterodactyl.io/">Pterodactyl Software</a>.
+                Southactyl 2026 - {{ date('Y') }} &copy;
             </footer>
         </div>
         @section('footer-scripts')

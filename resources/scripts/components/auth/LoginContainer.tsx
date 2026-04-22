@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import login from '@/api/auth/login';
-import LoginFormContainer from '@/components/auth/LoginFormContainer';
+import { Form } from 'formik';
+import AuthSplitLayout from '@/components/auth/AuthSplitLayout';
 import { useStoreState } from 'easy-peasy';
 import { Formik, FormikHelpers } from 'formik';
 import { object, string } from 'yup';
 import Field from '@/components/elements/Field';
+import Label from '@/components/elements/Label';
 import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 import Reaptcha from 'reaptcha';
@@ -22,6 +24,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { enabled: recaptchaEnabled, siteKey } = useStoreState((state) => state.settings.data!.recaptcha);
+    const registrationEnabled = useStoreState((state) => state.settings.data!.registration.enabled);
 
     useEffect(() => {
         clearFlashes();
@@ -74,40 +77,72 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer title={'Login to Continue'} css={tw`w-full flex`}>
-                    <Field light type={'text'} label={'Username or Email'} name={'username'} disabled={isSubmitting} />
-                    <div css={tw`mt-6`}>
-                        <Field light type={'password'} label={'Password'} name={'password'} disabled={isSubmitting} />
-                    </div>
-                    <div css={tw`mt-6`}>
-                        <Button type={'submit'} size={'xlarge'} isLoading={isSubmitting} disabled={isSubmitting}>
-                            Login
-                        </Button>
-                    </div>
-                    {recaptchaEnabled && (
-                        <Reaptcha
-                            ref={ref}
-                            size={'invisible'}
-                            sitekey={siteKey || '_invalid_key'}
-                            onVerify={(response) => {
-                                setToken(response);
-                                submitForm();
-                            }}
-                            onExpire={() => {
-                                setSubmitting(false);
-                                setToken('');
-                            }}
-                        />
-                    )}
-                    <div css={tw`mt-6 text-center`}>
-                        <Link
-                            to={'/auth/password'}
-                            css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
-                        >
-                            Forgot password?
-                        </Link>
-                    </div>
-                </LoginFormContainer>
+                <AuthSplitLayout
+                    title={'Welcome back to Southactyl'}
+                    subtitle={'Use your account credentials to continue.'}
+                    bottom={
+                        registrationEnabled ? (
+                            <>
+                                <div css={tw`mt-2`}>
+                                    <Link
+                                        to={'/auth/register'}
+                                        css={tw`inline-flex items-center justify-center w-full px-4 py-3 rounded-lg border border-neutral-500 bg-neutral-700/60 text-neutral-100 no-underline font-semibold tracking-wide shadow-sm hover:bg-neutral-600/80 hover:border-neutral-400 hover:shadow-md transition-all`}
+                                    >
+                                        Create an Account
+                                    </Link>
+                                </div>
+                                <div css={tw`mt-5 flex items-center gap-3 text-neutral-500 text-xs uppercase tracking-wider`}>
+                                    <span css={tw`h-px flex-1 bg-neutral-700`} />
+                                    <span>Or Continue With</span>
+                                    <span css={tw`h-px flex-1 bg-neutral-700`} />
+                                </div>
+                            </>
+                        ) : null
+                    }
+                >
+                    <Form>
+                        <Field type={'text'} label={'Username or Email'} name={'username'} disabled={isSubmitting} />
+                        <div css={tw`mt-5`}>
+                            <div css={tw`flex items-center justify-between mb-2`}>
+                                <Label>Password</Label>
+                                <Link
+                                    to={'/auth/password'}
+                                    css={tw`text-sm text-neutral-400 no-underline hover:text-neutral-200`}
+                                >
+                                    Forgot Password?
+                                </Link>
+                            </div>
+                            <Field type={'password'} name={'password'} disabled={isSubmitting} />
+                        </div>
+                        <div css={tw`mt-6`}>
+                            <Button type={'submit'} size={'xlarge'} isLoading={isSubmitting} disabled={isSubmitting}>
+                                Sign In
+                            </Button>
+                        </div>
+                        {recaptchaEnabled && (
+                            <Reaptcha
+                                ref={ref}
+                                size={'invisible'}
+                                sitekey={siteKey || '_invalid_key'}
+                                onVerify={(response) => {
+                                    setToken(response);
+                                    submitForm();
+                                }}
+                                onExpire={() => {
+                                    setSubmitting(false);
+                                    setToken('');
+                                }}
+                            />
+                        )}
+                        {!registrationEnabled && (
+                            <div css={tw`mt-4 text-sm text-neutral-400`}>
+                                <Link to={'/auth/password'} css={tw`no-underline hover:text-neutral-200`}>
+                                    Forgot Password?
+                                </Link>
+                            </div>
+                        )}
+                    </Form>
+                </AuthSplitLayout>
             )}
         </Formik>
     );

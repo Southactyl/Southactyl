@@ -62,6 +62,23 @@
                                     <p class="text-muted"><small>The default language to use when rendering UI components.</small></p>
                                 </div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Allow Registration</label>
+                                <div>
+                                    @php
+                                        $allowRegistration = old('pterodactyl:auth:allow_registration', config('pterodactyl.auth.allow_registration')) ? 'true' : 'false';
+                                    @endphp
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary @if ($allowRegistration === 'false') active @endif">
+                                            <input type="radio" name="pterodactyl:auth:allow_registration" autocomplete="off" value="false" @if ($allowRegistration === 'false') checked @endif> Disabled
+                                        </label>
+                                        <label class="btn btn-primary @if ($allowRegistration === 'true') active @endif">
+                                            <input type="radio" name="pterodactyl:auth:allow_registration" autocomplete="off" value="true" @if ($allowRegistration === 'true') checked @endif> Enabled
+                                        </label>
+                                    </div>
+                                    <p class="text-muted"><small>Allow users to create accounts from the login page.</small></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer">
