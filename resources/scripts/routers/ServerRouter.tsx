@@ -21,6 +21,7 @@ import PermissionRoute from '@/components/elements/PermissionRoute';
 import routes from '@/routers/routes';
 import Sidebar from '@/components/Sidebar';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import getSubdomainDomains from '@/api/server/subdomains/getSubdomainDomains';
 
 export default () => {
     const match = useRouteMatch<{ id: string }>();
@@ -28,6 +29,7 @@ export default () => {
 
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
     const [error, setError] = useState('');
+    const [subdomainsAvailable, setSubdomainsAvailable] = useState<boolean>(false);
 
     const id = ServerContext.useStoreState((state) => state.server.data?.id);
     const uuid = ServerContext.useStoreState((state) => state.server.data?.uuid);
@@ -63,6 +65,25 @@ export default () => {
         };
     }, [match.params.id]);
 
+    useEffect(() => {
+        if (!uuid) {
+            setSubdomainsAvailable(false);
+            return;
+        }
+
+        getSubdomainDomains(uuid)
+            .then((domains) => setSubdomainsAvailable(domains.length > 0))
+            .catch(() => setSubdomainsAvailable(false));
+    }, [uuid]);
+
+    const availableServerRoutes = routes.server.filter((route) => {
+        if (route.path === '/subdomains') {
+            return subdomainsAvailable;
+        }
+
+        return true;
+    });
+
     return (
         <React.Fragment key={'server-router'}>
             <NavigationBar />
@@ -77,6 +98,13 @@ export default () => {
                     <CSSTransition timeout={150} classNames={'fade'} appear in>
                         <Sidebar>
                             {routes.server
+                                .filter((route) => {
+                                    if (route.path === '/subdomains') {
+                                        return subdomainsAvailable;
+                                    }
+
+                                    return true;
+                                })
                                 .filter((route) => !!route.name)
                                 .map((route) =>
                                     route.permission ? (
@@ -117,7 +145,7 @@ export default () => {
                         <ErrorBoundary>
                             <TransitionRouter>
                                 <Switch location={location}>
-                                    {routes.server.map(({ path, permission, component: Component }) => (
+                                    {availableServerRoutes.map(({ path, permission, component: Component }) => (
                                         <PermissionRoute key={path} permission={permission} path={to(path)} exact>
                                             <Spinner.Suspense>
                                                 <Component />

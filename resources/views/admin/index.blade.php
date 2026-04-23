@@ -36,6 +36,9 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3 text-center">
+        <a href="{{ route('admin.subdomains') }}"><button class="btn btn-primary" style="width:100%;"><i class="fa fa-fw fa-globe"></i> Subdomains</button></a>
+    </div>
     <div class="col-xs-6 col-sm-3 text-center">
         <a href="{{ $version->getDiscord() }}"><button class="btn btn-warning" style="width:100%;"><i class="fa fa-fw fa-support"></i> Get Help <small>(via Discord)</small></button></a>
     </div>

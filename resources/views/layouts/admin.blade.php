@@ -97,6 +97,11 @@
                                 <i class="fa fa-database"></i> <span>Databases</span>
                             </a>
                         </li>
+                        <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.subdomains') ?: 'active' }}">
+                            <a class="admin-nav-link" href="{{ route('admin.subdomains') }}">
+                                <i class="fa fa-globe"></i> <span>Subdomains</span>
+                            </a>
+                        </li>
                         <li class="admin-nav-item {{ ! starts_with(Route::currentRouteName(), 'admin.locations') ?: 'active' }}">
                             <a class="admin-nav-link" href="{{ route('admin.locations') }}">
                                 <i class="fa fa-globe"></i> <span>Locations</span>

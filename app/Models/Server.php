@@ -43,6 +43,7 @@ use Pterodactyl\Exceptions\Http\Server\ServerStateConflictException;
  * @property int|null $allocation_limit
  * @property int|null $database_limit
  * @property int $backup_limit
+ * @property int|null $subdomain_limit
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $installed_at
@@ -173,6 +174,7 @@ class Server extends Model implements Identifiable
         'database_limit' => 'present|nullable|integer|min:0',
         'allocation_limit' => 'sometimes|nullable|integer|min:0',
         'backup_limit' => 'present|nullable|integer|min:0',
+        'subdomain_limit' => 'nullable|integer|min:0',
     ];
 
     /**
@@ -194,6 +196,7 @@ class Server extends Model implements Identifiable
         'database_limit' => 'integer',
         'allocation_limit' => 'integer',
         'backup_limit' => 'integer',
+        'subdomain_limit' => 'integer',
         self::CREATED_AT => 'datetime',
         self::UPDATED_AT => 'datetime',
         'deleted_at' => 'datetime',
@@ -358,6 +361,16 @@ class Server extends Model implements Identifiable
     public function backups(): HasMany
     {
         return $this->hasMany(Backup::class);
+    }
+
+    /**
+     * Gets all subdomains associated with a server.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\Pterodactyl\Models\ServerSubdomain, $this>
+     */
+    public function subdomains(): HasMany
+    {
+        return $this->hasMany(ServerSubdomain::class);
     }
 
     /**

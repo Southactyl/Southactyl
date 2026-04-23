@@ -14,6 +14,7 @@ import AccountApiContainer from '@/components/dashboard/AccountApiContainer';
 import AccountSSHContainer from '@/components/dashboard/ssh/AccountSSHContainer';
 import ActivityLogContainer from '@/components/dashboard/activity/ActivityLogContainer';
 import ServerActivityLogContainer from '@/components/server/ServerActivityLogContainer';
+import SubdomainsContainer from '@/components/server/subdomains/SubdomainsContainer';
 import {
     faBackward,
     faClock,
@@ -21,6 +22,7 @@ import {
     faDatabase,
     faEdit,
     faFolder,
+    faGlobe,
     faKey,
     faNetworkWired,
     faPaperclip,
@@ -151,6 +153,13 @@ export default {
             name: 'Network',
             component: NetworkContainer,
             iconProp: faNetworkWired,
+        },
+        {
+            path: '/subdomains',
+            permission: 'allocation.*',
+            name: 'Subdomains',
+            component: SubdomainsContainer,
+            iconProp: faGlobe,
         },
         {
             path: '/startup',

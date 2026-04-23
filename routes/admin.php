@@ -91,6 +91,22 @@ Route::group(['prefix' => 'theme'], function () {
 
 /*
 |--------------------------------------------------------------------------
+| Subdomain Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /admin/subdomains
+|
+*/
+Route::group(['prefix' => 'subdomains'], function () {
+    Route::get('/', [Admin\SubdomainController::class, 'index'])->name('admin.subdomains');
+    Route::patch('/settings', [Admin\SubdomainController::class, 'updateSettings'])->name('admin.subdomains.settings');
+    Route::post('/domains', [Admin\SubdomainController::class, 'storeDomain'])->name('admin.subdomains.domains.store');
+    Route::patch('/domains/{domain:id}', [Admin\SubdomainController::class, 'updateDomain'])->name('admin.subdomains.domains.update');
+    Route::delete('/domains/{domain:id}', [Admin\SubdomainController::class, 'deleteDomain'])->name('admin.subdomains.domains.delete');
+});
+
+/*
+|--------------------------------------------------------------------------
 | User Controller Routes
 |--------------------------------------------------------------------------
 |

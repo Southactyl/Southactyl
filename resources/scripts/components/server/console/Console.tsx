@@ -16,7 +16,7 @@ import { usePersistedState } from '@/plugins/usePersistedState';
 import { SocketEvent, SocketRequest } from '@/components/server/events';
 import classNames from 'classnames';
 import { ChevronDoubleRightIcon } from '@heroicons/react/solid';
-import NookConfig from '@/config';
+import PageConfig from '@/config';
 
 import 'xterm/css/xterm.css';
 import styles from './style.module.css';
@@ -54,7 +54,7 @@ const terminalProps: ITerminalOptions = {
 };
 
 export default () => {
-    const TERMINAL_PRELUDE = `\u001b[1m\u001b[33m${NookConfig.TERMINAL_PRELUDE} \u001b[0m`;
+    const TERMINAL_PRELUDE = `\u001b[1m\u001b[33m${PageConfig.TERMINAL_PRELUDE} \u001b[0m`;
     const ref = useRef<HTMLDivElement>(null);
     const terminal = useMemo(() => new Terminal({ ...terminalProps }), []);
     const fitAddon = new FitAddon();
