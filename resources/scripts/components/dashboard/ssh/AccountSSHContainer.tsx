@@ -39,10 +39,7 @@ export default () => {
                         </p>
                     ) : (
                         data.map((key, index) => (
-                            <GreyRowBox
-                                key={key.fingerprint}
-                                css={[tw`bg-neutral-600 flex space-x-4 items-center`, index > 0 && tw`mt-2`]}
-                            >
+                            <GreyRowBox key={key.fingerprint} css={[tw`flex space-x-4 items-center`, index > 0 && tw`mt-2`]}>
                                 <FontAwesomeIcon icon={faKey} css={tw`text-neutral-300`} />
                                 <div css={tw`flex-1`}>
                                     <p css={tw`text-sm break-words font-medium`}>{key.name}</p>

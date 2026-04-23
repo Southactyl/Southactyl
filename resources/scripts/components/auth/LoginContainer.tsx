@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import login from '@/api/auth/login';
 import { Form } from 'formik';
-import AuthSplitLayout from '@/components/auth/AuthSplitLayout';
+import LoginFormContainer from '@/components/auth/LoginFormContainer';
 import { useStoreState } from 'easy-peasy';
 import { Formik, FormikHelpers } from 'formik';
 import { object, string } from 'yup';
@@ -77,28 +77,9 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <AuthSplitLayout
+                <LoginFormContainer
                     title={'Welcome back to Southactyl'}
                     subtitle={'Use your account credentials to continue.'}
-                    bottom={
-                        registrationEnabled ? (
-                            <>
-                                <div css={tw`mt-2`}>
-                                    <Link
-                                        to={'/auth/register'}
-                                        css={tw`inline-flex items-center justify-center w-full px-4 py-3 rounded-lg border border-neutral-500 bg-neutral-700/60 text-neutral-100 no-underline font-semibold tracking-wide shadow-sm hover:bg-neutral-600/80 hover:border-neutral-400 hover:shadow-md transition-all`}
-                                    >
-                                        Create an Account
-                                    </Link>
-                                </div>
-                                <div css={tw`mt-5 flex items-center gap-3 text-neutral-500 text-xs uppercase tracking-wider`}>
-                                    <span css={tw`h-px flex-1 bg-neutral-700`} />
-                                    <span>Or Continue With</span>
-                                    <span css={tw`h-px flex-1 bg-neutral-700`} />
-                                </div>
-                            </>
-                        ) : null
-                    }
                 >
                     <Form>
                         <Field type={'text'} label={'Username or Email'} name={'username'} disabled={isSubmitting} />
@@ -119,6 +100,16 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                                 Sign In
                             </Button>
                         </div>
+                        {registrationEnabled && (
+                            <div css={tw`mt-4`}>
+                                <Link
+                                    to={'/auth/register'}
+                                    css={tw`inline-flex items-center justify-center w-full px-4 py-3 rounded-lg border border-neutral-500 bg-neutral-700/60 text-neutral-100 no-underline font-semibold tracking-wide shadow-sm hover:bg-neutral-600/80 hover:border-neutral-400 hover:shadow-md transition-all`}
+                                >
+                                    Create an Account
+                                </Link>
+                            </div>
+                        )}
                         {recaptchaEnabled && (
                             <Reaptcha
                                 ref={ref}
@@ -142,7 +133,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                             </div>
                         )}
                     </Form>
-                </AuthSplitLayout>
+                </LoginFormContainer>
             )}
         </Formik>
     );

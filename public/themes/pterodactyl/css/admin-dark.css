@@ -358,6 +358,55 @@ body.admin-dark .main-footer .text-gray {
     color: var(--theme-footer-text) !important;
 }
 
+/* Admin modal theming */
+body.admin-dark .modal-backdrop {
+    background-color: color-mix(in srgb, var(--theme-background) 78%, #000 22%) !important;
+}
+
+body.admin-dark .modal-content {
+    background: var(--theme-card-background) !important;
+    border: 1px solid var(--theme-card-border) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+}
+
+body.admin-dark .modal-header,
+body.admin-dark .modal-footer {
+    background: var(--theme-component-headers) !important;
+    border-color: color-mix(in srgb, var(--theme-card-border) 82%, transparent) !important;
+}
+
+body.admin-dark .modal-header {
+    border-top-left-radius: 14px !important;
+    border-top-right-radius: 14px !important;
+}
+
+body.admin-dark .modal-body {
+    background: var(--theme-card-background) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .modal-footer {
+    border-bottom-left-radius: 14px !important;
+    border-bottom-right-radius: 14px !important;
+}
+
+body.admin-dark .modal-title {
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .modal-header .close {
+    color: var(--theme-text-muted) !important;
+    text-shadow: none !important;
+    opacity: 0.9;
+}
+
+body.admin-dark .modal-header .close:hover {
+    color: var(--theme-text-primary) !important;
+    opacity: 1;
+}
+
 /* Keep AdminLTE collapse behavior while preserving the redesigned hover panel */
 @media (min-width: 768px) {
     body.admin-dark.sidebar-mini.sidebar-collapse .admin-sidebar-menu > .admin-nav-item:hover > .admin-nav-link > span {
@@ -504,27 +553,27 @@ body.admin-dark fieldset[disabled] .btn {
 
 /* Global theme variables (db-driven) */
 :root {
-    --theme-primary-content: #3b82f6;
-    --theme-secondary-content: #94a3b8;
-    --theme-background: #070b13;
-    --theme-component-headers: #0f1622;
-    --theme-sidebar: #05080f;
+    --theme-primary-content: #3d8bff;
+    --theme-secondary-content: #9bb0d0;
+    --theme-background: #050b1a;
+    --theme-component-headers: #0b162b;
+    --theme-sidebar: #030b1f;
     --theme-success: #22c55e;
     --theme-warning: #f59e0b;
     --theme-danger: #ef4444;
-    --theme-info: #0ea5e9;
-    --theme-text-primary: #f8fafc;
-    --theme-text-muted: #94a3b8;
-    --theme-link: #60a5fa;
-    --theme-link-hover: #93c5fd;
-    --theme-card-background: #162130;
-    --theme-card-border: #334155;
-    --theme-input-background: #1a2636;
-    --theme-input-border: #475569;
-    --theme-topbar-background: #05080f;
-    --theme-topbar-text: #cbd5e1;
-    --theme-footer-background: #05080f;
-    --theme-footer-text: #cbd5e1;
+    --theme-info: #38bdf8;
+    --theme-text-primary: #eaf2ff;
+    --theme-text-muted: #9bb0d0;
+    --theme-link: #6aa8ff;
+    --theme-link-hover: #9ec5ff;
+    --theme-card-background: #0d1a31;
+    --theme-card-border: #223a63;
+    --theme-input-background: #0a1730;
+    --theme-input-border: #2b4878;
+    --theme-topbar-background: #040d21;
+    --theme-topbar-text: #c9daf6;
+    --theme-footer-background: #040d21;
+    --theme-footer-text: #b8cae8;
 }
 
 body.admin-dark {
@@ -534,6 +583,32 @@ body.admin-dark {
 
 body.admin-dark .content-wrapper {
     background: var(--theme-background) !important;
+}
+
+/* Admin themed scrollbar */
+body.admin-dark,
+body.admin-dark * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--theme-input-border) 85%, #000 15%)
+        color-mix(in srgb, var(--theme-background) 85%, #000 15%);
+}
+
+body.admin-dark ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+body.admin-dark ::-webkit-scrollbar-track {
+    background: color-mix(in srgb, var(--theme-background) 85%, #000 15%);
+}
+
+body.admin-dark ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--theme-input-border) 85%, #000 15%);
+    border-radius: 999px;
+}
+
+body.admin-dark ::-webkit-scrollbar-thumb:hover {
+    background: var(--theme-primary-content);
 }
 
 body.admin-dark .main-header .logo.admin-brand,
@@ -614,6 +689,77 @@ body.admin-dark .select2-container--default .select2-selection--multiple,
 body.admin-dark .select2-dropdown {
     background: var(--theme-input-background);
     border-color: var(--theme-input-border);
+    color: var(--theme-text-primary);
+}
+
+body.admin-dark .select2-dropdown {
+    background: var(--theme-input-background) !important;
+    border: 1px solid var(--theme-input-border) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .select2-container--default .select2-search--dropdown .select2-search__field {
+    background: color-mix(in srgb, var(--theme-input-background) 88%, #000 12%) !important;
+    border: 1px solid var(--theme-input-border) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .select2-container--default .select2-results__option {
+    background: var(--theme-input-background) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .select2-container--default .select2-results__option[aria-selected='true'] {
+    background: color-mix(in srgb, var(--theme-component-headers) 76%, #ffffff 24%) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: color-mix(in srgb, var(--theme-primary-content) 58%, #0f172a 42%) !important;
+    color: #ffffff !important;
+}
+
+body.admin-dark .select2-container--default .select2-results__group {
+    background: color-mix(in srgb, var(--theme-component-headers) 88%, #ffffff 12%) !important;
+    color: var(--theme-text-muted) !important;
+}
+
+body.admin-dark select.form-control,
+body.admin-dark select.input-sm,
+body.admin-dark select.input-lg {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 34px;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--theme-text-muted) 50%),
+        linear-gradient(135deg, var(--theme-text-muted) 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) calc(50% - 2px),
+        calc(100% - 12px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+body.admin-dark select.form-control:hover {
+    border-color: color-mix(in srgb, var(--theme-input-border) 70%, #ffffff 30%);
+}
+
+body.admin-dark select.form-control:focus {
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--theme-primary-content) 50%),
+        linear-gradient(135deg, var(--theme-primary-content) 50%, transparent 50%);
+}
+
+body.admin-dark select.form-control[disabled],
+body.admin-dark select.form-control[readonly] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+body.admin-dark select.form-control option,
+body.admin-dark select.form-control optgroup {
+    background: var(--theme-input-background);
     color: var(--theme-text-primary);
 }
 
@@ -707,6 +853,131 @@ body.admin-dark .alert.alert-warning {
 body.admin-dark .alert.alert-danger {
     border-left: 4px solid var(--theme-danger);
     background: color-mix(in srgb, var(--theme-danger) 14%, var(--theme-background) 86%);
+}
+
+/* SweetAlert v1 theming */
+body.admin-dark .sweet-overlay {
+    background-color: color-mix(in srgb, var(--theme-background) 10%, #000000 10%) !important;
+}
+
+body.admin-dark .sweet-alert {
+    background: var(--theme-card-background) !important;
+    border: 1px solid var(--theme-card-border) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.42) !important;
+    overflow: hidden !important;
+}
+
+body.admin-dark .sweet-alert h2 {
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .sweet-alert p {
+    color: var(--theme-text-muted) !important;
+}
+
+body.admin-dark .sweet-alert input {
+    background: var(--theme-input-background) !important;
+    border-color: var(--theme-input-border) !important;
+    color: var(--theme-text-primary) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+body.admin-dark .sweet-alert input:focus {
+    border-color: var(--theme-primary-content) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-primary-content) 32%, transparent) !important;
+}
+
+body.admin-dark .sweet-alert .sa-error-container {
+    background: color-mix(in srgb, var(--theme-danger) 12%, var(--theme-background) 88%) !important;
+}
+
+body.admin-dark .sweet-alert .sa-icon.sa-success::before,
+body.admin-dark .sweet-alert .sa-icon.sa-success::after,
+body.admin-dark .sweet-alert .sa-icon.sa-success .sa-fix {
+    background: var(--theme-card-background) !important;
+}
+
+body.admin-dark .sweet-alert button {
+    border-radius: 10px !important;
+    border: 1px solid transparent !important;
+    font-weight: 600 !important;
+}
+
+body.admin-dark .sweet-alert button.confirm {
+    background: var(--theme-primary-content) !important;
+    border-color: color-mix(in srgb, var(--theme-primary-content) 82%, #000 18%) !important;
+    color: #fff !important;
+}
+
+body.admin-dark .sweet-alert button.confirm:hover {
+    background: color-mix(in srgb, var(--theme-primary-content) 88%, #000 12%) !important;
+}
+
+body.admin-dark .sweet-alert button.cancel {
+    background: var(--theme-input-background) !important;
+    border-color: var(--theme-input-border) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .sweet-alert button.cancel:hover {
+    background: color-mix(in srgb, var(--theme-input-background) 76%, #ffffff 24%) !important;
+    border-color: color-mix(in srgb, var(--theme-input-border) 70%, #ffffff 30%) !important;
+}
+
+body.admin-dark .modal-footer .btn-default,
+body.admin-dark .modal-footer .btn.cancel,
+body.admin-dark .modal-footer [data-action='cancel'] {
+    background: var(--theme-input-background) !important;
+    border-color: var(--theme-input-border) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .modal-footer .btn-default:hover,
+body.admin-dark .modal-footer .btn.cancel:hover,
+body.admin-dark .modal-footer [data-action='cancel']:hover {
+    background: color-mix(in srgb, var(--theme-input-background) 76%, #ffffff 24%) !important;
+    border-color: color-mix(in srgb, var(--theme-input-border) 70%, #ffffff 30%) !important;
+}
+
+/* Admin list search input-group button */
+body.admin-dark .box-tools .input-group-btn > .btn.btn-default {
+    background: var(--theme-input-background) !important;
+    border-color: var(--theme-input-border) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .box-tools .input-group-btn > .btn.btn-default:hover,
+body.admin-dark .box-tools .input-group-btn > .btn.btn-default:focus {
+    background: color-mix(in srgb, var(--theme-input-background) 76%, #ffffff 24%) !important;
+    border-color: color-mix(in srgb, var(--theme-input-border) 70%, #ffffff 30%) !important;
+    color: #ffffff !important;
+}
+
+body.admin-dark .box-tools .input-group-btn > .btn.btn-default > .fa {
+    color: inherit !important;
+}
+
+/* Settings segmented radio button groups */
+body.admin-dark .btn-group[data-toggle='buttons'] > .btn.btn-primary {
+    background: color-mix(in srgb, var(--theme-component-headers) 74%, #0f172a 26%) !important;
+    border-color: color-mix(in srgb, var(--theme-card-border) 86%, transparent) !important;
+    color: var(--theme-text-muted) !important;
+    box-shadow: none !important;
+}
+
+body.admin-dark .btn-group[data-toggle='buttons'] > .btn.btn-primary:hover {
+    background: color-mix(in srgb, var(--theme-component-headers) 64%, #ffffff 36%) !important;
+    border-color: color-mix(in srgb, var(--theme-input-border) 70%, #ffffff 30%) !important;
+    color: var(--theme-text-primary) !important;
+}
+
+body.admin-dark .btn-group[data-toggle='buttons'] > .btn.btn-primary.active {
+    background: var(--theme-primary-content) !important;
+    border-color: color-mix(in srgb, var(--theme-primary-content) 82%, #000000 18%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-primary-content) 30%, transparent) !important;
 }
 
 /* Final tab visual cleanup */

@@ -44,26 +44,26 @@ export default ({ activity, children }: Props) => {
     const properties = wrapProperties(activity.properties);
 
     return (
-        <div className={'grid grid-cols-10 py-4 border-b-2 border-gray-800 last:rounded-b last:border-0 group'}>
+        <div className={classNames('grid grid-cols-10 py-4 last:rounded-b last:border-0 group', style.activityRow)}>
             <div className={'hidden sm:flex sm:col-span-1 items-center justify-center select-none'}>
-                <div className={'flex items-center w-10 h-10 rounded-full bg-gray-600 overflow-hidden'}>
+                <div className={classNames('flex items-center w-10 h-10 rounded-full overflow-hidden', style.actorAvatar)}>
                     <Avatar name={actor?.uuid || 'system'} />
                 </div>
             </div>
             <div className={'col-span-10 sm:col-span-9 flex'}>
                 <div className={'flex-1 px-4 sm:px-0'}>
-                    <div className={'flex items-center text-gray-50'}>
+                    <div className={classNames('flex items-center', style.actorText)}>
                         <Tooltip placement={'top'} content={actor?.email || 'System User'}>
                             <span>{actor?.username || 'System'}</span>
                         </Tooltip>
-                        <span className={'text-gray-400'}>&nbsp;&mdash;&nbsp;</span>
+                        <span className={style.separator}>&nbsp;&mdash;&nbsp;</span>
                         <Link
                             to={`#${pathTo({ event: activity.event })}`}
-                            className={'transition-colors duration-75 active:text-cyan-400 hover:text-cyan-400'}
+                            className={style.activityLink}
                         >
                             {activity.event}
                         </Link>
-                        <div className={classNames(style.icons, 'group-hover:text-gray-300')}>
+                        <div className={style.icons}>
                             {activity.isApi && (
                                 <Tooltip placement={'top'} content={'Using API Key'}>
                                     <TerminalIcon />
@@ -80,11 +80,11 @@ export default ({ activity, children }: Props) => {
                     <p className={style.description}>
                         <Translate ns={'activity'} values={properties} i18nKey={activity.event.replace(':', '.')} />
                     </p>
-                    <div className={'mt-1 flex items-center text-sm'}>
+                    <div className={classNames('mt-1 flex items-center text-sm', style.activityMeta)}>
                         {activity.ip && (
                             <span>
                                 {activity.ip}
-                                <span className={'text-gray-400'}>&nbsp;|&nbsp;</span>
+                                <span className={style.separator}>&nbsp;|&nbsp;</span>
                             </span>
                         )}
                         <Tooltip placement={'right'} content={format(activity.timestamp, 'MMM do, yyyy H:mm:ss')}>

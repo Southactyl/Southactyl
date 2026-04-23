@@ -1,6 +1,6 @@
 import * as React from 'react';
-import tw from 'twin.macro';
-import styled, { css } from 'styled-components/macro';
+import tw, { TwStyle } from 'twin.macro';
+import styled from 'styled-components/macro';
 
 export type FlashMessageType = 'success' | 'info' | 'warning' | 'error';
 
@@ -10,52 +10,56 @@ interface Props {
     type?: FlashMessageType;
 }
 
-const alertColor = (type?: FlashMessageType): string => {
+const styling = (type?: FlashMessageType): TwStyle | string => {
     switch (type) {
         case 'error':
-            return '#ef4444';
+            return tw`bg-red-600 border-red-800`;
         case 'info':
-            return 'var(--theme-primary-content)';
+            return tw`bg-primary-600 border-primary-800`;
         case 'success':
-            return '#22c55e';
+            return tw`bg-green-600 border-green-800`;
         case 'warning':
-            return '#f59e0b';
+            return tw`bg-yellow-600 border-yellow-800`;
         default:
-            return 'var(--theme-primary-content)';
+            return '';
+    }
+};
+
+const getBackground = (type?: FlashMessageType): TwStyle | string => {
+    switch (type) {
+        case 'error':
+            return tw`bg-red-500`;
+        case 'info':
+            return tw`bg-primary-500`;
+        case 'success':
+            return tw`bg-green-500`;
+        case 'warning':
+            return tw`bg-yellow-500`;
+        default:
+            return '';
     }
 };
 
 const Container = styled.div<{ $type?: FlashMessageType }>`
-    ${tw`w-full text-sm`};
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    padding: 0.75rem 0.875rem;
-    border-radius: 12px;
-    border: 1px solid color-mix(in srgb, var(--theme-component-headers) 62%, #64748b 38%);
-    border-left: 4px solid ${(props) => alertColor(props.$type)};
-    color: rgb(var(--theme-neutral-100-rgb));
-    background: color-mix(in srgb, ${(props) => alertColor(props.$type)} 14%, var(--theme-background) 86%);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    ${tw`p-2 border items-center leading-normal rounded flex w-full text-sm text-white`};
+    ${(props) => styling(props.$type)};
 `;
 Container.displayName = 'MessageBox.Container';
-
-const Badge = styled.span<{ $type?: FlashMessageType }>`
-    ${tw`uppercase text-[10px] font-bold leading-none tracking-wide px-2 py-1 rounded`};
-    ${(props) => css`
-        color: #fff;
-        background: ${alertColor(props.$type)};
-    `};
-`;
 
 const MessageBox = ({ title, children, type }: Props) => (
     <Container css={tw`lg:inline-flex`} $type={type} role={'alert'}>
         {title && (
-            <Badge className={'title'} $type={type}>
+            <span
+                className={'title'}
+                css={[
+                    tw`flex rounded-full uppercase px-2 py-1 text-xs font-bold mr-3 leading-none`,
+                    getBackground(type),
+                ]}
+            >
                 {title}
-            </Badge>
+            </span>
         )}
-        <span css={tw`text-left flex-auto`}>{children}</span>
+        <span css={tw`mr-2 text-left flex-auto`}>{children}</span>
     </Container>
 );
 MessageBox.displayName = 'MessageBox';

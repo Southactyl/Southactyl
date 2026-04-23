@@ -21,7 +21,8 @@ export interface ModalProps extends RequiredModalProps {
 }
 
 export const ModalMask = styled.div`
-    ${tw`fixed z-50 overflow-auto flex w-full inset-0`};
+    ${tw`fixed overflow-auto flex w-full inset-0`};
+    z-index: 20000;
     background: rgba(0, 0, 0, 0.7);
 `;
 
@@ -53,6 +54,12 @@ const ModalContainer = styled.div<{ alignTop?: boolean }>`
             ${tw`w-6 h-6`};
         }
     }
+`;
+
+const ModalCard = styled.div`
+    ${tw`p-3 sm:p-4 md:p-6 rounded shadow-md overflow-y-auto transition-all duration-150`};
+    background: rgb(var(--theme-neutral-800-rgb) / 0.97);
+    border: 1px solid color-mix(in srgb, var(--theme-card-border) 85%, transparent);
 `;
 
 const Modal: React.FC<ModalProps> = ({
@@ -129,11 +136,9 @@ const Modal: React.FC<ModalProps> = ({
                             </div>
                         </Fade>
                     )}
-                    <div
-                        css={tw`bg-neutral-800 p-3 sm:p-4 md:p-6 rounded shadow-md overflow-y-scroll transition-all duration-150`}
-                    >
+                    <ModalCard>
                         {children}
-                    </div>
+                    </ModalCard>
                 </ModalContainer>
             </ModalMask>
         </Fade>

@@ -32,6 +32,18 @@ const getBackgroundColor = (value: number, max: number | null): string | undefin
     return undefined;
 };
 
+const getUptimeColor = (status: string | null): string | undefined => {
+    if (status === 'running') {
+        return 'bg-green-500';
+    }
+
+    if (status === 'starting' || status === 'stopping') {
+        return 'bg-yellow-500';
+    }
+
+    return undefined;
+};
+
 const Limit = ({ limit, children }: { limit: string | null; children: React.ReactNode }) => (
     <>
         {children}
@@ -96,7 +108,7 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
             <StatBlock
                 icon={faClock}
                 title={'Uptime'}
-                color={getBackgroundColor(status === 'running' ? 0 : status !== 'offline' ? 9 : 10, 10)}
+                color={getUptimeColor(status)}
             >
                 {status === null ? (
                     'Offline'

@@ -27,6 +27,7 @@ const Field = forwardRef<HTMLInputElement, Props>(
                         id={id}
                         {...field}
                         {...props}
+                        className={`theme-preview__input${props.className ? ` ${props.className}` : ''}`}
                         isLight={light}
                         hasError={!!(touched[field.name] && errors[field.name])}
                     />
@@ -43,6 +44,7 @@ const Field = forwardRef<HTMLInputElement, Props>(
         </FormikField>
     )
 );
+
 Field.displayName = 'Field';
 
 export default Field;

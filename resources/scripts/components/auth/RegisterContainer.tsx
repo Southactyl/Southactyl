@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import register from '@/api/auth/register';
 import { httpErrorToHuman } from '@/api/http';
 import { Form } from 'formik';
-import AuthSplitLayout from '@/components/auth/AuthSplitLayout';
+import LoginFormContainer from '@/components/auth/LoginFormContainer';
 import { useStoreState } from 'easy-peasy';
 import Field from '@/components/elements/Field';
 import { Formik, FormikHelpers } from 'formik';
@@ -104,17 +104,9 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <AuthSplitLayout
+                <LoginFormContainer
                     title={'Create Account'}
                     subtitle={'Set up your Southactyl account to access the panel.'}
-                    bottom={
-                        <div css={tw`text-sm text-neutral-300`}>
-                            Already have an account?{' '}
-                            <Link to={'/auth/login'} css={tw`text-neutral-100 no-underline hover:text-white`}>
-                                Return to Login
-                            </Link>
-                        </div>
-                    }
                 >
                     <Form>
                         <Field type={'text'} label={'Email'} name={'email'} disabled={isSubmitting} />
@@ -141,6 +133,12 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
                                 Create Account
                             </Button>
                         </div>
+                        <div css={tw`mt-4 text-sm text-neutral-300`}>
+                            Already have an account?{' '}
+                            <Link to={'/auth/login'} css={tw`text-neutral-100 no-underline hover:text-white`}>
+                                Return to Login
+                            </Link>
+                        </div>
                         {recaptchaEnabled && (
                             <Reaptcha
                                 ref={refCaptcha}
@@ -157,7 +155,7 @@ const RegisterContainer = ({ history }: RouteComponentProps) => {
                             />
                         )}
                     </Form>
-                </AuthSplitLayout>
+                </LoginFormContainer>
             )}
         </Formik>
     );

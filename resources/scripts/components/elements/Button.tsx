@@ -12,52 +12,54 @@ interface Props {
 
 const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
     ${tw`relative inline-block rounded p-2 uppercase tracking-wide text-sm transition-all duration-150 border`};
+    background: var(--btn-bg, var(--theme-primary-content));
+    border-color: var(--btn-border, color-mix(in srgb, var(--theme-primary-content) 84%, #000000 16%));
+    color: var(--btn-text, #f8fbff);
 
     ${(props) =>
         ((!props.isSecondary && !props.color) || props.color === 'primary') &&
         css<Props>`
-            ${(props) => !props.isSecondary && tw`bg-primary-500 border-primary-600 border text-primary-50`};
-            ${(props) =>
-                !props.isSecondary &&
-                css`
-                    background: var(--theme-primary-content);
-                    border-color: var(--theme-primary-content);
-                    color: #f8fafc;
-                `};
+            --btn-bg: var(--theme-primary-content);
+            --btn-border: color-mix(in srgb, var(--theme-primary-content) 84%, #000000 16%);
+            --btn-text: #f8fbff;
 
             &:hover:not(:disabled) {
-                ${tw`bg-primary-600 border-primary-700`};
-                background: color-mix(in srgb, var(--theme-primary-content) 90%, #0f172a 10%);
-                border-color: color-mix(in srgb, var(--theme-primary-content) 90%, #0f172a 10%);
+                --btn-bg: color-mix(in srgb, var(--theme-primary-content) 88%, #000000 12%);
+                --btn-border: color-mix(in srgb, var(--theme-primary-content) 72%, #000000 28%);
             }
         `};
 
     ${(props) =>
         props.color === 'grey' &&
         css`
-            ${tw`border-neutral-600 bg-neutral-500 text-neutral-50`};
+            --btn-bg: color-mix(in srgb, var(--theme-component-headers) 76%, #ffffff 24%);
+            --btn-border: color-mix(in srgb, var(--theme-card-border) 82%, #ffffff 18%);
+            --btn-text: var(--theme-text-primary);
 
             &:hover:not(:disabled) {
-                ${tw`bg-neutral-600 border-neutral-700`};
-                background: color-mix(in srgb, var(--theme-component-headers) 70%, #0f172a 30%);
-                border-color: color-mix(in srgb, var(--theme-component-headers) 70%, #1e293b 30%);
+                --btn-bg: color-mix(in srgb, var(--theme-component-headers) 88%, #ffffff 12%);
+                --btn-border: color-mix(in srgb, var(--theme-card-border) 70%, #ffffff 30%);
             }
         `};
 
     ${(props) =>
         props.color === 'green' &&
         css<Props>`
-            ${tw`border-green-600 bg-green-500 text-green-50`};
+            --btn-bg: var(--theme-success);
+            --btn-border: color-mix(in srgb, var(--theme-success) 82%, #000000 18%);
+            --btn-text: #ecfff3;
 
             &:hover:not(:disabled) {
-                ${tw`bg-green-600 border-green-700`};
+                --btn-bg: color-mix(in srgb, var(--theme-success) 86%, #000000 14%);
+                --btn-border: color-mix(in srgb, var(--theme-success) 68%, #000000 32%);
             }
 
             ${(props) =>
                 props.isSecondary &&
                 css`
                     &:active:not(:disabled) {
-                        ${tw`bg-green-600 border-green-700`};
+                        --btn-bg: color-mix(in srgb, var(--theme-success) 86%, #000000 14%);
+                        --btn-border: color-mix(in srgb, var(--theme-success) 68%, #000000 32%);
                     }
                 `};
         `};
@@ -65,17 +67,21 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
     ${(props) =>
         props.color === 'red' &&
         css<Props>`
-            ${tw`border-red-600 bg-red-500 text-red-50`};
+            --btn-bg: var(--theme-danger);
+            --btn-border: color-mix(in srgb, var(--theme-danger) 82%, #000000 18%);
+            --btn-text: #fff0f0;
 
             &:hover:not(:disabled) {
-                ${tw`bg-red-600 border-red-700`};
+                --btn-bg: color-mix(in srgb, var(--theme-danger) 86%, #000000 14%);
+                --btn-border: color-mix(in srgb, var(--theme-danger) 68%, #000000 32%);
             }
 
             ${(props) =>
                 props.isSecondary &&
                 css`
                     &:active:not(:disabled) {
-                        ${tw`bg-red-600 border-red-700`};
+                        --btn-bg: color-mix(in srgb, var(--theme-danger) 86%, #000000 14%);
+                        --btn-border: color-mix(in srgb, var(--theme-danger) 68%, #000000 32%);
                     }
                 `};
         `};
@@ -88,20 +94,17 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
     ${(props) =>
         props.isSecondary &&
         css<Props>`
-            ${tw`border-neutral-600 bg-transparent text-neutral-200`};
+            --btn-bg: transparent;
+            --btn-border: color-mix(in srgb, var(--theme-input-border) 86%, #ffffff 14%);
+            --btn-text: var(--theme-text-primary);
 
             &:hover:not(:disabled) {
-                ${tw`border-neutral-500 text-neutral-100`};
-                ${(props) => props.color === 'red' && tw`bg-red-500 border-red-600 text-red-50`};
-                ${(props) => props.color === 'primary' && tw`bg-primary-500 border-primary-600 text-primary-50`};
-                ${(props) => props.color === 'green' && tw`bg-green-500 border-green-600 text-green-50`};
-                ${(props) =>
-                    props.color === 'primary' &&
-                    css`
-                        background: var(--theme-primary-content);
-                        border-color: var(--theme-primary-content);
-                        color: #f8fafc;
-                    `};
+                --btn-bg: color-mix(in srgb, var(--theme-component-headers) 64%, transparent);
+                --btn-border: color-mix(in srgb, var(--theme-input-border) 72%, #ffffff 28%);
+                --btn-text: #f8fbff;
+                ${(props) => props.color === 'red' && css`--btn-bg: var(--theme-danger); --btn-border: color-mix(in srgb, var(--theme-danger) 82%, #000000 18%); --btn-text: #fff0f0;`};
+                ${(props) => props.color === 'primary' && css`--btn-bg: var(--theme-primary-content); --btn-border: color-mix(in srgb, var(--theme-primary-content) 84%, #000000 16%); --btn-text: #f8fbff;`};
+                ${(props) => props.color === 'green' && css`--btn-bg: var(--theme-success); --btn-border: color-mix(in srgb, var(--theme-success) 82%, #000000 18%); --btn-text: #ecfff3;`};
             }
         `};
 

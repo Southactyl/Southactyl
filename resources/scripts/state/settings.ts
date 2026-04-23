@@ -16,6 +16,22 @@ export interface SiteSettings {
         background_color: string;
         component_headers: string;
         sidebar_navigation: string;
+        success_color?: string;
+        warning_color?: string;
+        danger_color?: string;
+        info_color?: string;
+        text_primary?: string;
+        text_muted?: string;
+        link_color?: string;
+        link_hover_color?: string;
+        card_background?: string;
+        card_border?: string;
+        input_background?: string;
+        input_border?: string;
+        topbar_background?: string;
+        topbar_text?: string;
+        footer_background?: string;
+        footer_text?: string;
     };
 }
 

@@ -16,6 +16,6 @@ export default ({ title, legend, children }: ChartBlockProps) => (
             </h3>
             {legend && <p className={'text-sm flex items-center'}>{legend}</p>}
         </div>
-        <div className={'z-10 ml-2'}>{children}</div>
+        <div className={classNames(styles.chart_surface, 'z-10 mx-2 mb-2 rounded')}>{children}</div>
     </div>
 );

@@ -13,21 +13,21 @@ return new class () extends Migration {
     {
         Schema::create('theme_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('primary_content', 7)->default('#3b82f6');
-            $table->string('secondary_content', 7)->default('#94a3b8');
-            $table->string('background_color', 7)->default('#070b13');
-            $table->string('component_headers', 7)->default('#0f1622');
-            $table->string('sidebar_navigation', 7)->default('#05080f');
+            $table->string('primary_content', 7)->default('#3d8bff');
+            $table->string('secondary_content', 7)->default('#9bb0d0');
+            $table->string('background_color', 7)->default('#050b1a');
+            $table->string('component_headers', 7)->default('#0b162b');
+            $table->string('sidebar_navigation', 7)->default('#030b1f');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
         DB::table('theme_settings')->insert([
-            'primary_content' => '#3b82f6',
-            'secondary_content' => '#94a3b8',
-            'background_color' => '#070b13',
-            'component_headers' => '#0f1622',
-            'sidebar_navigation' => '#05080f',
+            'primary_content' => '#3d8bff',
+            'secondary_content' => '#9bb0d0',
+            'background_color' => '#050b1a',
+            'component_headers' => '#0b162b',
+            'sidebar_navigation' => '#030b1f',
             'is_active' => true,
             'created_at' => now(),
             'updated_at' => now(),

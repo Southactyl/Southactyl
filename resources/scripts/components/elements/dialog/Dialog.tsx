@@ -72,8 +72,11 @@ export default ({
                         open={open}
                         onClose={onDialogClose}
                     >
-                        <div className={'fixed inset-0 bg-gray-900/50 z-40'} />
-                        <div className={'fixed inset-0 overflow-y-auto z-50'}>
+                        <div
+                            className={'fixed inset-0'}
+                            style={{ zIndex: 20000, background: 'rgba(2, 6, 23, 0.72)', backdropFilter: 'blur(2px)' }}
+                        />
+                        <div className={'fixed inset-0 overflow-y-auto'} style={{ zIndex: 20001 }}>
                             <div
                                 ref={container}
                                 className={styles.container}

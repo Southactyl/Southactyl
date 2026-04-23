@@ -5,6 +5,9 @@
 .panel {
     @apply relative bg-gray-600 rounded max-w-xl w-full mx-auto shadow-lg text-left;
     @apply ring-4 ring-gray-800 ring-opacity-80;
+    background: rgb(var(--theme-neutral-800-rgb) / 0.98);
+    border: 1px solid color-mix(in srgb, var(--theme-card-border) 85%, transparent);
+    box-shadow: 0 20px 45px rgba(2, 6, 23, 0.6);
 }
 
 .title {

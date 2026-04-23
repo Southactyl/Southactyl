@@ -47,7 +47,13 @@ export default () => {
             {!data && isValidating ? (
                 <Spinner centered />
             ) : (
-                <div className={'bg-gray-700'}>
+                <div
+                    style={{
+                        background: 'var(--theme-card-background)',
+                        border: '1px solid color-mix(in srgb, var(--theme-card-border) 82%, transparent)',
+                        borderRadius: '12px',
+                    }}
+                >
                     {data?.items.map((activity) => (
                         <ActivityLogEntry key={activity.id} activity={activity}>
                             {typeof activity.properties.useragent === 'string' && (

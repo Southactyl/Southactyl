@@ -5,27 +5,27 @@ import font from '@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-w
 
 export default createGlobalStyle`
     :root {
-        --theme-primary-content: #3b82f6;
-        --theme-secondary-content: #94a3b8;
-        --theme-background: #070b13;
-        --theme-component-headers: #0f1622;
-        --theme-sidebar: #05080f;
+        --theme-primary-content: #3d8bff;
+        --theme-secondary-content: #9bb0d0;
+        --theme-background: #050b1a;
+        --theme-component-headers: #0b162b;
+        --theme-sidebar: #030b1f;
         --theme-success: #22c55e;
         --theme-warning: #f59e0b;
         --theme-danger: #ef4444;
-        --theme-info: #0ea5e9;
-        --theme-text-primary: #f8fafc;
-        --theme-text-muted: #94a3b8;
-        --theme-link: #60a5fa;
-        --theme-link-hover: #93c5fd;
-        --theme-card-background: #162130;
-        --theme-card-border: #334155;
-        --theme-input-background: #1a2636;
-        --theme-input-border: #475569;
-        --theme-topbar-background: #05080f;
-        --theme-topbar-text: #cbd5e1;
-        --theme-footer-background: #05080f;
-        --theme-footer-text: #cbd5e1;
+        --theme-info: #38bdf8;
+        --theme-text-primary: #eaf2ff;
+        --theme-text-muted: #9bb0d0;
+        --theme-link: #6aa8ff;
+        --theme-link-hover: #9ec5ff;
+        --theme-card-background: #0d1a31;
+        --theme-card-border: #223a63;
+        --theme-input-background: #0a1730;
+        --theme-input-border: #2b4878;
+        --theme-topbar-background: #040d21;
+        --theme-topbar-text: #c9daf6;
+        --theme-footer-background: #040d21;
+        --theme-footer-text: #b8cae8;
         --theme-primary-50-rgb: 239 246 255;
         --theme-primary-100-rgb: 219 234 254;
         --theme-primary-200-rgb: 191 219 254;
@@ -118,34 +118,95 @@ export default createGlobalStyle`
         -moz-appearance: textfield !important;
     }
 
-    /* Scroll Bar Style */
+    /* Global themed scrollbar */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--theme-input-border) 85%, #000 15%)
+            color-mix(in srgb, var(--theme-background) 85%, #000 15%);
+    }
+
     ::-webkit-scrollbar {
-        background: none;
-        width: 16px;
-        height: 16px;
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: color-mix(in srgb, var(--theme-background) 85%, #000 15%);
     }
 
     ::-webkit-scrollbar-thumb {
-        border: solid 0 rgb(0 0 0 / 0%);
-        border-right-width: 4px;
-        border-left-width: 4px;
-        -webkit-border-radius: 9px 4px;
-        -webkit-box-shadow: inset 0 0 0 1px hsl(211, 10%, 53%), inset 0 0 0 4px hsl(209deg 18% 30%);
+        background: color-mix(in srgb, var(--theme-input-border) 85%, #000 15%);
+        border-radius: 999px;
     }
 
-    ::-webkit-scrollbar-track-piece {
-        margin: 4px 0;
-    }
-
-    ::-webkit-scrollbar-thumb:horizontal {
-        border-right-width: 0;
-        border-left-width: 0;
-        border-top-width: 4px;
-        border-bottom-width: 4px;
-        -webkit-border-radius: 4px 9px;
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--theme-primary-content);
     }
 
     ::-webkit-scrollbar-corner {
-        background: transparent;
+        background: color-mix(in srgb, var(--theme-background) 85%, #000 15%);
+    }
+
+    /* SweetAlert v1 theming */
+    .sweet-overlay {
+        background-color: color-mix(in srgb, var(--theme-background) 72%, #000000 28%) !important;
+    }
+
+    .sweet-alert {
+        background: var(--theme-card-background) !important;
+        border: 1px solid var(--theme-card-border) !important;
+        border-radius: 14px !important;
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.42) !important;
+    }
+
+    .sweet-alert h2 {
+        color: var(--theme-text-primary) !important;
+    }
+
+    .sweet-alert p {
+        color: var(--theme-text-muted) !important;
+    }
+
+    .sweet-alert input {
+        background: var(--theme-input-background) !important;
+        border-color: var(--theme-input-border) !important;
+        color: var(--theme-text-primary) !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+    }
+
+    .sweet-alert input:focus {
+        border-color: var(--theme-primary-content) !important;
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--theme-primary-content) 32%, transparent) !important;
+    }
+
+    .sweet-alert .sa-error-container {
+        background: color-mix(in srgb, var(--theme-danger) 12%, var(--theme-background) 88%) !important;
+    }
+
+    .sweet-alert button {
+        border-radius: 10px !important;
+        border: 1px solid transparent !important;
+        font-weight: 600 !important;
+    }
+
+    .sweet-alert button.confirm {
+        background: var(--theme-primary-content) !important;
+        border-color: color-mix(in srgb, var(--theme-primary-content) 82%, #000 18%) !important;
+        color: #fff !important;
+    }
+
+    .sweet-alert button.confirm:hover {
+        background: color-mix(in srgb, var(--theme-primary-content) 88%, #000 12%) !important;
+    }
+
+    .sweet-alert button.cancel {
+        background: color-mix(in srgb, var(--theme-component-headers) 78%, #ffffff 22%) !important;
+        border-color: color-mix(in srgb, var(--theme-card-border) 82%, transparent) !important;
+        color: var(--theme-text-primary) !important;
+    }
+
+    .sweet-alert button.cancel:hover {
+        background: color-mix(in srgb, var(--theme-component-headers) 64%, #ffffff 36%) !important;
     }
 `;

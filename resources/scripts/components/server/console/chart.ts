@@ -16,6 +16,12 @@ import { hexToRgba } from '@/lib/helpers';
 
 ChartJS.register(LineElement, PointElement, Filler, LinearScale);
 
+const cssVar = (name: string, fallback: string): string => {
+    if (typeof window === 'undefined') return fallback;
+    const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return value || fallback;
+};
+
 const options: ChartOptions<'line'> = {
     responsive: true,
     animation: false,
@@ -45,13 +51,13 @@ const options: ChartOptions<'line'> = {
             type: 'linear',
             grid: {
                 display: true,
-                color: theme('colors.gray.700'),
+                color: cssVar('--theme-card-border', 'rgba(173, 194, 228, 0.24)'),
                 drawBorder: false,
             },
             ticks: {
                 display: true,
                 count: 3,
-                color: theme('colors.gray.200'),
+                color: cssVar('--theme-text-muted', 'rgba(219, 233, 255, 0.88)'),
                 font: {
                     family: theme('fontFamily.sans'),
                     size: 11,
@@ -91,8 +97,11 @@ function getEmptyData(label: string, sets = 1, callback?: ChartDatasetCallback |
                         fill: true,
                         label,
                         data: Array(20).fill(-5),
-                        borderColor: theme('colors.cyan.400'),
-                        backgroundColor: hexToRgba(theme('colors.cyan.700'), 0.5),
+                        borderColor: cssVar('--theme-primary-content', theme('colors.primary.400')),
+                        backgroundColor: hexToRgba(
+                            cssVar('--theme-primary-content', theme('colors.primary.700')),
+                            0.28
+                        ),
                     },
                     index
                 )

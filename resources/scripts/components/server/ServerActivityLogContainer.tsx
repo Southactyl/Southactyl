@@ -48,9 +48,17 @@ export default () => {
             {!data && isValidating ? (
                 <Spinner centered />
             ) : !data?.items.length ? (
-                <p className={'text-sm text-center text-gray-400'}>No activity logs available for this server.</p>
+                <p className={'text-sm text-center'} style={{ color: 'var(--theme-text-muted)' }}>
+                    No activity logs available for this server.
+                </p>
             ) : (
-                <div className={'bg-gray-700'}>
+                <div
+                    className={'rounded-lg overflow-hidden'}
+                    style={{
+                        background: 'var(--theme-card-background)',
+                        border: '1px solid color-mix(in srgb, var(--theme-card-border) 82%, transparent)',
+                    }}
+                >
                     {data?.items.map((activity) => (
                         <ActivityLogEntry key={activity.id} activity={activity}>
                             <span />

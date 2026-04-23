@@ -15,14 +15,30 @@ interface StatBlockProps {
     className?: string;
 }
 
+const tintMap: Record<string, { background: string; bar: string }> = {
+    'bg-green-500': {
+        background: 'color-mix(in srgb, var(--theme-success) 12%, var(--theme-card-background) 88%)',
+        bar: 'var(--theme-success)',
+    },
+    'bg-yellow-500': {
+        background: 'color-mix(in srgb, var(--theme-warning) 12%, var(--theme-card-background) 88%)',
+        bar: 'var(--theme-warning)',
+    },
+    'bg-red-500': {
+        background: 'color-mix(in srgb, var(--theme-danger) 12%, var(--theme-card-background) 88%)',
+        bar: 'var(--theme-danger)',
+    },
+};
+
 export default ({ title, copyOnClick, icon, color, className, children }: StatBlockProps) => {
     const { fontSize, ref } = useFitText({ minFontSize: 8, maxFontSize: 500 });
+    const tint = color ? tintMap[color] : undefined;
 
     return (
         <CopyOnClick text={copyOnClick}>
-            <div className={classNames(styles.stat_block, 'bg-gray-600', className)}>
-                <div className={classNames(styles.status_bar, color || 'bg-gray-700')} />
-                <div className={classNames(styles.icon, color || 'bg-gray-700')}>
+            <div className={classNames(styles.stat_block, className)} style={tint ? { background: tint.background } : undefined}>
+                <div className={styles.status_bar} style={tint ? { background: tint.bar } : undefined} />
+                <div className={styles.icon}>
                     <Icon
                         icon={icon}
                         className={classNames({

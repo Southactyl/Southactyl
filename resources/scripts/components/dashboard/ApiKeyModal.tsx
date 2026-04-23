@@ -19,7 +19,13 @@ const ApiKeyModal = ({ apiKey }: Props) => {
                 The API key you have requested is shown below. Please store this in a safe location, it will not be
                 shown again.
             </p>
-            <pre css={tw`text-sm bg-neutral-900 rounded py-2 px-4 font-mono`}>
+            <pre
+                css={tw`text-sm rounded py-2 px-4 font-mono border`}
+                style={{
+                    background: 'rgb(var(--theme-neutral-900-rgb) / 0.92)',
+                    borderColor: 'color-mix(in srgb, var(--theme-card-border) 70%, transparent)',
+                }}
+            >
                 <CopyOnClick text={apiKey}>
                     <code css={tw`font-mono`}>{apiKey}</code>
                 </CopyOnClick>

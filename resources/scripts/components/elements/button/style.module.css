@@ -1,7 +1,26 @@
 .button {
     @apply px-4 py-2 inline-flex items-center justify-center;
     @apply rounded text-base font-semibold transition-all duration-100;
-    @apply focus:ring-[3px] focus:ring-offset-2 focus:ring-offset-gray-700 focus:ring-opacity-50;
+    @apply focus:ring-[3px] focus:ring-offset-2 focus:ring-opacity-50;
+    --btn-bg: var(--theme-primary-content);
+    --btn-bg-hover: color-mix(in srgb, var(--theme-primary-content) 88%, #000 12%);
+    --btn-border: color-mix(in srgb, var(--theme-primary-content) 84%, #000 16%);
+    --btn-border-hover: color-mix(in srgb, var(--theme-primary-content) 72%, #000 28%);
+    --btn-text: #f8fbff;
+    --btn-focus: color-mix(in srgb, var(--theme-primary-content) 44%, transparent);
+    --btn-focus-offset: color-mix(in srgb, var(--theme-background) 90%, #0f172a 10%);
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 1px solid var(--btn-border);
+    box-shadow: none;
+    --tw-ring-color: var(--btn-focus);
+    --tw-ring-offset-color: var(--btn-focus-offset);
+
+    &:hover:not(:disabled),
+    &:active:not(:disabled) {
+        background: var(--btn-bg-hover);
+        border-color: var(--btn-border-hover);
+    }
 
     /* Sizing Controls */
     &.small {
@@ -13,7 +32,11 @@
     }
 
     &.secondary {
-        @apply text-gray-50 bg-transparent;
+        @apply bg-transparent;
+        --btn-text: var(--theme-text-primary);
+        --btn-border: color-mix(in srgb, var(--theme-input-border) 86%, #fff 14%);
+        --btn-border-hover: color-mix(in srgb, var(--theme-input-border) 72%, #fff 28%);
+        --btn-bg-hover: color-mix(in srgb, var(--theme-component-headers) 64%, transparent);
 
         &:disabled {
             background: transparent !important;
@@ -34,40 +57,55 @@
 }
 
 .primary {
-    @apply bg-blue-600 text-blue-50;
-    @apply hover:bg-blue-500 active:bg-blue-500 focus:ring-blue-400 focus:ring-opacity-75;
+    --btn-bg: var(--theme-primary-content);
+    --btn-bg-hover: color-mix(in srgb, var(--theme-primary-content) 88%, #000 12%);
+    --btn-border: color-mix(in srgb, var(--theme-primary-content) 84%, #000 16%);
+    --btn-border-hover: color-mix(in srgb, var(--theme-primary-content) 72%, #000 28%);
+    --btn-text: #f8fbff;
+    --btn-focus: color-mix(in srgb, var(--theme-primary-content) 44%, transparent);
 
     &.secondary {
-        @apply hover:bg-blue-600 active:bg-blue-600;
+        --btn-bg-hover: var(--theme-primary-content);
+        --btn-border-hover: color-mix(in srgb, var(--theme-primary-content) 84%, #000 16%);
     }
 
     &:disabled {
-        @apply bg-blue-500/75 text-blue-200/75;
+        color: color-mix(in srgb, #f8fbff 75%, transparent);
     }
 }
 
 .text {
-    @apply bg-gray-500 text-gray-50;
-    @apply hover:bg-gray-400 active:bg-gray-400 focus:ring-gray-300 focus:ring-opacity-50;
+    --btn-bg: color-mix(in srgb, var(--theme-component-headers) 76%, #fff 24%);
+    --btn-bg-hover: color-mix(in srgb, var(--theme-component-headers) 88%, #fff 12%);
+    --btn-border: color-mix(in srgb, var(--theme-card-border) 82%, #fff 18%);
+    --btn-border-hover: color-mix(in srgb, var(--theme-card-border) 70%, #fff 30%);
+    --btn-text: var(--theme-text-primary);
+    --btn-focus: color-mix(in srgb, var(--theme-card-border) 44%, transparent);
 
     &.secondary {
-        @apply hover:bg-gray-500 active:bg-gray-500;
+        --btn-bg-hover: color-mix(in srgb, var(--theme-component-headers) 76%, #fff 24%);
+        --btn-border-hover: color-mix(in srgb, var(--theme-card-border) 82%, #fff 18%);
     }
 
     &:disabled {
-        @apply bg-gray-500/75 text-gray-200/75;
+        color: color-mix(in srgb, var(--theme-text-primary) 70%, transparent);
     }
 }
 
 .danger {
-    @apply bg-red-600 text-gray-50;
-    @apply hover:bg-red-500 active:bg-red-500 focus:ring-red-400 focus:ring-opacity-75;
+    --btn-bg: var(--theme-danger);
+    --btn-bg-hover: color-mix(in srgb, var(--theme-danger) 86%, #000 14%);
+    --btn-border: color-mix(in srgb, var(--theme-danger) 82%, #000 18%);
+    --btn-border-hover: color-mix(in srgb, var(--theme-danger) 68%, #000 32%);
+    --btn-text: #fff0f0;
+    --btn-focus: color-mix(in srgb, var(--theme-danger) 38%, transparent);
 
     &.secondary {
-        @apply hover:bg-red-600 active:bg-red-600;
+        --btn-bg-hover: var(--theme-danger);
+        --btn-border-hover: color-mix(in srgb, var(--theme-danger) 82%, #000 18%);
     }
 
     &:disabled {
-        @apply bg-red-600/75 text-red-50/75;
+        color: color-mix(in srgb, #fff0f0 70%, transparent);
     }
 }

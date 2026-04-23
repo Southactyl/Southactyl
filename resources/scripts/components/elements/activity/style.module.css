@@ -1,15 +1,60 @@
+.activityRow {
+    border-bottom: 1px solid color-mix(in srgb, var(--theme-card-border) 78%, transparent);
+    background: color-mix(in srgb, var(--theme-card-background) 90%, transparent);
+    transition: background-color 120ms ease;
+}
+
+.activityRow:hover {
+    background: color-mix(in srgb, var(--theme-primary-content) 8%, var(--theme-card-background) 92%);
+}
+
+.actorAvatar {
+    background: var(--theme-input-background);
+    border: 1px solid color-mix(in srgb, var(--theme-input-border) 86%, transparent);
+}
+
+.actorText {
+    color: var(--theme-text-primary);
+}
+
+.separator {
+    color: var(--theme-text-muted);
+}
+
+.activityLink {
+    color: var(--theme-link);
+    transition: color 120ms ease;
+}
+
+.activityLink:hover,
+.activityLink:active {
+    color: var(--theme-link-hover);
+}
+
+.activityMeta {
+    color: var(--theme-text-muted);
+}
+
 .icons {
-    @apply flex space-x-1 mx-2 transition-colors duration-100 text-gray-400;
+    @apply flex space-x-1 mx-2 transition-colors duration-100;
+    color: var(--theme-text-muted);
 
     & svg {
-        @apply px-1 py-px cursor-pointer hover:text-gray-50 h-5 w-auto;
+        @apply px-1 py-px cursor-pointer h-5 w-auto;
+        transition: color 120ms ease;
+    }
+
+    & svg:hover {
+        color: var(--theme-text-primary);
     }
 }
 
 .description {
     @apply mt-1 text-sm break-words line-clamp-2 pr-4;
+    color: var(--theme-text-muted);
 
     & strong {
-        @apply text-gray-50 font-semibold break-all;
+        @apply font-semibold break-all;
+        color: var(--theme-text-primary);
     }
 }

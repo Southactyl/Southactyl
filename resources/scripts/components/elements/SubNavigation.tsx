@@ -1,8 +1,11 @@
 import styled from 'styled-components/macro';
-import tw, { theme } from 'twin.macro';
+import tw from 'twin.macro';
 
 const SubNavigation = styled.div`
-    ${tw`w-full bg-neutral-700 shadow overflow-x-auto`};
+    ${tw`w-full shadow overflow-x-auto`};
+    background: color-mix(in srgb, var(--theme-card-background) 90%, transparent);
+    border: 1px solid color-mix(in srgb, var(--theme-card-border) 80%, transparent);
+    border-radius: 12px;
 
     & > div {
         ${tw`flex items-center text-sm mx-auto px-2`};
@@ -23,7 +26,7 @@ const SubNavigation = styled.div`
             &:active,
             &.active {
                 ${tw`text-neutral-100`};
-                box-shadow: inset 0 -2px ${theme`colors.cyan.600`.toString()};
+                box-shadow: inset 0 -2px var(--theme-primary-content);
             }
         }
     }

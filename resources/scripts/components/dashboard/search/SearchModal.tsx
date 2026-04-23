@@ -33,6 +33,21 @@ const ServerResult = styled(Link)`
     }
 `;
 
+const SearchInput = styled(Input)`
+    background: color-mix(in srgb, var(--theme-input-background) 90%, #0b162b 10%);
+    border-color: color-mix(in srgb, var(--theme-input-border) 86%, #ffffff 14%);
+    color: var(--theme-text-primary);
+    padding-right: 2.35rem;
+
+    &:hover:not(:disabled):not(:read-only) {
+        border-color: color-mix(in srgb, var(--theme-input-border) 70%, #ffffff 30%);
+    }
+
+    &:focus:not(:disabled):not(:read-only) {
+        border-color: var(--theme-primary-content);
+    }
+`;
+
 const SearchWatcher = () => {
     const { values, submitForm } = useFormikContext<Values>();
 
@@ -74,7 +89,7 @@ export default ({ ...props }: Props) => {
     }, [props.visible]);
 
     // Formik does not support an innerRef on custom components.
-    const InputWithRef = (props: any) => <Input autoFocus {...props} ref={ref} />;
+    const InputWithRef = (props: any) => <SearchInput autoFocus {...props} ref={ref} />;
 
     return (
         <Formik

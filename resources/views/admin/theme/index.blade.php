@@ -21,87 +21,163 @@
                 </div>
                 <form id="themeForm" action="{{ route('admin.theme.update') }}" method="POST">
                     <div class="box-body">
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6">
-                                <h4 class="no-margin-top">Core</h4>
-                                @foreach ([
-                                    'primary_content' => 'Primary',
-                                    'secondary_content' => 'Secondary',
-                                    'background_color' => 'Background',
-                                    'component_headers' => 'Component Headers',
-                                    'sidebar_navigation' => 'Sidebar',
-                                ] as $key => $label)
-                                    <div class="form-group">
-                                        <label for="{{ $key }}">{{ $label }}</label>
-                                        <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                        <div class="nav-tabs-custom nav-tabs-floating theme-editor-tabs-shell">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#theme-tab-core" aria-controls="theme-tab-core" role="tab" data-toggle="tab">Core</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#theme-tab-surfaces" aria-controls="theme-tab-surfaces" role="tab" data-toggle="tab">Surfaces</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#theme-tab-text" aria-controls="theme-tab-text" role="tab" data-toggle="tab">Text & Links</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#theme-tab-states" aria-controls="theme-tab-states" role="tab" data-toggle="tab">States</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#theme-tab-navigation" aria-controls="theme-tab-navigation" role="tab" data-toggle="tab">Navigation</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#theme-tab-footer" aria-controls="theme-tab-footer" role="tab" data-toggle="tab">Footer</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="theme-tab-core">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'primary_content' => 'Primary',
+                                            'secondary_content' => 'Secondary',
+                                            'background_color' => 'Background',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'component_headers' => 'Component Headers',
+                                            'sidebar_navigation' => 'Sidebar',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                <h4 class="no-margin-top">State</h4>
-                                @foreach ([
-                                    'success_color' => 'Success',
-                                    'warning_color' => 'Warning',
-                                    'danger_color' => 'Danger',
-                                    'info_color' => 'Info',
-                                ] as $key => $label)
-                                    <div class="form-group">
-                                        <label for="{{ $key }}">{{ $label }}</label>
-                                        <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                <div role="tabpanel" class="tab-pane" id="theme-tab-surfaces">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'card_background' => 'Card Background',
+                                            'card_border' => 'Card Border',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'input_background' => 'Input Background',
+                                            'input_border' => 'Input Border',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                <h4>Text & Links</h4>
-                                @foreach ([
-                                    'text_primary' => 'Text Primary',
-                                    'text_muted' => 'Text Muted',
-                                    'link_color' => 'Link',
-                                    'link_hover_color' => 'Link Hover',
-                                ] as $key => $label)
-                                    <div class="form-group">
-                                        <label for="{{ $key }}">{{ $label }}</label>
-                                        <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                <div role="tabpanel" class="tab-pane" id="theme-tab-text">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'text_primary' => 'Text Primary',
+                                            'text_muted' => 'Text Muted',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'link_color' => 'Link',
+                                            'link_hover_color' => 'Link Hover',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                <h4>Cards & Inputs</h4>
-                                @foreach ([
-                                    'card_background' => 'Card Background',
-                                    'card_border' => 'Card Border',
-                                    'input_background' => 'Input Background',
-                                    'input_border' => 'Input Border',
-                                ] as $key => $label)
-                                    <div class="form-group">
-                                        <label for="{{ $key }}">{{ $label }}</label>
-                                        <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                <div role="tabpanel" class="tab-pane" id="theme-tab-states">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'success_color' => 'Success',
+                                            'warning_color' => 'Warning',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'danger_color' => 'Danger',
+                                            'info_color' => 'Info',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                <h4>Topbar</h4>
-                                @foreach ([
-                                    'topbar_background' => 'Topbar Background',
-                                    'topbar_text' => 'Topbar Text',
-                                ] as $key => $label)
-                                    <div class="form-group">
-                                        <label for="{{ $key }}">{{ $label }}</label>
-                                        <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                <div role="tabpanel" class="tab-pane" id="theme-tab-navigation">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'topbar_background' => 'Topbar Background',
+                                            'topbar_text' => 'Topbar Text',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                </div>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                <h4>Footer</h4>
-                                @foreach ([
-                                    'footer_background' => 'Footer Background',
-                                    'footer_text' => 'Footer Text',
-                                ] as $key => $label)
-                                    <div class="form-group">
-                                        <label for="{{ $key }}">{{ $label }}</label>
-                                        <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                <div role="tabpanel" class="tab-pane" id="theme-tab-footer">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'footer_background' => 'Footer Background',
+                                            'footer_text' => 'Footer Text',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -160,6 +236,31 @@
     </div>
 
     <style>
+        .theme-editor-tabs-shell > .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .theme-editor-tabs-shell > .nav-tabs > li {
+            float: none;
+        }
+        .theme-editor-tabs-shell > .tab-content {
+            background: var(--theme-card-background);
+            border-top: 1px solid var(--theme-card-border);
+            padding: 12px;
+        }
+        .theme-editor-tabs-shell > .tab-content > .tab-pane {
+            background: transparent;
+        }
+        .theme-editor-tabs-shell .form-group > label {
+            color: var(--theme-text-muted);
+            font-weight: 600;
+        }
+        .theme-editor-tabs-shell .form-control[type="color"] {
+            background: var(--theme-input-background);
+            border-color: var(--theme-input-border);
+            height: 34px;
+            padding: 4px 6px;
+        }
         .theme-preview {
             border: 1px solid var(--theme-card-border);
             border-radius: 14px;
