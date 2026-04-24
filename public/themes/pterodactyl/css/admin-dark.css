@@ -1070,3 +1070,43 @@ body.admin-dark .content-header > .breadcrumb > li + li:before {
         font-size: 11px;
     }
 }
+
+/* Unified radius for admin navbar/sidebar to match component styling */
+body.admin-dark {
+    --admin-ui-radius: 12px;
+}
+
+body.admin-dark .main-header .navbar {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    overflow: hidden;
+}
+
+body.admin-dark .main-header .logo.admin-brand {
+    border-bottom-left-radius: 0;
+    overflow: hidden;
+}
+
+body.admin-dark .main-header .navbar .sidebar-toggle,
+body.admin-dark .main-header .navbar .nav > li > a {
+    border-radius: var(--admin-ui-radius);
+}
+
+body.admin-dark .admin-sidebar,
+body.admin-dark .skin-blue .main-sidebar,
+body.admin-dark .skin-blue .left-side {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    overflow: hidden;
+}
+
+body.admin-dark .admin-sidebar-menu > .admin-nav-item > .admin-nav-link {
+    border-radius: var(--admin-ui-radius) !important;
+}
+
+@media (min-width: 768px) {
+    body.admin-dark.sidebar-mini.sidebar-collapse .admin-sidebar-menu > .admin-nav-item:hover > .admin-nav-link > span,
+    body.admin-dark.sidebar-mini.sidebar-collapse .admin-sidebar-menu > .admin-nav-item.active:hover > .admin-nav-link > span {
+        border-radius: 0 var(--admin-ui-radius) var(--admin-ui-radius) 0;
+    }
+}

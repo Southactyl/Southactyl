@@ -28,6 +28,10 @@
 
 .terminal {
     @apply flex flex-col w-full;
+    border-radius: var(--theme-card-radius);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--theme-card-border) 76%, transparent);
+    background: #020202;
 
     & .overflows_container {
         @apply -ml-4 sm:ml-0;
@@ -39,9 +43,9 @@
     }
 
     & > .container {
-        @apply rounded-t-lg p-1 sm:p-2 min-h-[16rem] flex-1 font-mono text-sm;
-        background: #020202;
-        border: 1px solid color-mix(in srgb, var(--theme-card-border) 76%, transparent);
+        @apply p-1 sm:p-2 min-h-[16rem] flex-1 font-mono text-sm;
+        background: transparent;
+        border: 0;
 
         & #terminal {
             @apply h-full;
@@ -69,13 +73,13 @@
     }
 
     & .command_input {
-        @apply relative px-2 text-gray-100 pl-10 pr-4 py-2 w-full font-mono text-sm rounded-b-lg;
+        @apply relative px-2 text-gray-100 pl-10 pr-4 py-2 w-full font-mono text-sm;
         @apply focus:ring-0 outline-none focus-visible:outline-none;
         @apply border-0 border-b-2 transition-colors duration-100;
         background: var(--theme-input-background);
         border-bottom-color: color-mix(in srgb, var(--theme-input-border) 78%, transparent);
-        border-left: 1px solid color-mix(in srgb, var(--theme-card-border) 76%, transparent);
-        border-right: 1px solid color-mix(in srgb, var(--theme-card-border) 76%, transparent);
+        border-left: 0;
+        border-right: 0;
         border-bottom-width: 1px;
 
         &:active,

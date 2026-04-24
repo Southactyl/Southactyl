@@ -20,6 +20,7 @@ export default createGlobalStyle`
         --theme-link-hover: #9ec5ff;
         --theme-card-background: #0d1a31;
         --theme-card-border: #223a63;
+        --theme-card-radius: 12px;
         --theme-input-background: #0a1730;
         --theme-input-border: #2b4878;
         --theme-topbar-background: #040d21;

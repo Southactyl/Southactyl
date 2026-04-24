@@ -2,8 +2,8 @@
 :root {
     --sidebar-size: 240px;
     --sidebar-top-offset: 3.5rem;
-    --sidebar-radius: 16px;
-    --sidebar-item-radius: 14px;
+    --sidebar-radius: 12px;
+    --sidebar-item-radius: 12px;
     --sidebar-padding: 14px;
     --sidebar-gap: 8px;
     --sidebar-icon-size: 44px;
@@ -52,6 +52,8 @@
         left var(--sidebar-transition),
         transform var(--sidebar-transition),
         box-shadow var(--sidebar-transition);
+    border-radius: 0;
+    clip-path: none;
 }
 
 /* Content shift */
@@ -115,7 +117,7 @@ body.has-client-sidebar .content-container {
     flex: 0 0 auto;
     width: var(--sidebar-icon-size);
     height: var(--sidebar-icon-size);
-    border-radius: 12px;
+    border-radius: var(--sidebar-item-radius);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -237,6 +239,9 @@ div.content {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    overflow: hidden;
 }
 
 .topbar__inner {
@@ -260,7 +265,7 @@ div.content {
     align-items: center;
     height: 2.4rem;
     padding: 0 0.85rem;
-    border-radius: 0.75rem;
+    border-radius: var(--sidebar-item-radius);
     text-decoration: none;
     font-size: 1.5rem;
     font-family: var(--font-header, inherit);
@@ -290,7 +295,7 @@ div.content {
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 0.8rem;
+    border-radius: var(--sidebar-item-radius);
     border: 1px solid transparent;
     background: transparent;
     color: color-mix(in srgb, var(--theme-topbar-text) 88%, #ffffff 12%);
@@ -324,7 +329,7 @@ div.content {
     width: 2.4rem;
     height: 2.4rem;
     margin-left: 0.25rem;
-    border-radius: 0.75rem;
+    border-radius: var(--sidebar-item-radius);
     border: 1px solid color-mix(in srgb, var(--theme-input-border) 75%, transparent 25%);
     color: var(--theme-topbar-text);
     background: color-mix(in srgb, var(--theme-component-headers) 82%, transparent 18%);
@@ -417,7 +422,7 @@ div.content {
     .topbar__actions > .navigation-link {
         width: 2.2rem;
         height: 2.2rem;
-        border-radius: 0.65rem;
+        border-radius: var(--sidebar-item-radius);
     }
 
     body.has-client-sidebar .content-container {

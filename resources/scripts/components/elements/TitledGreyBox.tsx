@@ -13,15 +13,17 @@ interface Props {
 
 const TitledGreyBox = ({ icon, title, children, className }: Props) => (
     <div
-        css={tw`rounded shadow-md`}
+        css={tw`shadow-md`}
         className={className}
         style={{
             background: 'var(--theme-card-background)',
             border: '1px solid color-mix(in srgb, var(--theme-card-border) 82%, transparent)',
+            borderRadius: 'var(--theme-card-radius)',
+            overflow: 'hidden',
         }}
     >
         <div
-            css={tw`rounded-t p-3`}
+            css={tw`p-3`}
             style={{
                 background: 'color-mix(in srgb, var(--theme-component-headers) 82%, transparent)',
                 borderBottom: '1px solid color-mix(in srgb, var(--theme-card-border) 82%, transparent)',
