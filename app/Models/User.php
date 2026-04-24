@@ -245,6 +245,16 @@ class User extends Model implements
     }
 
     /**
+     * Returns all server groups owned by this user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\Pterodactyl\Models\ServerGroup, $this>
+     */
+    public function serverGroups(): HasMany
+    {
+        return $this->hasMany(ServerGroup::class, 'user_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\Pterodactyl\Models\ApiKey, $this>
      */
     public function apiKeys(): HasMany

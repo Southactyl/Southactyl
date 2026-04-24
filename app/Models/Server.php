@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Pterodactyl\Models\Traits\HasRealtimeIdentifier;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Pterodactyl\Exceptions\Http\Server\ServerStateConflictException;
@@ -371,6 +372,18 @@ class Server extends Model implements Identifiable
     public function subdomains(): HasMany
     {
         return $this->hasMany(ServerSubdomain::class);
+    }
+
+    /**
+     * Returns all server groups this server belongs to.
+     *
+     * @return BelongsToMany<ServerGroup, $this>
+     */
+    public function groups(): BelongsToMany
+    {
+        return $this->belongsToMany(ServerGroup::class, 'server_group_servers', 'server_id', 'server_group_id')
+            ->withPivot(['id', 'sort_order'])
+            ->withTimestamps();
     }
 
     /**

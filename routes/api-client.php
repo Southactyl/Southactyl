@@ -19,6 +19,18 @@ use Pterodactyl\Http\Middleware\Api\Client\Server\AuthenticateServerAccess;
 */
 Route::get('/', [Client\ClientController::class, 'index'])->name('api:client.index');
 Route::get('/permissions', [Client\ClientController::class, 'permissions']);
+Route::prefix('/server-groups')->group(function () {
+    Route::get('/', [Client\ServerGroupController::class, 'index']);
+    Route::post('/', [Client\ServerGroupController::class, 'store']);
+    Route::patch('/{group}', [Client\ServerGroupController::class, 'update']);
+    Route::delete('/{group}', [Client\ServerGroupController::class, 'delete']);
+
+    Route::post('/{group}/servers', [Client\ServerGroupController::class, 'attachServer']);
+    Route::delete('/{group}/servers/{serverRef}', [Client\ServerGroupController::class, 'detachServer']);
+
+    Route::patch('/{group}/sort', [Client\ServerGroupController::class, 'sort']);
+    Route::patch('/{group}/servers/sort', [Client\ServerGroupController::class, 'sortServers']);
+});
 
 Route::prefix('/account')->middleware(AccountSubject::class)->group(function () {
     Route::prefix('/')->withoutMiddleware(RequireTwoFactorAuthentication::class)->group(function () {
