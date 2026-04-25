@@ -9,6 +9,12 @@ body.admin-dark .content-wrapper {
     background: #131c28;
 }
 
+/* Use theme variable for admin sidebar background */
+body.admin-dark .skin-blue .main-sidebar,
+body.admin-dark .skin-blue .left-side {
+    background-color: var(--theme-sidebar, #121a25);
+}
+
 body.admin-dark .skin-blue .wrapper,
 body.admin-dark .skin-blue .main-sidebar,
 body.admin-dark .skin-blue .left-side,
@@ -321,7 +327,7 @@ body.admin-dark .admin-sidebar-menu > .admin-nav-item > .admin-nav-link > i.fa {
 }
 
 body.admin-dark .admin-sidebar-menu > .admin-nav-item:hover > .admin-nav-link {
-    background: #141a28 !important;
+    background: color-mix(in srgb, var(--theme-sidebar) 78%, var(--theme-primary-content) 22%) !important;
     color: #f8fafc !important;
 }
 
@@ -330,13 +336,13 @@ body.admin-dark .admin-sidebar-menu > .admin-nav-item:hover > .admin-nav-link > 
 }
 
 body.admin-dark .admin-sidebar-menu > .admin-nav-item.active > .admin-nav-link {
-    background: #141a28 !important;
-    color: #3b82f6 !important;
+    background: color-mix(in srgb, var(--theme-sidebar) 72%, var(--theme-primary-content) 28%) !important;
+    color: var(--theme-primary-content) !important;
     font-weight: 600;
 }
 
 body.admin-dark .admin-sidebar-menu > .admin-nav-item.active > .admin-nav-link > i.fa {
-    color: #3b82f6 !important;
+    color: var(--theme-primary-content) !important;
 }
 
 body.admin-dark .skin-blue .sidebar-menu > li.active > a {
@@ -410,13 +416,13 @@ body.admin-dark .modal-header .close:hover {
 /* Keep AdminLTE collapse behavior while preserving the redesigned hover panel */
 @media (min-width: 768px) {
     body.admin-dark.sidebar-mini.sidebar-collapse .admin-sidebar-menu > .admin-nav-item:hover > .admin-nav-link > span {
-        background: #141a28;
+        background: color-mix(in srgb, var(--theme-sidebar) 78%, var(--theme-primary-content) 22%);
         border-radius: 0 10px 10px 0;
         color: #f8fafc;
     }
 
     body.admin-dark.sidebar-mini.sidebar-collapse .admin-sidebar-menu > .admin-nav-item.active:hover > .admin-nav-link > span {
-        color: #3b82f6;
+        color: var(--theme-primary-content);
     }
 }
 

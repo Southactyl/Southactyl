@@ -298,7 +298,7 @@
             color: var(--theme-text-muted);
         }
         .theme-preview__sidebar-item.active {
-            background: rgba(59, 130, 246, 0.16);
+            background: color-mix(in srgb, var(--theme-sidebar) 72%, var(--theme-primary-content) 28%);
             color: var(--theme-primary-content);
             font-weight: 600;
         }
@@ -355,7 +355,7 @@
             border-color: var(--theme-card-border);
         }
         .theme-preview__table > tbody > tr:hover {
-            background: rgba(59, 130, 246, 0.12);
+            background: color-mix(in srgb, var(--theme-background) 82%, var(--theme-primary-content) 18%);
         }
     </style>
 
