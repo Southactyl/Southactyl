@@ -196,71 +196,38 @@
                 <div class="box-body">
                     <div class="theme-preview" id="themePreview">
                         <div class="theme-preview__topbar">
-                            <div class="theme-preview__brand">Client Panel</div>
-                            <a href="#" class="theme-preview__link">Account</a>
-                        </div>
-                        <div class="theme-preview__routebar">
-                            <span class="theme-preview__route-label">Route:</span>
-                            <code class="theme-preview__route-item active">/account</code>
-                            <code class="theme-preview__route-item">/account/api</code>
-                            <code class="theme-preview__route-item">/account/ssh</code>
+                            <span>Header</span>
+                            <a href="#" class="theme-preview__link">Sample Link</a>
                         </div>
                         <div class="theme-preview__layout">
                             <aside class="theme-preview__sidebar">
-                                <div class="theme-preview__sidebar-item">Dashboard</div>
+                                <div class="theme-preview__sidebar-item active">Dashboard</div>
+                                <div class="theme-preview__sidebar-item">Settings</div>
                                 <div class="theme-preview__sidebar-item">Servers</div>
-                                <div class="theme-preview__sidebar-item">Backups</div>
-                                <div class="theme-preview__sidebar-item active">Account</div>
                             </aside>
                             <main class="theme-preview__content">
-                                <div class="theme-preview__account-row">
-                                    <div>
-                                        <strong>Account Settings</strong>
-                                        <small>Combined API + SSH management</small>
+                                <div class="theme-preview__card">
+                                    <div class="theme-preview__card-header">Component Header</div>
+                                    <div class="theme-preview__card-body">
+                                        <input type="text" class="form-control theme-preview__input" placeholder="Form input" readonly />
+                                        <div class="theme-preview__alerts">
+                                            <span class="theme-preview__badge success">Success</span>
+                                            <span class="theme-preview__badge warning">Warning</span>
+                                            <span class="theme-preview__badge danger">Danger</span>
+                                            <span class="theme-preview__badge info">Info</span>
+                                        </div>
+                                        <table class="table theme-preview__table">
+                                            <thead>
+                                            <tr><th>Status</th><th>Row</th></tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr><td>Active</td><td>Default table state</td></tr>
+                                            <tr><td>Hover</td><td>Move cursor here</td></tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <button type="button" class="theme-preview__btn theme-preview__btn--primary">Save</button>
-                                </div>
-                                <div class="theme-preview__grid">
-                                    <section class="theme-preview__card">
-                                        <header class="theme-preview__card-header">API Keys</header>
-                                        <div class="theme-preview__card-body">
-                                            <input type="text" class="form-control theme-preview__input" value="Deploy Key" readonly />
-                                            <div class="theme-preview__alerts">
-                                                <span class="theme-preview__badge info">Read</span>
-                                                <span class="theme-preview__badge success">Write</span>
-                                            </div>
-                                            <table class="table theme-preview__table">
-                                                <thead>
-                                                    <tr><th>Name</th><th>Last Used</th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td>Deploy Bot</td><td>2h ago</td></tr>
-                                                    <tr><td>CI Token</td><td>Never</td></tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </section>
-                                    <section class="theme-preview__card">
-                                        <header class="theme-preview__card-header">SSH Keys</header>
-                                        <div class="theme-preview__card-body">
-                                            <input type="text" class="form-control theme-preview__input" value="ssh-ed25519 AAAA... user@host" readonly />
-                                            <table class="table theme-preview__table">
-                                                <thead>
-                                                    <tr><th>Fingerprint</th><th>Status</th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td>SHA256:Abc123...</td><td>Active</td></tr>
-                                                    <tr><td>SHA256:Def456...</td><td>Revoked</td></tr>
-                                                </tbody>
-                                            </table>
-                                            <a href="#" class="theme-preview__link theme-preview__inline-link">Add SSH key</a>
-                                        </div>
-                                    </section>
                                 </div>
                             </main>
-                        </div>
-                        <div class="theme-preview__footer">
-                            Footer preview - <a href="#" class="theme-preview__link">Status Page</a>
                         </div>
                     </div>
                 </div>
@@ -310,95 +277,35 @@
             justify-content: space-between;
             align-items: center;
         }
-        .theme-preview__brand {
-            font-weight: 700;
-            color: var(--theme-topbar-text);
-        }
         .theme-preview__link {
             color: var(--theme-link);
             text-decoration: none;
         }
-        .theme-preview__link:hover {
-            color: var(--theme-link-hover);
-        }
-        .theme-preview__routebar {
-            background: color-mix(in srgb, var(--theme-component-headers) 78%, transparent);
-            border-bottom: 1px solid var(--theme-card-border);
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .theme-preview__route-label {
-            color: var(--theme-text-muted);
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .theme-preview__route-item {
-            display: inline-block;
-            font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-            font-size: 12px;
-            padding: 3px 8px;
-            border-radius: 999px;
-            background: color-mix(in srgb, var(--theme-background) 82%, transparent);
-            border: 1px solid var(--theme-card-border);
-            color: var(--theme-text-muted);
-        }
-        .theme-preview__route-item.active {
-            color: var(--theme-primary-content);
-            border-color: color-mix(in srgb, var(--theme-primary-content) 45%, transparent);
-            background: color-mix(in srgb, var(--theme-primary-content) 14%, transparent);
-        }
         .theme-preview__layout {
             display: flex;
-            min-height: 560px;
+            min-height: 310px;
         }
         .theme-preview__sidebar {
-            width: 180px;
+            width: 170px;
             background: var(--theme-sidebar);
             border-right: 1px solid var(--theme-card-border);
-            padding: 12px;
+            padding: 10px;
         }
         .theme-preview__sidebar-item {
             padding: 8px 10px;
             border-radius: 8px;
             margin-bottom: 6px;
             color: var(--theme-text-muted);
-            font-weight: 600;
         }
         .theme-preview__sidebar-item.active {
             background: color-mix(in srgb, var(--theme-sidebar) 72%, var(--theme-primary-content) 28%);
             color: var(--theme-primary-content);
+            font-weight: 600;
         }
         .theme-preview__content {
             flex: 1;
             padding: 12px;
             background: var(--theme-background);
-        }
-        .theme-preview__account-row {
-            border: 1px solid var(--theme-card-border);
-            background: var(--theme-card-background);
-            border-radius: 10px;
-            padding: 10px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .theme-preview__account-row strong {
-            display: block;
-            color: var(--theme-text-primary);
-            line-height: 1.2;
-        }
-        .theme-preview__account-row small {
-            color: var(--theme-text-muted);
-            font-size: 12px;
-        }
-        .theme-preview__grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
         }
         .theme-preview__card {
             border: 1px solid var(--theme-card-border);
@@ -410,41 +317,19 @@
             background: var(--theme-component-headers);
             color: var(--theme-text-primary);
             padding: 10px 12px;
-            font-weight: 700;
-            border-bottom: 1px solid var(--theme-card-border);
+            font-weight: 600;
         }
         .theme-preview__card-body {
             padding: 12px;
             color: var(--theme-text-muted);
         }
-        .theme-preview__btn {
-            border: 1px solid transparent;
-            border-radius: 8px;
-            padding: 6px 10px;
-            font-weight: 700;
-            font-size: 12px;
-            margin-right: 8px;
-            color: #fff;
-            background: var(--theme-component-headers);
-            border-color: var(--theme-card-border);
-        }
-        .theme-preview__btn--primary {
-            background: var(--theme-primary-content);
-            border-color: color-mix(in srgb, var(--theme-primary-content) 82%, #000 18%);
-        }
         .theme-preview__input {
             background: var(--theme-input-background) !important;
             border-color: var(--theme-input-border) !important;
             color: var(--theme-text-primary) !important;
-            margin-bottom: 8px;
-        }
-        .theme-preview__inline-link {
-            display: inline-block;
-            margin-top: 4px;
-            font-weight: 600;
         }
         .theme-preview__alerts {
-            margin-bottom: 10px;
+            margin-top: 10px;
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
@@ -454,7 +339,7 @@
             padding: 4px 10px;
             font-size: 12px;
             color: #fff;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: .01em;
         }
         .theme-preview__badge.success { background: var(--theme-success); }
@@ -462,7 +347,7 @@
         .theme-preview__badge.danger { background: var(--theme-danger); }
         .theme-preview__badge.info { background: var(--theme-info); }
         .theme-preview__table {
-            margin-bottom: 0;
+            margin-top: 12px;
             color: var(--theme-text-muted);
         }
         .theme-preview__table > thead > tr > th,
@@ -471,27 +356,6 @@
         }
         .theme-preview__table > tbody > tr:hover {
             background: color-mix(in srgb, var(--theme-background) 82%, var(--theme-primary-content) 18%);
-        }
-        .theme-preview__footer {
-            border-top: 1px solid var(--theme-card-border);
-            background: var(--theme-footer-background);
-            color: var(--theme-footer-text);
-            padding: 10px 12px;
-            font-size: 12px;
-        }
-        @media (max-width: 991px) {
-            .theme-preview__layout {
-                flex-direction: column;
-                min-height: 0;
-            }
-            .theme-preview__sidebar {
-                width: auto;
-                border-right: 0;
-                border-bottom: 1px solid var(--theme-card-border);
-            }
-            .theme-preview__grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 
@@ -529,23 +393,16 @@
                 var inputs = Array.prototype.slice.call(document.querySelectorAll('.js-theme-input'));
                 if (!inputs.length) return;
 
-                var rootEl = document.documentElement;
                 var bodyEl = document.body;
                 var preview = document.getElementById('themePreview');
 
-                var applyVariablesTo = function (el) {
-                    if (!el) return;
+                var applyTheme = function () {
                     inputs.forEach(function (input) {
                         var variable = map[input.name];
                         if (!variable) return;
-                        el.style.setProperty(variable, input.value);
+                        bodyEl.style.setProperty(variable, input.value);
+                        if (preview) preview.style.setProperty(variable, input.value);
                     });
-                };
-
-                var applyTheme = function () {
-                    applyVariablesTo(rootEl);
-                    applyVariablesTo(bodyEl);
-                    applyVariablesTo(preview);
                 };
 
                 inputs.forEach(function (input) {
