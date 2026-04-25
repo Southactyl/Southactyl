@@ -163,6 +163,7 @@ class Node extends Model implements Identifiable
                 ],
             ],
             'allowed_mounts' => $this->mounts->pluck('source')->toArray(),
+            'app_name' => 'Southactyl',
             'remote' => route('index'),
         ];
     }
