@@ -4,6 +4,43 @@
     transition: background-color 120ms ease;
 }
 
+.activityEntry {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.activityMain {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.actorAvatarWrap {
+    display: none;
+    flex: 0 0 auto;
+}
+
+.activityBody {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.actorRow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.actorName {
+    max-width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .activityRow:hover {
     background: color-mix(in srgb, var(--theme-primary-content) 8%, var(--theme-card-background) 92%);
 }
@@ -24,6 +61,8 @@
 .activityLink {
     color: var(--theme-link);
     transition: color 120ms ease;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .activityLink:hover,
@@ -33,11 +72,16 @@
 
 .activityMeta {
     color: var(--theme-text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
 }
 
 .icons {
-    @apply flex space-x-1 mx-2 transition-colors duration-100;
+    @apply flex space-x-1 transition-colors duration-100;
     color: var(--theme-text-muted);
+    margin-left: 0.25rem;
+    flex-shrink: 0;
 
     & svg {
         @apply px-1 py-px cursor-pointer h-5 w-auto;
@@ -50,11 +94,26 @@
 }
 
 .description {
-    @apply mt-1 text-sm break-words line-clamp-2 pr-4;
+    @apply mt-1 text-sm break-words line-clamp-2;
     color: var(--theme-text-muted);
 
     & strong {
         @apply font-semibold break-all;
         color: var(--theme-text-primary);
+    }
+}
+
+@media (min-width: 640px) {
+    .activityEntry {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .actorAvatarWrap {
+        display: flex;
+    }
+
+    .activityBody {
+        padding-right: 0.25rem;
     }
 }

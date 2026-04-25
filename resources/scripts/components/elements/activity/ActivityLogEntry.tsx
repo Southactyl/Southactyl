@@ -15,6 +15,7 @@ import { getObjectKeys, isObject } from '@/lib/objects';
 interface Props {
     activity: ActivityLog;
     children?: React.ReactNode;
+    hashBasePath?: string;
 }
 
 function wrapProperties(value: unknown): any {
@@ -38,27 +39,30 @@ function wrapProperties(value: unknown): any {
     return value;
 }
 
-export default ({ activity, children }: Props) => {
+export default ({ activity, children, hashBasePath }: Props) => {
     const { pathTo } = useLocationHash();
     const actor = activity.relationships.actor;
     const properties = wrapProperties(activity.properties);
 
+    const eventHash = `#${pathTo({ event: activity.event })}`;
+    const eventLink = hashBasePath ? `${hashBasePath}${eventHash}` : eventHash;
+
     return (
-        <div className={classNames('grid grid-cols-10 py-4 last:rounded-b last:border-0 group', style.activityRow)}>
-            <div className={'hidden sm:flex sm:col-span-1 items-center justify-center select-none'}>
-                <div className={classNames('flex items-center w-10 h-10 rounded-full overflow-hidden', style.actorAvatar)}>
-                    <Avatar name={actor?.uuid || 'system'} />
+        <div className={classNames('py-4 last:rounded-b last:border-0 group', style.activityRow, style.activityEntry)}>
+            <div className={style.activityMain}>
+                <div className={classNames(style.actorAvatarWrap, 'select-none')}>
+                    <div className={classNames('flex items-center w-10 h-10 rounded-full overflow-hidden', style.actorAvatar)}>
+                        <Avatar name={actor?.uuid || 'system'} />
+                    </div>
                 </div>
-            </div>
-            <div className={'col-span-10 sm:col-span-9 flex'}>
-                <div className={'flex-1 px-4 sm:px-0'}>
-                    <div className={classNames('flex items-center', style.actorText)}>
+                <div className={style.activityBody}>
+                    <div className={classNames(style.actorText, style.actorRow)}>
                         <Tooltip placement={'top'} content={actor?.email || 'System User'}>
-                            <span>{actor?.username || 'System'}</span>
+                            <span className={style.actorName}>{actor?.username || 'System'}</span>
                         </Tooltip>
-                        <span className={style.separator}>&nbsp;&mdash;&nbsp;</span>
+                        <span className={style.separator}>&mdash;</span>
                         <Link
-                            to={`#${pathTo({ event: activity.event })}`}
+                            to={eventLink}
                             className={style.activityLink}
                         >
                             {activity.event}
@@ -80,7 +84,7 @@ export default ({ activity, children }: Props) => {
                     <p className={style.description}>
                         <Translate ns={'activity'} values={properties} i18nKey={activity.event.replace(':', '.')} />
                     </p>
-                    <div className={classNames('mt-1 flex items-center text-sm', style.activityMeta)}>
+                    <div className={classNames('mt-1 text-sm', style.activityMeta)}>
                         {activity.ip && (
                             <span>
                                 {activity.ip}

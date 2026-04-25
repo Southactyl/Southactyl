@@ -45,6 +45,7 @@
 }
 
 .content-dashboard {
+    width: auto;
     max-width: 1800px;
 }
 
