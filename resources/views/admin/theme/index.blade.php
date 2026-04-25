@@ -201,67 +201,66 @@
                         </div>
                         <div class="theme-preview__routebar">
                             <span class="theme-preview__route-label">Route:</span>
-                            <code class="theme-preview__route-item active">/</code>
-                            <code class="theme-preview__route-item">/server/alpha</code>
-                            <code class="theme-preview__route-item">/account</code>
+                            <code class="theme-preview__route-item active">/account</code>
+                            <code class="theme-preview__route-item">/account/api</code>
+                            <code class="theme-preview__route-item">/account/ssh</code>
                         </div>
                         <div class="theme-preview__layout">
                             <aside class="theme-preview__sidebar">
-                                <div class="theme-preview__sidebar-item active">Dashboard</div>
+                                <div class="theme-preview__sidebar-item">Dashboard</div>
                                 <div class="theme-preview__sidebar-item">Servers</div>
                                 <div class="theme-preview__sidebar-item">Backups</div>
-                                <div class="theme-preview__sidebar-item">Account</div>
+                                <div class="theme-preview__sidebar-item active">Account</div>
                             </aside>
                             <main class="theme-preview__content">
-                                <div class="theme-preview__server-row">
+                                <div class="theme-preview__account-row">
                                     <div>
-                                        <strong>Survival</strong>
-                                        <small>UUID: f3d2b64f</small>
+                                        <strong>Account Settings</strong>
+                                        <small>Combined API + SSH management</small>
                                     </div>
-                                    <span class="theme-preview__state theme-preview__state--success">Running</span>
+                                    <button type="button" class="theme-preview__btn theme-preview__btn--primary">Save</button>
                                 </div>
                                 <div class="theme-preview__grid">
                                     <section class="theme-preview__card">
-                                        <header class="theme-preview__card-header">Controls</header>
+                                        <header class="theme-preview__card-header">API Keys</header>
                                         <div class="theme-preview__card-body">
-                                            <button type="button" class="theme-preview__btn theme-preview__btn--primary">Start</button>
-                                            <button type="button" class="theme-preview__btn theme-preview__btn--neutral">Restart</button>
-                                            <button type="button" class="theme-preview__btn theme-preview__btn--danger">Stop</button>
-                                        </div>
-                                    </section>
-                                    <section class="theme-preview__card">
-                                        <header class="theme-preview__card-header">Form</header>
-                                        <div class="theme-preview__card-body">
-                                            <input type="text" class="form-control theme-preview__input" value="SERVER_JARFILE" readonly />
-                                            <input type="text" class="form-control theme-preview__input" value="server.jar" readonly />
-                                            <a href="#" class="theme-preview__link theme-preview__inline-link">Open docs</a>
-                                        </div>
-                                    </section>
-                                    <section class="theme-preview__card theme-preview__card--wide">
-                                        <header class="theme-preview__card-header">Activity</header>
-                                        <div class="theme-preview__card-body">
+                                            <input type="text" class="form-control theme-preview__input" value="Deploy Key" readonly />
                                             <div class="theme-preview__alerts">
-                                                <span class="theme-preview__badge success">Success</span>
-                                                <span class="theme-preview__badge warning">Warning</span>
-                                                <span class="theme-preview__badge danger">Danger</span>
-                                                <span class="theme-preview__badge info">Info</span>
+                                                <span class="theme-preview__badge info">Read</span>
+                                                <span class="theme-preview__badge success">Write</span>
                                             </div>
                                             <table class="table theme-preview__table">
                                                 <thead>
-                                                    <tr><th>Event</th><th>Status</th></tr>
+                                                    <tr><th>Name</th><th>Last Used</th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td>Backup finished</td><td>OK</td></tr>
-                                                    <tr><td>Server reinstall</td><td>Queued</td></tr>
+                                                    <tr><td>Deploy Bot</td><td>2h ago</td></tr>
+                                                    <tr><td>CI Token</td><td>Never</td></tr>
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    </section>
+                                    <section class="theme-preview__card">
+                                        <header class="theme-preview__card-header">SSH Keys</header>
+                                        <div class="theme-preview__card-body">
+                                            <input type="text" class="form-control theme-preview__input" value="ssh-ed25519 AAAA... user@host" readonly />
+                                            <table class="table theme-preview__table">
+                                                <thead>
+                                                    <tr><th>Fingerprint</th><th>Status</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td>SHA256:Abc123...</td><td>Active</td></tr>
+                                                    <tr><td>SHA256:Def456...</td><td>Revoked</td></tr>
+                                                </tbody>
+                                            </table>
+                                            <a href="#" class="theme-preview__link theme-preview__inline-link">Add SSH key</a>
                                         </div>
                                     </section>
                                 </div>
                             </main>
                         </div>
                         <div class="theme-preview__footer">
-                            Footer preview · <a href="#" class="theme-preview__link">Status Page</a>
+                            Footer preview - <a href="#" class="theme-preview__link">Status Page</a>
                         </div>
                     </div>
                 </div>
@@ -377,7 +376,7 @@
             padding: 12px;
             background: var(--theme-background);
         }
-        .theme-preview__server-row {
+        .theme-preview__account-row {
             border: 1px solid var(--theme-card-border);
             background: var(--theme-card-background);
             border-radius: 10px;
@@ -387,26 +386,14 @@
             align-items: center;
             margin-bottom: 12px;
         }
-        .theme-preview__server-row strong {
+        .theme-preview__account-row strong {
             display: block;
             color: var(--theme-text-primary);
             line-height: 1.2;
         }
-        .theme-preview__server-row small {
+        .theme-preview__account-row small {
             color: var(--theme-text-muted);
             font-size: 12px;
-        }
-        .theme-preview__state {
-            border-radius: 999px;
-            padding: 4px 10px;
-            font-size: 12px;
-            font-weight: 700;
-            border: 1px solid transparent;
-        }
-        .theme-preview__state--success {
-            color: #fff;
-            background: var(--theme-success);
-            border-color: color-mix(in srgb, var(--theme-success) 78%, #000 22%);
         }
         .theme-preview__grid {
             display: grid;
@@ -418,9 +405,6 @@
             border-radius: 12px;
             overflow: hidden;
             background: var(--theme-card-background);
-        }
-        .theme-preview__card--wide {
-            grid-column: span 2;
         }
         .theme-preview__card-header {
             background: var(--theme-component-headers);
@@ -447,15 +431,6 @@
         .theme-preview__btn--primary {
             background: var(--theme-primary-content);
             border-color: color-mix(in srgb, var(--theme-primary-content) 82%, #000 18%);
-        }
-        .theme-preview__btn--danger {
-            background: var(--theme-danger);
-            border-color: color-mix(in srgb, var(--theme-danger) 82%, #000 18%);
-        }
-        .theme-preview__btn--neutral {
-            color: var(--theme-text-primary);
-            background: color-mix(in srgb, var(--theme-component-headers) 78%, transparent);
-            border-color: var(--theme-card-border);
         }
         .theme-preview__input {
             background: var(--theme-input-background) !important;
@@ -516,9 +491,6 @@
             }
             .theme-preview__grid {
                 grid-template-columns: 1fr;
-            }
-            .theme-preview__card--wide {
-                grid-column: span 1;
             }
         }
     </style>
