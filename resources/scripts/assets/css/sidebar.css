@@ -277,15 +277,10 @@ body.has-client-sidebar .content-container {
 
 .sidebar a.active > .icon,
 .sidebar .active > .icon {
-    background:
-        linear-gradient(
-            180deg,
-            color-mix(in srgb, var(--theme-primary-content, #3d8bff) 88%, #ffffff 12%) 0%,
-            color-mix(in srgb, var(--theme-primary-content, #3d8bff) 72%, #1d4ed8 28%) 100%
-        );
+    border-radius: 0;
+    background: transparent;
     color: #fff;
-    box-shadow:
-        0 8px 18px color-mix(in srgb, var(--theme-primary-content, #3d8bff) 24%, transparent 76%);
+    box-shadow: none;
 }
 
 /* Keyboard focus */
