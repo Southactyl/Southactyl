@@ -1,3 +1,3 @@
 export default {
-    TERMINAL_PRELUDE: 'container@southactyl~ ',
+    TERMINAL_PRELUDE: '[Southactyl Container]:',
 };
