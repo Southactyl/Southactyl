@@ -360,12 +360,25 @@ export default () => {
                                     <img
                                         src={NotFoundSvg}
                                         alt={'No servers'}
-                                        css={tw`mx-auto mb-4 w-40 max-w-full select-none opacity-90`}
+                                        css={tw`mx-auto mb-5 max-w-full select-none opacity-90`}
+                                        style={{ width: 'clamp(8rem, 35vw, 36rem)' }}
                                     />
-                                    <p css={tw`text-2xl font-semibold`} style={{ color: 'var(--theme-text-primary)' }}>
+                                    <p
+                                        css={tw`font-semibold leading-tight`}
+                                        style={{
+                                            color: 'var(--theme-text-primary)',
+                                            fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+                                        }}
+                                    >
                                         No Servers
                                     </p>
-                                    <p css={tw`text-sm mt-2`} style={{ color: 'var(--theme-text-muted)' }}>
+                                    <p
+                                        css={tw`mt-3 mx-auto max-w-2xl px-2 leading-relaxed`}
+                                        style={{
+                                            color: 'var(--theme-text-muted)',
+                                            fontSize: 'clamp(1rem, 2.6vw, 1.375rem)',
+                                        }}
+                                    >
                                         No servers found for this view.
                                     </p>
                                 </div>

@@ -64,6 +64,7 @@
 /* Active/current link */
 .sidebar .active > .icon {
     background-color: var(--button-color-active);
+
     color: white;
 }
 
@@ -80,7 +81,6 @@
     text-align: center;
     background-size: 100px;
     line-height: 30px;
-    background-color: var(--button-color);
     color: var(--button-color-text);
     margin-right: 10px;
 }

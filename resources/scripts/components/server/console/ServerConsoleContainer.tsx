@@ -45,18 +45,20 @@ const ServerConsoleContainer = () => {
                     </Can>
                 </div>
             </div>
-            <div className={'grid grid-cols-4 gap-2 sm:gap-4 mb-4'}>
-                <div className={'flex col-span-4 lg:col-span-3'}>
+            <ServerDetailsBlock className={'mb-4'} />
+            <div className={'grid grid-cols-4 gap-2 sm:gap-4 items-stretch'}>
+                <div className={'col-span-4 lg:col-span-3 min-w-0 flex'}>
                     <Spinner.Suspense>
-                        <Console />
+                        <div className={'w-full h-full'}>
+                            <Console />
+                        </div>
                     </Spinner.Suspense>
                 </div>
-                <ServerDetailsBlock className={'col-span-4 lg:col-span-1 order-last lg:order-none'} />
-            </div>
-            <div className={'grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4'}>
-                <Spinner.Suspense>
-                    <StatGraphs />
-                </Spinner.Suspense>
+                <div className={'col-span-4 lg:col-span-1 grid grid-cols-1 gap-2 sm:gap-4'}>
+                    <Spinner.Suspense>
+                        <StatGraphs />
+                    </Spinner.Suspense>
+                </div>
             </div>
             <Features enabled={eggFeatures} />
         </ServerContentBlock>

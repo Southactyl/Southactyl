@@ -17,6 +17,21 @@ const cssVar = (name: string, fallback: string): string => {
     return value || fallback;
 };
 
+const mixHex = (hex: string, target: number, amount: number): string => {
+    if (!/^#?[a-fA-F0-9]{6}$/.test(hex)) {
+        return hex;
+    }
+
+    const cleanHex = hex.startsWith('#') ? hex.slice(1) : hex;
+    const [r, g, b] = cleanHex.match(/[a-fA-F0-9]{2}/g)!.map((v) => parseInt(v, 16));
+    const blend = (value: number) => Math.round(value + (target - value) * amount);
+
+    return `#${[blend(r), blend(g), blend(b)].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+};
+
+const lightenHex = (hex: string, amount: number): string => mixHex(hex, 255, amount);
+const darkenHex = (hex: string, amount: number): string => mixHex(hex, 0, amount);
+
 export default () => {
     const status = ServerContext.useStoreState((state) => state.status.value);
     const limits = ServerContext.useStoreState((state) => state.server.data!.limits);
@@ -38,8 +53,9 @@ export default () => {
             },
         },
         callback(opts, index) {
-            const inbound = cssVar('--theme-info', theme('colors.cyan.400'));
-            const outbound = cssVar('--theme-warning', theme('colors.yellow.400'));
+            const primary = cssVar('--theme-primary-content', theme('colors.primary.500'));
+            const inbound = lightenHex(primary, 0.18);
+            const outbound = darkenHex(primary, 0.18);
             return {
                 ...opts,
                 label: !index ? 'Network In' : 'Network Out',
@@ -87,10 +103,16 @@ export default () => {
                 legend={
                     <>
                         <Tooltip arrow content={'Inbound'}>
-                            <CloudDownloadIcon className={'mr-2 w-4 h-4'} style={{ color: 'var(--theme-warning)' }} />
+                            <CloudDownloadIcon
+                                className={'mr-2 w-4 h-4'}
+                                style={{ color: lightenHex(cssVar('--theme-primary-content', theme('colors.primary.500')), 0.18) }}
+                            />
                         </Tooltip>
                         <Tooltip arrow content={'Outbound'}>
-                            <CloudUploadIcon className={'w-4 h-4'} style={{ color: 'var(--theme-info)' }} />
+                            <CloudUploadIcon
+                                className={'w-4 h-4'}
+                                style={{ color: darkenHex(cssVar('--theme-primary-content', theme('colors.primary.500')), 0.18) }}
+                            />
                         </Tooltip>
                     </>
                 }

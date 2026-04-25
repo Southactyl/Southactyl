@@ -11,6 +11,8 @@ interface StatBlockProps {
     copyOnClick?: string;
     color?: string | undefined;
     icon: IconDefinition;
+    iconClassName?: string;
+    iconStyle?: React.CSSProperties;
     children: React.ReactNode;
     className?: string;
 }
@@ -30,7 +32,7 @@ const tintMap: Record<string, { background: string; bar: string }> = {
     },
 };
 
-export default ({ title, copyOnClick, icon, color, className, children }: StatBlockProps) => {
+export default ({ title, copyOnClick, icon, color, iconClassName, iconStyle, className, children }: StatBlockProps) => {
     const { fontSize, ref } = useFitText({ minFontSize: 8, maxFontSize: 500 });
     const tint = color ? tintMap[color] : undefined;
 
@@ -41,10 +43,11 @@ export default ({ title, copyOnClick, icon, color, className, children }: StatBl
                 <div className={styles.icon}>
                     <Icon
                         icon={icon}
+                        style={iconStyle}
                         className={classNames({
                             'text-gray-100': !color || color === 'bg-gray-700',
                             'text-gray-50': color && color !== 'bg-gray-700',
-                        })}
+                        }, iconClassName)}
                     />
                 </div>
                 <div className={'flex flex-col justify-center overflow-hidden w-full'}>
