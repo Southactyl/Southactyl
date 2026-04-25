@@ -1,6 +1,6 @@
 import TransferListener from '@/components/server/TransferListener';
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import TransitionRouter from '@/TransitionRouter';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
 import { ServerContext } from '@/state/server';
@@ -112,12 +112,11 @@ export default () => {
                     <CSSTransition timeout={150} classNames={'fade'} appear in>
                         <Sidebar>
                             <SpinnerOverlay visible={isLoggingOut} />
-                            <Link to={'/'} className={'sidebar-brand-link'}>
-                                <div className='icon'>
-                                    <FontAwesomeIcon icon={faHome} />
+                            <div className={'sidebar-brand-link cursor-default'} role={'banner'}>
+                                <div className={'sidebar-brand-copy text-center flex items-center justify-center gap-2'}>
+                                    <span className={'sidebar-brand-name'}>{appName}</span>
                                 </div>
-                                {appName}
-                            </Link>
+                            </div>
                             <NavLink to={'/'} exact>
                                 <div className='icon'>
                                     <FontAwesomeIcon icon={faHome} />
@@ -171,14 +170,6 @@ export default () => {
                                         Admin Panel
                                     </a>
                                 )}
-                                <NavLink to={'/account'}>
-                                    <div className='icon'>
-                                        <span className={'flex items-center w-5 h-5'}>
-                                            <Avatar.User />
-                                        </span>
-                                    </div>
-                                    Account
-                                </NavLink>
                                 <NavLink
                                     to={'#'}
                                     className={'sidebar-utility-link'}

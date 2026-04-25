@@ -82,7 +82,7 @@ body.has-client-sidebar .content-container {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     padding: 8px 12px;
     border-radius: var(--sidebar-item-radius);
     text-decoration: none;
@@ -95,8 +95,39 @@ body.has-client-sidebar .content-container {
 }
 
 .sidebar-brand-link {
+    margin-bottom: 0.35rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+.sidebar-brand-link:hover {
+    background: color-mix(in srgb, var(--theme-primary-content, #3d8bff) 6%, transparent 94%);
+}
+
+.sidebar-brand-copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.sidebar-brand-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--theme-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-brand-subtitle {
+    margin-top: 2px;
+    font-size: 0.68rem;
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--theme-secondary-content, #9bb0d0) 82%, #ffffff 18%);
 }
 
 .sidebar-utilities {

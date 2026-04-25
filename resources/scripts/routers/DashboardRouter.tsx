@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, Route, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import DashboardContainer from '@/components/dashboard/DashboardContainer';
 import { NotFound } from '@/components/elements/ScreenBlock';
 import TransitionRouter from '@/TransitionRouter';
@@ -36,12 +36,11 @@ export default () => {
         <>
             <Sidebar>
                 <SpinnerOverlay visible={isLoggingOut} />
-                <Link to={'/'} className={'sidebar-brand-link'}>
-                    <div className='icon'>
-                        <FontAwesomeIcon icon={faHome} />
+                <div className={'sidebar-brand-link cursor-default'} role={'banner'}>
+                    <div className={'sidebar-brand-copy text-center flex items-center justify-center gap-2'}>
+                        <span className={'sidebar-brand-name'}>{name}</span>
                     </div>
-                    {name}
-                </Link>
+                </div>
                 <NavLink to={'/'} exact>
                     <div className='icon'>
                         <FontAwesomeIcon icon={faHome} />
