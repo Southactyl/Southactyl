@@ -31,6 +31,8 @@ import {
 export default () => {
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const uuid = useStoreState((state) => state.user.data!.uuid);
+    const userEmail = useStoreState((state) => state.user.data!.email);
+    const companyName = useStoreState((state) => state.settings.data!.name);
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
     const [showOnlyAdmin, setShowOnlyAdmin] = usePersistedState(`${uuid}:show_all_servers`, false);
     const [collapsedGroups, setCollapsedGroups] = usePersistedState<Record<number, boolean>>(
@@ -294,6 +296,14 @@ export default () => {
 
     return (
         <PageContentBlock className={'content-dashboard'} title={'Dashboard'} showFlashKey={'dashboard'}>
+            <div css={tw`mb-4`}>
+                <h1 css={tw`text-2xl sm:text-3xl font-semibold`} style={{ color: 'var(--theme-text-primary)' }}>
+                    Welcome to {companyName}
+                </h1>
+                <p css={tw`text-sm mt-1`} style={{ color: 'var(--theme-text-muted)' }}>
+                    Logged in as {userEmail}
+                </p>
+            </div>
             <div css={tw`mb-4 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:min-h-[2.5rem]`}>
                 <div css={tw`flex items-center w-full sm:w-[22rem] max-w-full`}>
                     <p css={tw`uppercase text-xs text-neutral-400 mr-2 w-auto sm:w-[13.5rem] whitespace-nowrap overflow-hidden truncate`}>

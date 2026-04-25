@@ -1,7 +1,6 @@
 import TransferListener from '@/components/server/TransferListener';
 import React, { useEffect, useState } from 'react';
-import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
-import NavigationBar from '@/components/NavigationBar';
+import { Link, NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import TransitionRouter from '@/TransitionRouter';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
 import { ServerContext } from '@/state/server';
@@ -22,13 +21,21 @@ import routes from '@/routers/routes';
 import Sidebar from '@/components/Sidebar';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import getSubdomainDomains from '@/api/server/subdomains/getSubdomainDomains';
+import { ApplicationStore } from '@/state';
+import SearchContainer from '@/components/dashboard/search/SearchContainer';
+import Avatar from '@/components/Avatar';
+import http from '@/api/http';
+import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
+import { faCogs, faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 export default () => {
     const match = useRouteMatch<{ id: string }>();
     const location = useLocation();
 
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
+    const appName = useStoreState((state: ApplicationStore) => state.settings.data!.name);
     const [error, setError] = useState('');
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [subdomainsAvailable, setSubdomainsAvailable] = useState<boolean>(false);
 
     const id = ServerContext.useStoreState((state) => state.server.data?.id);
@@ -43,6 +50,14 @@ export default () => {
             return url ? match.url : match.path;
         }
         return `${(url ? match.url : match.path).replace(/\/*$/, '')}/${value.replace(/^\/+/, '')}`;
+    };
+
+    const onTriggerLogout = () => {
+        setIsLoggingOut(true);
+        http.post('/auth/logout').finally(() => {
+            // @ts-expect-error valid assignment
+            window.location = '/';
+        });
     };
 
     useEffect(
@@ -86,7 +101,6 @@ export default () => {
 
     return (
         <React.Fragment key={'server-router'}>
-            <NavigationBar />
             {!uuid || !id ? (
                 error ? (
                     <ServerError message={error} />
@@ -97,6 +111,19 @@ export default () => {
                 <>
                     <CSSTransition timeout={150} classNames={'fade'} appear in>
                         <Sidebar>
+                            <SpinnerOverlay visible={isLoggingOut} />
+                            <Link to={'/'} className={'sidebar-brand-link'}>
+                                <div className='icon'>
+                                    <FontAwesomeIcon icon={faHome} />
+                                </div>
+                                {appName}
+                            </Link>
+                            <NavLink to={'/'} exact>
+                                <div className='icon'>
+                                    <FontAwesomeIcon icon={faHome} />
+                                </div>
+                                Dashboard
+                            </NavLink>
                             {routes.server
                                 .filter((route) => {
                                     if (route.path === '/subdomains') {
@@ -134,6 +161,39 @@ export default () => {
                                     Admin
                                 </a>
                             )}
+                            <div className={'sidebar-utilities'}>
+                                <SearchContainer asSidebarLink className={'sidebar-utility-link'} />
+                                {rootAdmin && (
+                                    <a href={'/admin'} rel={'noreferrer'}>
+                                        <div className='icon'>
+                                            <FontAwesomeIcon icon={faCogs} />
+                                        </div>
+                                        Admin Panel
+                                    </a>
+                                )}
+                                <NavLink to={'/account'}>
+                                    <div className='icon'>
+                                        <span className={'flex items-center w-5 h-5'}>
+                                            <Avatar.User />
+                                        </span>
+                                    </div>
+                                    Account
+                                </NavLink>
+                                <NavLink
+                                    to={'#'}
+                                    className={'sidebar-utility-link'}
+                                    isActive={() => false}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        onTriggerLogout();
+                                    }}
+                                >
+                                    <div className='icon'>
+                                        <FontAwesomeIcon icon={faSignOutAlt} />
+                                    </div>
+                                    Sign Out
+                                </NavLink>
+                            </div>
                         </Sidebar>
                     </CSSTransition>
                     <InstallListener />

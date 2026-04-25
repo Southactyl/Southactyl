@@ -1,12 +1,12 @@
 /* Enhanced client sidebar styles (theme-variable driven) */
 :root {
     --sidebar-size: 240px;
-    --sidebar-top-offset: 3.5rem;
+    --sidebar-top-offset: 0rem;
     --sidebar-radius: 12px;
     --sidebar-item-radius: 12px;
     --sidebar-padding: 14px;
     --sidebar-gap: 8px;
-    --sidebar-icon-size: 44px;
+    --sidebar-icon-size: 32px;
     --sidebar-transition: 0.25s ease;
     --sidebar-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
 }
@@ -57,15 +57,24 @@
 }
 
 /* Content shift */
+body.has-client-sidebar .dashboard-container {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding-left: calc(var(--sidebar-size) + 24px);
+    padding-right: 24px;
+    transition: padding var(--sidebar-transition);
+}
+
 body.has-client-sidebar .content-container {
-    margin-left: calc(var(--sidebar-size) + 40px);
-    margin-right: 40px;
-    transition: margin var(--sidebar-transition);
+    margin-left: 0;
+    margin-right: 0;
+    max-width: none;
 }
 
 .content-dashboard {
-    width: auto;
-    max-width: 1800px;
+    width: 100%;
+    max-width: none;
 }
 
 /* Sidebar links */
@@ -73,9 +82,8 @@ body.has-client-sidebar .content-container {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
-
-    padding: 8px 10px;
+    gap: 10px;
+    padding: 8px 12px;
     border-radius: var(--sidebar-item-radius);
     text-decoration: none;
     color: color-mix(in srgb, var(--theme-secondary-content, #9bb0d0) 88%, #ffffff 12%);
@@ -84,6 +92,60 @@ body.has-client-sidebar .content-container {
         background-color var(--sidebar-transition),
         color var(--sidebar-transition),
         transform var(--sidebar-transition);
+}
+
+.sidebar-brand-link {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-utilities {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sidebar-gap);
+    padding-top: 0.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--theme-card-border) 60%, transparent);
+}
+
+.sidebar .sidebar-action-button,
+.sidebar .sidebar-utility-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: var(--sidebar-item-radius);
+    border: 0;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    color: color-mix(in srgb, var(--theme-secondary-content, #9bb0d0) 88%, #ffffff 12%);
+}
+
+.sidebar .sidebar-action-button {
+    cursor: pointer;
+}
+
+.sidebar .sidebar-action-button:hover,
+.sidebar .sidebar-utility-link:hover {
+    background: color-mix(in srgb, var(--theme-primary-content, #3d8bff) 8%, transparent 92%);
+    color: #fff;
+}
+
+.sidebar .sidebar-utility-link .navigation-link {
+    width: var(--sidebar-icon-size);
+    height: var(--sidebar-icon-size);
+    border-radius: var(--sidebar-item-radius);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--theme-background, #050b1a) 88%, #1f2937 12%) 0%,
+            color-mix(in srgb, var(--theme-background, #050b1a) 78%, #0f172a 22%) 100%
+        );
 }
 
 /* Better click/tap feedback */
@@ -356,9 +418,14 @@ div.content {
         height: calc(100vh - var(--sidebar-top-offset));
     }
 
+    body.has-client-sidebar .dashboard-container {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
     body.has-client-sidebar .content-container {
-        margin-left: 40px;
-        margin-right: 40px;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     div.content {
@@ -426,9 +493,14 @@ div.content {
         border-radius: var(--sidebar-item-radius);
     }
 
+    body.has-client-sidebar .dashboard-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
     body.has-client-sidebar .content-container {
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -437,6 +509,7 @@ div.content {
     .sidebar,
     .sidebar a,
     .icon,
+    body.has-client-sidebar .dashboard-container,
     body.has-client-sidebar .content-container,
     div.content,
     .sidebar-backdrop {

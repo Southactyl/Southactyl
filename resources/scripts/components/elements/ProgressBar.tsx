@@ -8,7 +8,7 @@ import tw from 'twin.macro';
 const BarTrack = styled.div`
     ${tw`w-full fixed top-0 left-0 overflow-hidden pointer-events-none`};
     height: 3px;
-    z-index: 9998;
+    z-index: 2147483646;
     background: color-mix(in srgb, var(--theme-component-headers) 72%, transparent);
 `;
 

@@ -4,8 +4,14 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import useEventListener from '@/plugins/useEventListener';
 import SearchModal from '@/components/dashboard/search/SearchModal';
 import Tooltip from '@/components/elements/tooltip/Tooltip';
+import { NavLink } from 'react-router-dom';
 
-export default () => {
+interface Props {
+    asSidebarLink?: boolean;
+    className?: string;
+}
+
+export default ({ asSidebarLink = false, className }: Props) => {
     const [visible, setVisible] = useState(false);
 
     useEventListener('keydown', (e: KeyboardEvent) => {
@@ -15,6 +21,28 @@ export default () => {
             }
         }
     });
+
+    if (asSidebarLink) {
+        return (
+            <>
+                {visible && <SearchModal appear visible={visible} onDismissed={() => setVisible(false)} />}
+                <NavLink
+                    to={'#'}
+                    className={className}
+                    isActive={() => false}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setVisible(true);
+                    }}
+                >
+                    <div className={'icon'}>
+                        <FontAwesomeIcon icon={faSearch} />
+                    </div>
+                    Search
+                </NavLink>
+            </>
+        );
+    }
 
     return (
         <>

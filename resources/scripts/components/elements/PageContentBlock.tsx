@@ -19,7 +19,7 @@ const PageContentBlock: React.FC<PageContentBlockProps> = ({ title, showFlashKey
 
     return (
         <CSSTransition timeout={150} classNames={'fade'} appear in>
-            <div css={tw`flex flex-col min-h-[calc(100vh-3.5rem)]`}>
+            <div css={tw`flex flex-col min-h-screen`}>
                 <ContentContainer css={tw`my-4 sm:my-10 flex-1`} className={className}>
                     {showFlashKey && <FlashMessageRender byKey={showFlashKey} css={tw`mb-4`} />}
                     {children}

@@ -1,6 +1,5 @@
 import React from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
-import NavigationBar from '@/components/NavigationBar';
+import { Link, NavLink, Route, Switch } from 'react-router-dom';
 import DashboardContainer from '@/components/dashboard/DashboardContainer';
 import { NotFound } from '@/components/elements/ScreenBlock';
 import TransitionRouter from '@/TransitionRouter';
@@ -10,27 +9,82 @@ import routes from '@/routers/routes';
 import Sidebar from '@/components/Sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCogs, faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { useStoreState } from 'easy-peasy';
+import { ApplicationStore } from '@/state';
+import SearchContainer from '@/components/dashboard/search/SearchContainer';
+import Avatar from '@/components/Avatar';
+import http from '@/api/http';
+import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
+import { useState } from 'react';
 
 export default () => {
     const location = useLocation();
+    const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
+    const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+    const onTriggerLogout = () => {
+        setIsLoggingOut(true);
+        http.post('/auth/logout').finally(() => {
+            // @ts-expect-error valid assignment
+            window.location = '/';
+        });
+    };
 
     return (
         <>
-            <NavigationBar />
-            {location.pathname.startsWith('/account') && (
-                <Sidebar>
-                    {routes.account
-                        .filter((route) => !!route.name)
-                        .map(({ path, name, exact = false, iconProp }) => (
-                            <NavLink key={path} to={`/account/${path}`.replace('//', '/')} exact={exact}>
-                                <div className='icon'>
-                                    <FontAwesomeIcon icon={iconProp as IconProp} />
-                                </div>
-                                {name}
-                            </NavLink>
-                        ))}
-                </Sidebar>
-            )}
+            <Sidebar>
+                <SpinnerOverlay visible={isLoggingOut} />
+                <Link to={'/'} className={'sidebar-brand-link'}>
+                    <div className='icon'>
+                        <FontAwesomeIcon icon={faHome} />
+                    </div>
+                    {name}
+                </Link>
+                <NavLink to={'/'} exact>
+                    <div className='icon'>
+                        <FontAwesomeIcon icon={faHome} />
+                    </div>
+                    Dashboard
+                </NavLink>
+                {routes.account
+                    .filter((route) => !!route.name)
+                    .map(({ path, name, exact = false, iconProp }) => (
+                        <NavLink key={path} to={`/account/${path}`.replace('//', '/')} exact={exact}>
+                            <div className='icon'>
+                                <FontAwesomeIcon icon={iconProp as IconProp} />
+                            </div>
+                            {name}
+                        </NavLink>
+                    ))}
+
+                <div className={'sidebar-utilities'}>
+                    <SearchContainer asSidebarLink className={'sidebar-utility-link'} />
+                    {rootAdmin && (
+                        <a href={'/admin'} rel={'noreferrer'}>
+                            <div className='icon'>
+                                <FontAwesomeIcon icon={faCogs} />
+                            </div>
+                            Admin
+                        </a>
+                    )}
+                    <NavLink
+                        to={'#'}
+                        className={'sidebar-utility-link'}
+                        isActive={() => false}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onTriggerLogout();
+                        }}
+                    >
+                        <div className='icon'>
+                            <FontAwesomeIcon icon={faSignOutAlt} />
+                        </div>
+                        Sign Out
+                    </NavLink>
+                </div>
+            </Sidebar>
 
             <TransitionRouter>
                 <React.Suspense fallback={<Spinner centered />}>
