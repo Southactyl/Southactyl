@@ -144,8 +144,8 @@ body.has-client-sidebar .content-container {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
+    gap: 8px;
+    padding: 8px 12px;
     border-radius: var(--sidebar-item-radius);
     border: 0;
     width: 100%;
@@ -245,7 +245,7 @@ body.has-client-sidebar .content-container {
 }
 
 .sidebar a:hover:not(.active) > .icon {
-    background: color-mix(in srgb, var(--theme-primary-content, #3d8bff) 34%, #1f2937 66%);
+    background: transparent;
     color: #fff;
     transform: translateY(-1px);
 }
