@@ -9,7 +9,6 @@ class DeleteSubdomainRequest extends ClientApiRequest
 {
     public function permission(): string
     {
-        return Permission::ACTION_ALLOCATION_DELETE;
+        return Permission::ACTION_USER_SUBDOMAINS;
     }
 }
-
