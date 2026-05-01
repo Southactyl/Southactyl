@@ -35,6 +35,7 @@ class ThemeController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
+        $mode = $request->input('theme_mode', 'simple');
         $data = $request->validate([
             'primary_content' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'secondary_content' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
@@ -47,9 +48,41 @@ class ThemeController extends Controller
             'info_color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'text_primary' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'text_muted' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'theme_mode' => ['nullable', 'string', 'in:simple,advanced'],
         ]);
 
-        $this->themes->saveActiveTheme($data);
+        if ($mode === 'advanced') {
+            $advancedData = $request->validate([
+                'link_color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'link_hover_color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'card_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'card_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'input_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'input_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'topbar_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'topbar_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'footer_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'footer_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_panel_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_panel_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_stat_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_stat_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_search_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_search_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_online_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'dashboard_offline_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'sidebar_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'sidebar_text_active' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'sidebar_section_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'sidebar_footer_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'sidebar_active_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'sidebar_icon_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+                'sidebar_hover_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            ]);
+            $data = array_merge($data, $advancedData);
+        }
+
+        $this->themes->saveActiveTheme($data, $mode === 'advanced');
         $this->alert->success('Theme settings saved successfully.')->flash();
 
         return redirect()->route('admin.theme');

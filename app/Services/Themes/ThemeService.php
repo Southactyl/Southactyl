@@ -20,19 +20,46 @@ class ThemeService
         'text_primary',
         'text_muted',
     ];
+    private const DERIVED_THEME_KEYS = [
+        'link_color',
+        'link_hover_color',
+        'card_background',
+        'card_border',
+        'input_background',
+        'input_border',
+        'topbar_background',
+        'topbar_text',
+        'footer_background',
+        'footer_text',
+        'dashboard_panel_background',
+        'dashboard_panel_border',
+        'dashboard_stat_background',
+        'dashboard_stat_border',
+        'dashboard_search_background',
+        'dashboard_search_border',
+        'dashboard_online_text',
+        'dashboard_offline_text',
+        'sidebar_text',
+        'sidebar_text_active',
+        'sidebar_section_text',
+        'sidebar_footer_text',
+        'sidebar_active_background',
+        'sidebar_icon_background',
+        'sidebar_hover_background',
+    ];
 
     public const DEFAULT_THEME = [
-        'primary_content' => '#3d8bff',
-        'secondary_content' => '#9bb0d0',
-        'background_color' => '#050b1a',
-        'component_headers' => '#0b162b',
-        'sidebar_navigation' => '#030b1f',
-        'success_color' => '#22c55e',
-        'warning_color' => '#f59e0b',
-        'danger_color' => '#ef4444',
-        'info_color' => '#38bdf8',
-        'text_primary' => '#eaf2ff',
-        'text_muted' => '#9bb0d0',
+        'primary_content' => '#6b5bff',
+        'secondary_content' => '#8ea1bf',
+        'background_color' => '#060d1a',
+        'component_headers' => '#0d1728',
+        'sidebar_navigation' => '#070f1f',
+        'success_color' => '#28cf8d',
+        'warning_color' => '#f3b44d',
+        'danger_color' => '#f06272',
+        'info_color' => '#3ec7ff',
+        'text_primary' => '#e9f0fb',
+        'text_muted' => '#8fa1bb',
         'link_color' => '#6aa8ff',
         'link_hover_color' => '#9ec5ff',
         'card_background' => '#0d1a31',
@@ -93,14 +120,17 @@ class ThemeService
     /**
      * Save active theme values.
      */
-    public function saveActiveTheme(array $data): array
+    public function saveActiveTheme(array $data, bool $advanced = false): array
     {
-        $base = [];
-        foreach (self::BASE_THEME_KEYS as $key) {
-            $base[$key] = $data[$key] ?? self::DEFAULT_THEME[$key];
+        if ($advanced) {
+            $theme = $this->repository->saveActive($this->normalizeFullTheme($data));
+        } else {
+            $base = [];
+            foreach (self::BASE_THEME_KEYS as $key) {
+                $base[$key] = $data[$key] ?? self::DEFAULT_THEME[$key];
+            }
+            $theme = $this->repository->saveActive($this->applyDerivedTheme($base));
         }
-
-        $theme = $this->repository->saveActive($this->applyDerivedTheme($base));
 
         return [
             'primary_content' => $theme->primary_content,
@@ -151,35 +181,48 @@ class ThemeService
         $textPrimary = $theme['text_primary'];
         $textMuted = $theme['text_muted'];
 
-        $theme['link_color'] = $this->lighten($primary, 0.18);
-        $theme['link_hover_color'] = $this->lighten($primary, 0.33);
+        $theme['link_color'] = $this->lighten($primary, 0.14);
+        $theme['link_hover_color'] = $this->lighten($primary, 0.24);
         $theme['card_background'] = $this->mix($background, $component, 0.56);
-        $theme['card_border'] = $this->mix($background, $primary, 0.48);
+        $theme['card_border'] = $this->mix($background, $primary, 0.28);
         $theme['input_background'] = $this->mix($background, $component, 0.36);
-        $theme['input_border'] = $this->mix($background, $primary, 0.52);
+        $theme['input_border'] = $this->mix($background, $primary, 0.24);
         $theme['topbar_background'] = $this->mix($background, $sidebar, 0.72);
         $theme['topbar_text'] = $textPrimary;
         $theme['footer_background'] = $this->mix($background, $sidebar, 0.8);
         $theme['footer_text'] = $textMuted;
 
         $theme['dashboard_panel_background'] = $this->mix($background, $sidebar, 0.45);
-        $theme['dashboard_panel_border'] = $this->mix($background, $primary, 0.52);
+        $theme['dashboard_panel_border'] = $this->mix($background, $primary, 0.22);
         $theme['dashboard_stat_background'] = $this->mix($background, $component, 0.52);
-        $theme['dashboard_stat_border'] = $this->mix($background, $primary, 0.42);
+        $theme['dashboard_stat_border'] = $this->mix($background, $primary, 0.2);
         $theme['dashboard_search_background'] = $this->mix($background, $component, 0.34);
-        $theme['dashboard_search_border'] = $this->mix($background, $primary, 0.46);
+        $theme['dashboard_search_border'] = $this->mix($background, $primary, 0.18);
         $theme['dashboard_online_text'] = $theme['success_color'];
         $theme['dashboard_offline_text'] = $theme['danger_color'];
 
         $theme['sidebar_text'] = $textMuted;
         $theme['sidebar_text_active'] = $textPrimary;
-        $theme['sidebar_section_text'] = $this->mix($background, $textMuted, 0.6);
-        $theme['sidebar_footer_text'] = $this->mix($background, $textMuted, 0.54);
-        $theme['sidebar_active_background'] = $this->mix($sidebar, $primary, 0.28);
+        $theme['sidebar_section_text'] = $this->mix($background, $textMuted, 0.52);
+        $theme['sidebar_footer_text'] = $this->mix($background, $textMuted, 0.42);
+        $theme['sidebar_active_background'] = $this->mix($sidebar, $primary, 0.2);
         $theme['sidebar_icon_background'] = $this->mix($background, $sidebar, 0.62);
-        $theme['sidebar_hover_background'] = $this->mix($sidebar, $primary, 0.2);
+        $theme['sidebar_hover_background'] = $this->mix($sidebar, $primary, 0.14);
 
         return $theme;
+    }
+
+    private function normalizeFullTheme(array $theme): array
+    {
+        $normalized = [];
+        foreach (self::BASE_THEME_KEYS as $key) {
+            $normalized[$key] = $theme[$key] ?? self::DEFAULT_THEME[$key];
+        }
+        foreach (self::DERIVED_THEME_KEYS as $key) {
+            $normalized[$key] = $theme[$key] ?? self::DEFAULT_THEME[$key];
+        }
+
+        return $normalized;
     }
 
     private function lighten(string $hex, float $amount): string

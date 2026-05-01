@@ -19,6 +19,13 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Theme Colors</h3>
                     <p class="text-muted" style="margin-top: 6px; margin-bottom: 0;">Set core colors only. Other colors auto-generate from blends.</p>
+                    <div class="form-group" style="margin-top: 10px; margin-bottom: 0; max-width: 220px;">
+                        <label for="theme_mode" style="margin-bottom: 4px;">Theme Mode</label>
+                        <select id="theme_mode" name="theme_mode" class="form-control">
+                            <option value="simple" {{ old('theme_mode', 'simple') === 'simple' ? 'selected' : '' }}>Simple</option>
+                            <option value="advanced" {{ old('theme_mode') === 'advanced' ? 'selected' : '' }}>Advanced</option>
+                        </select>
+                    </div>
                 </div>
                 <form id="themeForm" action="{{ route('admin.theme.update') }}" method="POST">
                     <div class="box-body">
@@ -486,14 +493,7 @@
             var initPreview = function () {
                 var inputs = Array.prototype.slice.call(document.querySelectorAll('.js-theme-input'));
                 if (!inputs.length) return;
-                inputs.forEach(function (input) {
-                    if (editableKeys.indexOf(input.name) !== -1) return;
-                    input.setAttribute('disabled', 'disabled');
-                    var group = input.closest('.form-group');
-                    if (group) {
-                        group.style.opacity = '0.45';
-                    }
-                });
+                var modeSelect = document.getElementById('theme_mode');
 
                 var bodyEl = document.body;
                 var preview = document.getElementById('themePreview');
@@ -512,6 +512,28 @@
                     input.addEventListener('change', applyTheme);
                 });
 
+                var applyMode = function () {
+                    var mode = modeSelect && modeSelect.value === 'advanced' ? 'advanced' : 'simple';
+                    inputs.forEach(function (input) {
+                        var isCore = editableKeys.indexOf(input.name) !== -1;
+                        var shouldDisable = mode === 'simple' && !isCore;
+                        if (shouldDisable) {
+                            input.setAttribute('disabled', 'disabled');
+                        } else {
+                            input.removeAttribute('disabled');
+                        }
+                        var group = input.closest('.form-group');
+                        if (group) {
+                            group.style.opacity = shouldDisable ? '0.45' : '1';
+                        }
+                    });
+                };
+
+                if (modeSelect) {
+                    modeSelect.addEventListener('change', applyMode);
+                }
+
+                applyMode();
                 applyTheme();
             };
 
