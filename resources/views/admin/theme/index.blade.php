@@ -17,10 +17,8 @@
         <div class="col-xs-12 col-lg-5">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Theme Colors</h3>
-                    <p class="text-muted" style="margin-top: 6px; margin-bottom: 0;">Set core colors only. Other colors auto-generate from blends.</p>
-                    <div class="form-group" style="margin-top: 10px; margin-bottom: 0; max-width: 220px;">
-                        <label for="theme_mode" style="margin-bottom: 4px;">Theme Mode</label>
+                    <div class="form-group" style="margin-top: 10px; margin-bottom: 0; width: 100%;">
+                        <label for="theme_mode" style="margin-bottom: 4px;">Select Editing Mode</label>
                         <select id="theme_mode" name="theme_mode" class="form-control">
                             <option value="simple" {{ old('theme_mode', 'simple') === 'simple' ? 'selected' : '' }}>Simple</option>
                             <option value="advanced" {{ old('theme_mode') === 'advanced' ? 'selected' : '' }}>Advanced</option>
@@ -29,7 +27,7 @@
                 </div>
                 <form id="themeForm" action="{{ route('admin.theme.update') }}" method="POST">
                     <div class="box-body">
-                        <div class="nav-tabs-custom nav-tabs-floating theme-editor-tabs-shell">
+                        <div class="nav-tabs-custom nav-tabs-floating theme-editor-tabs-shell" id="themeEditorShell">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active">
                                     <a href="#theme-tab-core" aria-controls="theme-tab-core" role="tab" data-toggle="tab">Core</a>
@@ -251,6 +249,39 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
+                        </div>
+                        <div id="themeSimpleCard" style="display:none;">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    @foreach ([
+                                        'primary_content' => 'Primary',
+                                        'secondary_content' => 'Secondary',
+                                        'background_color' => 'Background',
+                                        'component_headers' => 'Component Headers',
+                                        'sidebar_navigation' => 'Sidebar',
+                                        'text_primary' => 'Text Primary',
+                                    ] as $key => $label)
+                                        <div class="form-group">
+                                            <label for="simple_{{ $key }}">{{ $label }}</label>
+                                            <input id="simple_{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input js-simple-clone" data-target-id="{{ $key }}" value="{{ old($key, $theme[$key]) }}" />
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    @foreach ([
+                                        'text_muted' => 'Text Muted',
+                                        'success_color' => 'Success',
+                                        'warning_color' => 'Warning',
+                                        'danger_color' => 'Danger',
+                                        'info_color' => 'Info',
+                                    ] as $key => $label)
+                                        <div class="form-group">
+                                            <label for="simple_{{ $key }}">{{ $label }}</label>
+                                            <input id="simple_{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input js-simple-clone" data-target-id="{{ $key }}" value="{{ old($key, $theme[$key]) }}" />
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -494,6 +525,9 @@
                 var inputs = Array.prototype.slice.call(document.querySelectorAll('.js-theme-input'));
                 if (!inputs.length) return;
                 var modeSelect = document.getElementById('theme_mode');
+                var tabsShell = document.getElementById('themeEditorShell');
+                var simpleCard = document.getElementById('themeSimpleCard');
+                var cloneInputs = Array.prototype.slice.call(document.querySelectorAll('.js-simple-clone'));
 
                 var bodyEl = document.body;
                 var preview = document.getElementById('themePreview');
@@ -514,9 +548,11 @@
 
                 var applyMode = function () {
                     var mode = modeSelect && modeSelect.value === 'advanced' ? 'advanced' : 'simple';
+                    if (tabsShell) tabsShell.style.display = mode === 'advanced' ? '' : 'none';
+                    if (simpleCard) simpleCard.style.display = mode === 'simple' ? '' : 'none';
                     inputs.forEach(function (input) {
-                        var isCore = editableKeys.indexOf(input.name) !== -1;
-                        var shouldDisable = mode === 'simple' && !isCore;
+                        var isCloneInput = input.classList.contains('js-simple-clone');
+                        var shouldDisable = mode === 'simple' ? (!isCloneInput) : (isCloneInput);
                         if (shouldDisable) {
                             input.setAttribute('disabled', 'disabled');
                         } else {
@@ -528,6 +564,22 @@
                         }
                     });
                 };
+
+                cloneInputs.forEach(function (cloneInput) {
+                    var targetId = cloneInput.getAttribute('data-target-id');
+                    if (!targetId) return;
+                    var sourceInput = document.getElementById(targetId);
+                    if (!sourceInput) return;
+
+                    cloneInput.addEventListener('input', function () {
+                        sourceInput.value = cloneInput.value;
+                        sourceInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    });
+                    cloneInput.addEventListener('change', function () {
+                        sourceInput.value = cloneInput.value;
+                        sourceInput.dispatchEvent(new Event('change', { bubbles: true }));
+                    });
+                });
 
                 if (modeSelect) {
                     modeSelect.addEventListener('change', applyMode);

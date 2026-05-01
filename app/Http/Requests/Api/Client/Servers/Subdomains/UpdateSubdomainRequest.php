@@ -20,6 +20,6 @@ class UpdateSubdomainRequest extends ClientApiRequest
 
     public function permission(): string
     {
-        return Permission::ACTION_ALLOCATION_UPDATE;
+        return Permission::ACTION_USER_SUBDOMAINS;
     }
 }

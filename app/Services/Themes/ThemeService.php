@@ -50,41 +50,41 @@ class ThemeService
 
     public const DEFAULT_THEME = [
         'primary_content' => '#6b5bff',
-        'secondary_content' => '#8ea1bf',
-        'background_color' => '#060d1a',
-        'component_headers' => '#0d1728',
-        'sidebar_navigation' => '#070f1f',
+        'secondary_content' => '#7f92b0',
+        'background_color' => '#040515',
+        'component_headers' => '#0a1323',
+        'sidebar_navigation' => '#050d1b',
         'success_color' => '#28cf8d',
         'warning_color' => '#f3b44d',
         'danger_color' => '#f06272',
         'info_color' => '#3ec7ff',
-        'text_primary' => '#e9f0fb',
-        'text_muted' => '#8fa1bb',
-        'link_color' => '#6aa8ff',
-        'link_hover_color' => '#9ec5ff',
-        'card_background' => '#0d1a31',
-        'card_border' => '#223a63',
-        'input_background' => '#0a1730',
-        'input_border' => '#2b4878',
-        'topbar_background' => '#040d21',
-        'topbar_text' => '#c9daf6',
-        'footer_background' => '#040d21',
-        'footer_text' => '#b8cae8',
-        'dashboard_panel_background' => '#0a1427',
-        'dashboard_panel_border' => '#1f3357',
-        'dashboard_stat_background' => '#101c35',
-        'dashboard_stat_border' => '#243d65',
-        'dashboard_search_background' => '#0b1730',
-        'dashboard_search_border' => '#2f4c7e',
-        'dashboard_online_text' => '#27d17f',
-        'dashboard_offline_text' => '#fb5f71',
-        'sidebar_text' => '#9bb0d0',
-        'sidebar_text_active' => '#eaf2ff',
-        'sidebar_section_text' => '#6f86aa',
-        'sidebar_footer_text' => '#6f86aa',
-        'sidebar_active_background' => '#12284d',
-        'sidebar_icon_background' => '#0b1730',
-        'sidebar_hover_background' => '#0f2345',
+        'text_primary' => '#e8effb',
+        'text_muted' => '#8295b3',
+        'link_color' => '#8072ff',
+        'link_hover_color' => '#8f82ff',
+        'card_background' => '#070d1d',
+        'card_border' => '#211d57',
+        'input_background' => '#060a1a',
+        'input_border' => '#1d1a4d',
+        'topbar_background' => '#050b19',
+        'topbar_text' => '#e8effb',
+        'footer_background' => '#050b1a',
+        'footer_text' => '#8295b3',
+        'dashboard_panel_background' => '#040918',
+        'dashboard_panel_border' => '#1b1848',
+        'dashboard_stat_background' => '#070c1c',
+        'dashboard_stat_border' => '#191644',
+        'dashboard_search_background' => '#060a1a',
+        'dashboard_search_border' => '#17143f',
+        'dashboard_online_text' => '#28cf8d',
+        'dashboard_offline_text' => '#f06272',
+        'sidebar_text' => '#8295b3',
+        'sidebar_text_active' => '#e8effb',
+        'sidebar_section_text' => '#465067',
+        'sidebar_footer_text' => '#394157',
+        'sidebar_active_background' => '#191d49',
+        'sidebar_icon_background' => '#050a19',
+        'sidebar_hover_background' => '#13183b',
     ];
 
     /**
@@ -183,9 +183,9 @@ class ThemeService
 
         $theme['link_color'] = $this->lighten($primary, 0.14);
         $theme['link_hover_color'] = $this->lighten($primary, 0.24);
-        $theme['card_background'] = $this->mix($background, $component, 0.56);
+        $theme['card_background'] = $this->mix($this->mix($background, $component, 0.64), $textPrimary, 0.06);
         $theme['card_border'] = $this->mix($background, $primary, 0.28);
-        $theme['input_background'] = $this->mix($background, $component, 0.36);
+        $theme['input_background'] = $this->mix($this->mix($background, $component, 0.46), $textPrimary, 0.03);
         $theme['input_border'] = $this->mix($background, $primary, 0.24);
         $theme['topbar_background'] = $this->mix($background, $sidebar, 0.72);
         $theme['topbar_text'] = $textPrimary;
@@ -194,9 +194,9 @@ class ThemeService
 
         $theme['dashboard_panel_background'] = $this->mix($background, $sidebar, 0.45);
         $theme['dashboard_panel_border'] = $this->mix($background, $primary, 0.22);
-        $theme['dashboard_stat_background'] = $this->mix($background, $component, 0.52);
+        $theme['dashboard_stat_background'] = $this->mix($this->mix($background, $component, 0.62), $textPrimary, 0.05);
         $theme['dashboard_stat_border'] = $this->mix($background, $primary, 0.2);
-        $theme['dashboard_search_background'] = $this->mix($background, $component, 0.34);
+        $theme['dashboard_search_background'] = $this->mix($this->mix($background, $component, 0.42), $textPrimary, 0.03);
         $theme['dashboard_search_border'] = $this->mix($background, $primary, 0.18);
         $theme['dashboard_online_text'] = $theme['success_color'];
         $theme['dashboard_offline_text'] = $theme['danger_color'];

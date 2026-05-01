@@ -36,6 +36,7 @@ class Permission extends Model
     public const ACTION_USER_CREATE = 'user.create';
     public const ACTION_USER_UPDATE = 'user.update';
     public const ACTION_USER_DELETE = 'user.delete';
+    public const ACTION_USER_SUBDOMAINS = 'user.subdomains';
 
     public const ACTION_BACKUP_READ = 'backup.read';
     public const ACTION_BACKUP_CREATE = 'backup.create';
@@ -123,6 +124,7 @@ class Permission extends Model
                 'read' => 'Allows the user to view subusers and their permissions for the server.',
                 'update' => 'Allows a user to modify other subusers.',
                 'delete' => 'Allows a user to delete a subuser from the server.',
+                'subdomains' => 'Allows a user to view and manage subdomains for the server.',
             ],
         ],
 

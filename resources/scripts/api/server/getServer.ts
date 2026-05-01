@@ -60,6 +60,7 @@ export interface Server {
     isTransferring: boolean;
     variables: ServerEggVariable[];
     allocations: Allocation[];
+    primaryAllocationSubdomain?: string | null;
 }
 
 export const rawDataToServerObject = ({ attributes: data }: FractalResponseData): Server => ({
@@ -89,6 +90,7 @@ export const rawDataToServerObject = ({ attributes: data }: FractalResponseData)
     allocations: ((data.relationships?.allocations as FractalResponseList | undefined)?.data || []).map(
         rawDataToServerAllocation
     ),
+    primaryAllocationSubdomain: data.primary_allocation_subdomain ?? null,
 });
 
 export default (uuid: string): Promise<[Server, string[]]> => {

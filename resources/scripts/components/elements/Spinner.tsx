@@ -23,9 +23,10 @@ const spin = keyframes`
 // noinspection CssOverwrittenProperties
 const SpinnerComponent = styled.div<Props>`
     ${tw`w-8 h-8`};
+    position: relative;
     border-width: 3px;
     border-radius: 50%;
-    animation: ${spin} 1s cubic-bezier(0.55, 0.25, 0.25, 0.7) infinite;
+    animation: ${spin} 0.9s linear infinite;
 
     ${(props) =>
         props.size === 'small'
@@ -37,8 +38,22 @@ const SpinnerComponent = styled.div<Props>`
               `
             : null};
 
-    border-color: ${(props) => (!props.isBlue ? 'rgba(255, 255, 255, 0.2)' : 'hsla(212, 92%, 43%, 0.2)')};
-    border-top-color: ${(props) => (!props.isBlue ? 'rgb(255, 255, 255)' : 'hsl(212, 92%, 43%)')};
+    border-color: ${(props) =>
+        !props.isBlue
+            ? 'color-mix(in srgb, var(--theme-card-border, #223a63) 72%, transparent)'
+            : 'hsla(212, 92%, 43%, 0.2)'};
+    border-top-color: ${(props) => (!props.isBlue ? 'var(--theme-primary-content, #6b5bff)' : 'hsl(212, 92%, 43%)')};
+    border-right-color: ${(props) =>
+        !props.isBlue
+            ? 'color-mix(in srgb, var(--theme-primary-content, #6b5bff) 30%, transparent)'
+            : 'hsla(212, 92%, 43%, 0.35)'};
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--theme-card-border, #223a63) 35%, transparent),
+        0 0 14px
+            ${(props) =>
+                !props.isBlue
+                    ? 'color-mix(in srgb, var(--theme-primary-content, #6b5bff) 34%, transparent)'
+                    : 'hsla(212, 92%, 43%, 0.34)'};
 `;
 
 const Spinner: Spinner = ({ centered, ...props }) =>

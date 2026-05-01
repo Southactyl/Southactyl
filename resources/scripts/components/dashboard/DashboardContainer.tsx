@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronRight, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronRight, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Server } from '@/api/server/getServer';
 import getServers from '@/api/getServers';
 import ServerRow from '@/components/dashboard/ServerRow';
@@ -83,9 +83,7 @@ export default () => {
 
     const serverByInternalId = useMemo(() => {
         return new Map<number, Server>(
-            servers
-                .map((server) => [Number(server.internalId), server] as const)
-                .filter(([id]) => Number.isFinite(id))
+            servers.map((server) => [Number(server.internalId), server] as const).filter(([id]) => Number.isFinite(id))
         );
     }, [servers]);
 
@@ -289,6 +287,10 @@ export default () => {
 
     const isShowingOtherUsersServers = !!(showOnlyAdmin && rootAdmin);
     const hideGroupSettings = !!(showOnlyAdmin && rootAdmin);
+    const totalServers = servers.length;
+    const suspendedServers = servers.filter((server) => server.status === 'suspended').length;
+    const installingServers = servers.filter((server) => server.status === 'installing').length;
+    const activeServers = Math.max(totalServers - suspendedServers, 0);
 
     const toggleCollapsed = (groupId: number) => {
         setCollapsedGroups((current) => ({ ...(current || {}), [groupId]: !(current || {})[groupId] }));
@@ -296,46 +298,87 @@ export default () => {
 
     return (
         <PageContentBlock className={'content-dashboard'} title={'Dashboard'} showFlashKey={'dashboard'}>
-            <div css={tw`mb-4`}>
-                <h1 css={tw`text-2xl sm:text-3xl font-semibold`} style={{ color: 'var(--theme-text-primary)' }}>
-                    Welcome to {companyName}
-                </h1>
-                <p css={tw`text-sm mt-1`} style={{ color: 'var(--theme-text-muted)' }}>
-                    Logged in as {userEmail}
-                </p>
-            </div>
-            <div css={tw`mb-4 w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:min-h-[2.5rem]`}>
-                <div css={tw`flex items-center w-full sm:w-[22rem] max-w-full`}>
-                    <p css={tw`uppercase text-xs text-neutral-400 mr-2 w-auto sm:w-[13.5rem] whitespace-nowrap overflow-hidden truncate`}>
-                        {showOnlyAdmin ? "Showing others' servers" : 'Showing your servers'}
-                    </p>
-                    {rootAdmin && (
-                        <Switch
-                            name={'show_all_servers'}
-                            defaultChecked={showOnlyAdmin}
-                            onChange={() => setShowOnlyAdmin((s) => !s)}
-                        />
-                    )}
+            <div css={tw`mb-4 rounded-xl p-4 sm:p-5`}>
+                <div css={tw`flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3`}>
+                    <div>
+                        <h1 css={tw`text-2xl sm:text-3xl font-semibold`} style={{ color: 'var(--theme-text-primary)' }}>
+                            Welcome back, {companyName}
+                        </h1>
+                        <p css={tw`text-sm mt-1`} style={{ color: 'var(--theme-text-muted)' }}>
+                            Logged in as {userEmail}
+                        </p>
+                    </div>
+                    <div css={tw`flex w-full flex-col sm:w-auto sm:flex-row sm:items-center gap-2`}>
+                        <div css={tw`flex items-center w-full sm:w-[22rem] max-w-full`}>
+                            <p
+                                css={tw`uppercase text-xs mr-2 w-auto sm:w-[13.5rem] whitespace-nowrap overflow-hidden truncate`}
+                                style={{ color: 'var(--theme-text-muted)' }}
+                            >
+                                {showOnlyAdmin ? "Showing others' servers" : 'Showing your servers'}
+                            </p>
+                            {rootAdmin && (
+                                <Switch
+                                    name={'show_all_servers'}
+                                    defaultChecked={showOnlyAdmin}
+                                    onChange={() => setShowOnlyAdmin((s) => !s)}
+                                />
+                            )}
+                        </div>
+                        <Button css={tw`w-full sm:w-auto`} onClick={() => setShowCreateGroupModal(true)}>
+                            <FontAwesomeIcon icon={faPlus} css={tw`mr-2`} />
+                            New Group
+                        </Button>
+                        <Button
+                            isSecondary
+                            onClick={() => setShowGroupSettingsModal(true)}
+                            css={tw`w-full sm:w-auto`}
+                            style={{
+                                visibility: hideGroupSettings ? 'hidden' : 'visible',
+                                pointerEvents: hideGroupSettings ? 'none' : 'auto',
+                            }}
+                        >
+                            Group Settings
+                        </Button>
+                    </div>
                 </div>
-                <div css={tw`flex justify-start sm:justify-end w-full sm:w-[10rem] sm:flex-shrink-0`}>
-                    <Button
-                        isSecondary
-                        onClick={() => setShowGroupSettingsModal(true)}
-                        css={tw`w-full sm:w-full`}
-                        style={{
-                            visibility: hideGroupSettings ? 'hidden' : 'visible',
-                            pointerEvents: hideGroupSettings ? 'none' : 'auto',
-                        }}
-                    >
-                        Group Settings
-                    </Button>
+
+                <div css={tw`grid grid-cols-2 lg:grid-cols-6 gap-2 sm:gap-3 mt-4`}>
+                    {[
+                        { label: 'Servers', value: totalServers, color: 'var(--theme-text-primary)' },
+                        { label: 'Running', value: activeServers, color: 'var(--theme-dashboard-online-text)' },
+                        { label: 'Offline', value: suspendedServers, color: 'var(--theme-dashboard-offline-text)' },
+                        { label: 'Groups', value: groupedSections.sections.length, color: 'var(--theme-text-primary)' },
+                        { label: 'Installing', value: installingServers, color: 'var(--theme-warning)' },
+                        {
+                            label: 'Ungrouped',
+                            value: groupedSections.ungrouped.length,
+                            color: 'var(--theme-text-primary)',
+                        },
+                    ].map((stat) => (
+                        <div
+                            key={stat.label}
+                            css={tw`rounded-lg p-3`}
+                            style={{
+                                background:
+                                    'linear-gradient(145deg, color-mix(in srgb, var(--theme-dashboard-stat-background) 90%, #01050e 10%) 0%, var(--theme-dashboard-stat-background) 100%)',
+                                border: '1px solid color-mix(in srgb, var(--theme-dashboard-stat-border) 52%, transparent)',
+                            }}
+                        >
+                            <p css={tw`text-xs uppercase tracking-wide`} style={{ color: 'var(--theme-text-muted)' }}>
+                                {stat.label}
+                            </p>
+                            <p css={tw`text-2xl font-semibold mt-2`} style={{ color: stat.color }}>
+                                {stat.value}
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </div>
 
             {!serversResponse ? (
                 <Spinner centered size={'large'} />
             ) : (
-                <div css={tw`w-full grid grid-cols-1 xl:grid-cols-12 gap-4`}>
+                <div css={tw`w-full grid grid-cols-1 xl:grid-cols-12 gap-4 rounded-xl p-4`}>
                     <div css={tw`xl:col-span-8 2xl:col-span-9 min-w-0`}>
                         {isShowingOtherUsersServers ? (
                             servers.length > 0 ? (
@@ -353,7 +396,8 @@ export default () => {
                                 <div
                                     css={tw`w-full rounded-md p-8 text-center`}
                                     style={{
-                                        background: 'color-mix(in srgb, var(--theme-component-headers) 72%, transparent)',
+                                        background:
+                                            'color-mix(in srgb, var(--theme-component-headers) 72%, transparent)',
                                         border: '1px solid color-mix(in srgb, var(--theme-card-border) 76%, transparent)',
                                     }}
                                 >
@@ -391,7 +435,8 @@ export default () => {
                                         css={tw`mb-4 rounded-md overflow-hidden`}
                                         style={{
                                             border: '1px solid color-mix(in srgb, var(--theme-card-border) 76%, transparent)',
-                                            background: 'color-mix(in srgb, var(--theme-component-headers) 76%, transparent)',
+                                            background:
+                                                'color-mix(in srgb, var(--theme-component-headers) 76%, transparent)',
                                             boxShadow:
                                                 draggingServer && dragOverGroupId === group.id
                                                     ? '0 0 0 2px color-mix(in srgb, var(--theme-primary-content) 48%, transparent) inset'
@@ -413,15 +458,21 @@ export default () => {
                                                     type={'button'}
                                                     css={tw`w-6 h-6 rounded-sm inline-flex items-center justify-center text-neutral-300 hover:text-white`}
                                                     onClick={() => toggleCollapsed(group.id)}
-                                                    title={collapsedGroups?.[group.id] ? 'Expand group' : 'Collapse group'}
+                                                    title={
+                                                        collapsedGroups?.[group.id] ? 'Expand group' : 'Collapse group'
+                                                    }
                                                 >
                                                     <FontAwesomeIcon
-                                                        icon={collapsedGroups?.[group.id] ? faChevronRight : faChevronDown}
+                                                        icon={
+                                                            collapsedGroups?.[group.id] ? faChevronRight : faChevronDown
+                                                        }
                                                     />
                                                 </button>
                                                 <span
                                                     css={tw`inline-block w-2 h-2 rounded-full flex-shrink-0`}
-                                                    style={{ background: group.color || 'var(--theme-primary-content)' }}
+                                                    style={{
+                                                        background: group.color || 'var(--theme-primary-content)',
+                                                    }}
                                                 />
                                                 <p css={tw`font-semibold truncate`}>{group.name}</p>
                                                 <button
@@ -436,7 +487,8 @@ export default () => {
                                                     <span
                                                         css={tw`text-xs px-2 py-0.5 rounded-full`}
                                                         style={{
-                                                            background: 'color-mix(in srgb, var(--theme-warning) 20%, transparent)',
+                                                            background:
+                                                                'color-mix(in srgb, var(--theme-warning) 20%, transparent)',
                                                             border: '1px solid color-mix(in srgb, var(--theme-warning) 50%, transparent)',
                                                         }}
                                                     >
@@ -455,7 +507,8 @@ export default () => {
                                                                 lockedGroup.is_locked &&
                                                                 lockedGroup.servers.some(
                                                                     (membership) =>
-                                                                        membership.server_id === Number(server.internalId)
+                                                                        membership.server_id ===
+                                                                        Number(server.internalId)
                                                                 )
                                                         );
 
@@ -468,7 +521,9 @@ export default () => {
                                                                 }}
                                                                 onDragEnd={onDragEndServer}
                                                                 css={tw`select-none`}
-                                                                style={{ cursor: isDragLocked ? 'not-allowed' : 'move' }}
+                                                                style={{
+                                                                    cursor: isDragLocked ? 'not-allowed' : 'move',
+                                                                }}
                                                             >
                                                                 <ServerRow
                                                                     server={server}
@@ -479,7 +534,9 @@ export default () => {
                                                         );
                                                     })
                                                 ) : (
-                                                    <p css={tw`text-sm text-neutral-400 px-2 py-3`}>No servers in this group yet.</p>
+                                                    <p css={tw`text-sm text-neutral-400 px-2 py-3`}>
+                                                        No servers in this group yet.
+                                                    </p>
                                                 )}
                                             </div>
                                         )}
@@ -511,7 +568,8 @@ export default () => {
                                                 (lockedGroup) =>
                                                     lockedGroup.is_locked &&
                                                     lockedGroup.servers.some(
-                                                        (membership) => membership.server_id === Number(server.internalId)
+                                                        (membership) =>
+                                                            membership.server_id === Number(server.internalId)
                                                     )
                                             );
 
@@ -612,8 +670,10 @@ export default () => {
                                             isSecondary
                                             disabled={group.is_locked}
                                             style={{
-                                                background: 'color-mix(in srgb, var(--theme-component-headers) 72%, transparent)',
-                                                borderColor: 'color-mix(in srgb, var(--theme-card-border) 78%, transparent)',
+                                                background:
+                                                    'color-mix(in srgb, var(--theme-component-headers) 72%, transparent)',
+                                                borderColor:
+                                                    'color-mix(in srgb, var(--theme-card-border) 78%, transparent)',
                                                 color: 'var(--theme-text-primary)',
                                             }}
                                             onClick={() => {
@@ -628,8 +688,10 @@ export default () => {
                                             isSecondary
                                             disabled={group.is_locked}
                                             style={{
-                                                background: 'color-mix(in srgb, var(--theme-component-headers) 72%, transparent)',
-                                                borderColor: 'color-mix(in srgb, var(--theme-card-border) 78%, transparent)',
+                                                background:
+                                                    'color-mix(in srgb, var(--theme-component-headers) 72%, transparent)',
+                                                borderColor:
+                                                    'color-mix(in srgb, var(--theme-card-border) 78%, transparent)',
                                                 color: 'var(--theme-text-primary)',
                                             }}
                                             onClick={() => {
@@ -693,7 +755,9 @@ export default () => {
             >
                 <h2 css={tw`text-lg font-semibold mb-3`}>Manage Servers in {activeAddGroup?.name}</h2>
                 {activeAddGroup?.is_locked && (
-                    <p css={tw`text-sm text-yellow-400 mb-3`}>This group is locked. Unlock it from group settings first.</p>
+                    <p css={tw`text-sm text-yellow-400 mb-3`}>
+                        This group is locked. Unlock it from group settings first.
+                    </p>
                 )}
                 <Input
                     placeholder={'Search servers...'}

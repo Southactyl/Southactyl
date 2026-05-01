@@ -22,6 +22,6 @@ class StoreSubdomainRequest extends ClientApiRequest
 
     public function permission(): string
     {
-        return Permission::ACTION_ALLOCATION_CREATE;
+        return Permission::ACTION_USER_SUBDOMAINS;
     }
 }

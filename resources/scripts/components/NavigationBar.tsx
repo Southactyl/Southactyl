@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCogs, faLayerGroup, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useStoreState } from 'easy-peasy';
@@ -23,17 +23,6 @@ export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
-    const location = useLocation();
-    const [showSidebar, setShowSidebar] = useState(false);
-
-    useEffect(() => {
-        if (location.pathname.startsWith('/server') || location.pathname.startsWith('/account')) {
-            setShowSidebar(true);
-            return;
-        }
-        setShowSidebar(false);
-    }, [location.pathname]);
-
     const onTriggerLogout = () => {
         setIsLoggingOut(true);
         http.post('/auth/logout').finally(() => {
@@ -46,13 +35,11 @@ export default () => {
         <div className={'topbar'}>
             <SpinnerOverlay visible={isLoggingOut} />
             <div className={'topbar__inner'}>
-                {showSidebar && (
-                    <FontAwesomeIcon
-                        icon={faBars}
-                        className={'navbar-button topbar__menuButton'}
-                        onClick={onTriggerNavButton}
-                    ></FontAwesomeIcon>
-                )}
+                <FontAwesomeIcon
+                    icon={faBars}
+                    className={'navbar-button topbar__menuButton'}
+                    onClick={onTriggerNavButton}
+                ></FontAwesomeIcon>
 
                 <div id={'logo'} className={'topbar__logo'}>
                     <Link to={'/'} className={'topbar__brand'}>

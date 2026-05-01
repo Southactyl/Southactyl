@@ -16,6 +16,7 @@ import SearchContainer from '@/components/dashboard/search/SearchContainer';
 import http from '@/api/http';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import { useState } from 'react';
+import NavigationBar from '@/components/NavigationBar';
 
 export default () => {
     const location = useLocation();
@@ -85,8 +86,8 @@ export default () => {
                         <div className='icon'>
                             <FontAwesomeIcon icon={faSignOutAlt} />
                         </div>
-                            Sign Out
-                        </NavLink>
+                        Sign Out
+                    </NavLink>
                 </div>
                 <div className={'sidebar-footer'}>
                     <a href={'https://pterodactyl.io'} rel={'noreferrer'} target={'_blank'}>
@@ -95,6 +96,7 @@ export default () => {
                     <span>v1.0.0</span>
                 </div>
             </Sidebar>
+            <NavigationBar />
 
             <TransitionRouter>
                 <React.Suspense fallback={<Spinner centered />}>

@@ -67,6 +67,10 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
     );
 
     const allocation = ServerContext.useStoreState((state) => {
+        if (state.server.data!.primaryAllocationSubdomain) {
+            return state.server.data!.primaryAllocationSubdomain;
+        }
+
         const match = state.server.data!.allocations.find((allocation) => allocation.isDefault);
 
         return !match ? 'n/a' : `${match.alias || ip(match.ip)}:${match.port}`;

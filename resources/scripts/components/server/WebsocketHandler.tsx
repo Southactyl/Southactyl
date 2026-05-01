@@ -6,12 +6,15 @@ import ContentContainer from '@/components/elements/ContentContainer';
 import { CSSTransition } from 'react-transition-group';
 import Spinner from '@/components/elements/Spinner';
 import tw from 'twin.macro';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle, faPlug } from '@fortawesome/free-solid-svg-icons';
 
 const reconnectErrors = ['jwt: exp claim is invalid', 'jwt: created too far in past (denylist)'];
 
 export default () => {
     let updatingToken = false;
     const [error, setError] = useState<'connecting' | string>('');
+    const isConnecting = error === 'connecting';
     const { connected, instance } = ServerContext.useStoreState((state) => state.socket);
     const uuid = ServerContext.useStoreState((state) => state.server.data?.uuid);
     const setServerStatus = ServerContext.useStoreActions((actions) => actions.status.setServerStatus);
@@ -108,19 +111,40 @@ export default () => {
     }, [uuid]);
 
     return error ? (
-        <CSSTransition timeout={150} in appear classNames={'fade'}>
-            <div css={tw`bg-red-500 py-2`}>
-                <ContentContainer css={tw`flex items-center justify-center`}>
-                    {error === 'connecting' ? (
-                        <>
-                            <Spinner size={'small'} />
-                            <p css={tw`ml-2 text-sm text-red-100`}>
-                                We&apos;re having some trouble connecting to your server, please wait...
-                            </p>
-                        </>
-                    ) : (
-                        <p css={tw`ml-2 text-sm text-white`}>{error}</p>
-                    )}
+        <CSSTransition timeout={150} in appear classNames={'fade'} unmountOnExit>
+            <div>
+                <ContentContainer css={tw`flex items-center justify-center py-6`}>
+                    <div
+                        css={tw`w-full max-w-4xl rounded-md px-4 py-4 flex items-center gap-3`}
+                        style={{
+                            background: isConnecting
+                                ? 'linear-gradient(135deg, color-mix(in srgb, var(--theme-card-background) 96%, var(--theme-warning) 4%) 0%, color-mix(in srgb, var(--theme-card-background) 98%, #000 2%) 100%)'
+                                : 'linear-gradient(135deg, color-mix(in srgb, var(--theme-card-background) 95%, var(--theme-danger) 5%) 0%, color-mix(in srgb, var(--theme-card-background) 98%, #000 2%) 100%)',
+                            border: isConnecting
+                                ? '1px solid color-mix(in srgb, var(--theme-warning) 38%, var(--theme-card-border) 62%)'
+                                : '1px solid color-mix(in srgb, var(--theme-danger) 42%, var(--theme-card-border) 58%)',
+                        }}
+                    >
+                        {isConnecting ? (
+                            <>
+                                <Spinner size={'small'} />
+                                <FontAwesomeIcon icon={faPlug} style={{ color: 'var(--theme-warning)' }} />
+                                <p css={tw`text-sm`} style={{ color: 'var(--theme-text-primary)' }}>
+                                    We&apos;re having some trouble connecting to your server, please wait...
+                                </p>
+                            </>
+                        ) : (
+                            <>
+                                <FontAwesomeIcon
+                                    icon={faExclamationTriangle}
+                                    style={{ color: 'var(--theme-danger)' }}
+                                />
+                                <p css={tw`text-sm`} style={{ color: 'var(--theme-text-primary)' }}>
+                                    {error}
+                                </p>
+                            </>
+                        )}
+                    </div>
                 </ContentContainer>
             </div>
         </CSSTransition>

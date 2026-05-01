@@ -77,7 +77,13 @@ export default createGlobalStyle`
 
     body {
         ${tw`font-sans text-neutral-200`};
-        background: var(--theme-background);
+        background:
+            radial-gradient(
+                1200px 700px at 18% 8%,
+                color-mix(in srgb, var(--theme-primary-content) 8%, transparent 92%) 0%,
+                transparent 60%
+            ),
+            color-mix(in srgb, var(--theme-background) 86%, #000 14%);
         color: var(--theme-text-primary);
         letter-spacing: 0.015em;
     }
