@@ -18,6 +18,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Theme Colors</h3>
+                    <p class="text-muted" style="margin-top: 6px; margin-bottom: 0;">Set core colors only. Other colors auto-generate from blends.</p>
                 </div>
                 <form id="themeForm" action="{{ route('admin.theme.update') }}" method="POST">
                     <div class="box-body">
@@ -430,6 +431,19 @@
     @parent
     <script>
         (function () {
+            var editableKeys = [
+                'primary_content',
+                'secondary_content',
+                'background_color',
+                'component_headers',
+                'sidebar_navigation',
+                'success_color',
+                'warning_color',
+                'danger_color',
+                'info_color',
+                'text_primary',
+                'text_muted'
+            ];
             var map = {
                 primary_content: '--theme-primary-content',
                 secondary_content: '--theme-secondary-content',
@@ -472,6 +486,14 @@
             var initPreview = function () {
                 var inputs = Array.prototype.slice.call(document.querySelectorAll('.js-theme-input'));
                 if (!inputs.length) return;
+                inputs.forEach(function (input) {
+                    if (editableKeys.indexOf(input.name) !== -1) return;
+                    input.setAttribute('disabled', 'disabled');
+                    var group = input.closest('.form-group');
+                    if (group) {
+                        group.style.opacity = '0.45';
+                    }
+                });
 
                 var bodyEl = document.body;
                 var preview = document.getElementById('themePreview');

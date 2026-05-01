@@ -7,6 +7,20 @@ use Pterodactyl\Repositories\ThemeSettingRepository;
 
 class ThemeService
 {
+    private const BASE_THEME_KEYS = [
+        'primary_content',
+        'secondary_content',
+        'background_color',
+        'component_headers',
+        'sidebar_navigation',
+        'success_color',
+        'warning_color',
+        'danger_color',
+        'info_color',
+        'text_primary',
+        'text_muted',
+    ];
+
     public const DEFAULT_THEME = [
         'primary_content' => '#3d8bff',
         'secondary_content' => '#9bb0d0',
@@ -60,55 +74,19 @@ class ThemeService
     {
         try {
             $theme = $this->repository->getActive();
+            $base = [];
+            foreach (self::BASE_THEME_KEYS as $key) {
+                $base[$key] = $theme->{$key} ?? self::DEFAULT_THEME[$key];
+            }
 
-            return [
-                'primary_content' => $theme->primary_content ?? self::DEFAULT_THEME['primary_content'],
-                'secondary_content' => $theme->secondary_content ?? self::DEFAULT_THEME['secondary_content'],
-                'background_color' => $theme->background_color ?? self::DEFAULT_THEME['background_color'],
-                'component_headers' => $theme->component_headers ?? self::DEFAULT_THEME['component_headers'],
-                'sidebar_navigation' => $theme->sidebar_navigation ?? self::DEFAULT_THEME['sidebar_navigation'],
-                'success_color' => $theme->success_color ?? self::DEFAULT_THEME['success_color'],
-                'warning_color' => $theme->warning_color ?? self::DEFAULT_THEME['warning_color'],
-                'danger_color' => $theme->danger_color ?? self::DEFAULT_THEME['danger_color'],
-                'info_color' => $theme->info_color ?? self::DEFAULT_THEME['info_color'],
-                'text_primary' => $theme->text_primary ?? self::DEFAULT_THEME['text_primary'],
-                'text_muted' => $theme->text_muted ?? self::DEFAULT_THEME['text_muted'],
-                'link_color' => $theme->link_color ?? self::DEFAULT_THEME['link_color'],
-                'link_hover_color' => $theme->link_hover_color ?? self::DEFAULT_THEME['link_hover_color'],
-                'card_background' => $theme->card_background ?? self::DEFAULT_THEME['card_background'],
-                'card_border' => $theme->card_border ?? self::DEFAULT_THEME['card_border'],
-                'input_background' => $theme->input_background ?? self::DEFAULT_THEME['input_background'],
-                'input_border' => $theme->input_border ?? self::DEFAULT_THEME['input_border'],
-                'topbar_background' => $theme->topbar_background ?? self::DEFAULT_THEME['topbar_background'],
-                'topbar_text' => $theme->topbar_text ?? self::DEFAULT_THEME['topbar_text'],
-                'footer_background' => $theme->footer_background ?? self::DEFAULT_THEME['footer_background'],
-                'footer_text' => $theme->footer_text ?? self::DEFAULT_THEME['footer_text'],
-                'dashboard_panel_background' =>
-                    $theme->dashboard_panel_background ?? self::DEFAULT_THEME['dashboard_panel_background'],
-                'dashboard_panel_border' => $theme->dashboard_panel_border ?? self::DEFAULT_THEME['dashboard_panel_border'],
-                'dashboard_stat_background' =>
-                    $theme->dashboard_stat_background ?? self::DEFAULT_THEME['dashboard_stat_background'],
-                'dashboard_stat_border' => $theme->dashboard_stat_border ?? self::DEFAULT_THEME['dashboard_stat_border'],
-                'dashboard_search_background' =>
-                    $theme->dashboard_search_background ?? self::DEFAULT_THEME['dashboard_search_background'],
-                'dashboard_search_border' =>
-                    $theme->dashboard_search_border ?? self::DEFAULT_THEME['dashboard_search_border'],
-                'dashboard_online_text' => $theme->dashboard_online_text ?? self::DEFAULT_THEME['dashboard_online_text'],
-                'dashboard_offline_text' =>
-                    $theme->dashboard_offline_text ?? self::DEFAULT_THEME['dashboard_offline_text'],
-                'sidebar_text' => $theme->sidebar_text ?? self::DEFAULT_THEME['sidebar_text'],
-                'sidebar_text_active' => $theme->sidebar_text_active ?? self::DEFAULT_THEME['sidebar_text_active'],
-                'sidebar_section_text' => $theme->sidebar_section_text ?? self::DEFAULT_THEME['sidebar_section_text'],
-                'sidebar_footer_text' => $theme->sidebar_footer_text ?? self::DEFAULT_THEME['sidebar_footer_text'],
-                'sidebar_active_background' =>
-                    $theme->sidebar_active_background ?? self::DEFAULT_THEME['sidebar_active_background'],
-                'sidebar_icon_background' =>
-                    $theme->sidebar_icon_background ?? self::DEFAULT_THEME['sidebar_icon_background'],
-                'sidebar_hover_background' =>
-                    $theme->sidebar_hover_background ?? self::DEFAULT_THEME['sidebar_hover_background'],
-            ];
+            return $this->applyDerivedTheme($base);
         } catch (QueryException) {
-            return self::DEFAULT_THEME;
+            $base = [];
+            foreach (self::BASE_THEME_KEYS as $key) {
+                $base[$key] = self::DEFAULT_THEME[$key];
+            }
+
+            return $this->applyDerivedTheme($base);
         }
     }
 
@@ -117,7 +95,12 @@ class ThemeService
      */
     public function saveActiveTheme(array $data): array
     {
-        $theme = $this->repository->saveActive($data);
+        $base = [];
+        foreach (self::BASE_THEME_KEYS as $key) {
+            $base[$key] = $data[$key] ?? self::DEFAULT_THEME[$key];
+        }
+
+        $theme = $this->repository->saveActive($this->applyDerivedTheme($base));
 
         return [
             'primary_content' => $theme->primary_content,
@@ -156,6 +139,78 @@ class ThemeService
             'sidebar_active_background' => $theme->sidebar_active_background,
             'sidebar_icon_background' => $theme->sidebar_icon_background,
             'sidebar_hover_background' => $theme->sidebar_hover_background,
+        ];
+    }
+
+    private function applyDerivedTheme(array $theme): array
+    {
+        $primary = $theme['primary_content'];
+        $background = $theme['background_color'];
+        $component = $theme['component_headers'];
+        $sidebar = $theme['sidebar_navigation'];
+        $textPrimary = $theme['text_primary'];
+        $textMuted = $theme['text_muted'];
+
+        $theme['link_color'] = $this->lighten($primary, 0.18);
+        $theme['link_hover_color'] = $this->lighten($primary, 0.33);
+        $theme['card_background'] = $this->mix($background, $component, 0.56);
+        $theme['card_border'] = $this->mix($background, $primary, 0.48);
+        $theme['input_background'] = $this->mix($background, $component, 0.36);
+        $theme['input_border'] = $this->mix($background, $primary, 0.52);
+        $theme['topbar_background'] = $this->mix($background, $sidebar, 0.72);
+        $theme['topbar_text'] = $textPrimary;
+        $theme['footer_background'] = $this->mix($background, $sidebar, 0.8);
+        $theme['footer_text'] = $textMuted;
+
+        $theme['dashboard_panel_background'] = $this->mix($background, $sidebar, 0.45);
+        $theme['dashboard_panel_border'] = $this->mix($background, $primary, 0.52);
+        $theme['dashboard_stat_background'] = $this->mix($background, $component, 0.52);
+        $theme['dashboard_stat_border'] = $this->mix($background, $primary, 0.42);
+        $theme['dashboard_search_background'] = $this->mix($background, $component, 0.34);
+        $theme['dashboard_search_border'] = $this->mix($background, $primary, 0.46);
+        $theme['dashboard_online_text'] = $theme['success_color'];
+        $theme['dashboard_offline_text'] = $theme['danger_color'];
+
+        $theme['sidebar_text'] = $textMuted;
+        $theme['sidebar_text_active'] = $textPrimary;
+        $theme['sidebar_section_text'] = $this->mix($background, $textMuted, 0.6);
+        $theme['sidebar_footer_text'] = $this->mix($background, $textMuted, 0.54);
+        $theme['sidebar_active_background'] = $this->mix($sidebar, $primary, 0.28);
+        $theme['sidebar_icon_background'] = $this->mix($background, $sidebar, 0.62);
+        $theme['sidebar_hover_background'] = $this->mix($sidebar, $primary, 0.2);
+
+        return $theme;
+    }
+
+    private function lighten(string $hex, float $amount): string
+    {
+        return $this->mix($hex, '#ffffff', $amount);
+    }
+
+    private function mix(string $baseHex, string $overlayHex, float $ratio): string
+    {
+        $ratio = max(0.0, min(1.0, $ratio));
+        [$r1, $g1, $b1] = $this->hexToRgb($baseHex);
+        [$r2, $g2, $b2] = $this->hexToRgb($overlayHex);
+
+        $r = (int) round(($r1 * (1 - $ratio)) + ($r2 * $ratio));
+        $g = (int) round(($g1 * (1 - $ratio)) + ($g2 * $ratio));
+        $b = (int) round(($b1 * (1 - $ratio)) + ($b2 * $ratio));
+
+        return sprintf('#%02x%02x%02x', $r, $g, $b);
+    }
+
+    private function hexToRgb(string $hex): array
+    {
+        $value = ltrim($hex, '#');
+        if (strlen($value) !== 6) {
+            return [0, 0, 0];
+        }
+
+        return [
+            hexdec(substr($value, 0, 2)),
+            hexdec(substr($value, 2, 2)),
+            hexdec(substr($value, 4, 2)),
         ];
     }
 
