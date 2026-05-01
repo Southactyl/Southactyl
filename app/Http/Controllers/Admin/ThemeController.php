@@ -57,6 +57,21 @@ class ThemeController extends Controller
             'topbar_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'footer_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'footer_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_panel_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_panel_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_stat_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_stat_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_search_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_search_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_online_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'dashboard_offline_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_text_active' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_section_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_footer_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_active_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_icon_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'sidebar_hover_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         ]);
 
         $this->themes->saveActiveTheme($data);

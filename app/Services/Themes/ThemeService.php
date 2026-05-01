@@ -29,6 +29,21 @@ class ThemeService
         'topbar_text' => '#c9daf6',
         'footer_background' => '#040d21',
         'footer_text' => '#b8cae8',
+        'dashboard_panel_background' => '#0a1427',
+        'dashboard_panel_border' => '#1f3357',
+        'dashboard_stat_background' => '#101c35',
+        'dashboard_stat_border' => '#243d65',
+        'dashboard_search_background' => '#0b1730',
+        'dashboard_search_border' => '#2f4c7e',
+        'dashboard_online_text' => '#27d17f',
+        'dashboard_offline_text' => '#fb5f71',
+        'sidebar_text' => '#9bb0d0',
+        'sidebar_text_active' => '#eaf2ff',
+        'sidebar_section_text' => '#6f86aa',
+        'sidebar_footer_text' => '#6f86aa',
+        'sidebar_active_background' => '#12284d',
+        'sidebar_icon_background' => '#0b1730',
+        'sidebar_hover_background' => '#0f2345',
     ];
 
     /**
@@ -68,6 +83,29 @@ class ThemeService
                 'topbar_text' => $theme->topbar_text ?? self::DEFAULT_THEME['topbar_text'],
                 'footer_background' => $theme->footer_background ?? self::DEFAULT_THEME['footer_background'],
                 'footer_text' => $theme->footer_text ?? self::DEFAULT_THEME['footer_text'],
+                'dashboard_panel_background' =>
+                    $theme->dashboard_panel_background ?? self::DEFAULT_THEME['dashboard_panel_background'],
+                'dashboard_panel_border' => $theme->dashboard_panel_border ?? self::DEFAULT_THEME['dashboard_panel_border'],
+                'dashboard_stat_background' =>
+                    $theme->dashboard_stat_background ?? self::DEFAULT_THEME['dashboard_stat_background'],
+                'dashboard_stat_border' => $theme->dashboard_stat_border ?? self::DEFAULT_THEME['dashboard_stat_border'],
+                'dashboard_search_background' =>
+                    $theme->dashboard_search_background ?? self::DEFAULT_THEME['dashboard_search_background'],
+                'dashboard_search_border' =>
+                    $theme->dashboard_search_border ?? self::DEFAULT_THEME['dashboard_search_border'],
+                'dashboard_online_text' => $theme->dashboard_online_text ?? self::DEFAULT_THEME['dashboard_online_text'],
+                'dashboard_offline_text' =>
+                    $theme->dashboard_offline_text ?? self::DEFAULT_THEME['dashboard_offline_text'],
+                'sidebar_text' => $theme->sidebar_text ?? self::DEFAULT_THEME['sidebar_text'],
+                'sidebar_text_active' => $theme->sidebar_text_active ?? self::DEFAULT_THEME['sidebar_text_active'],
+                'sidebar_section_text' => $theme->sidebar_section_text ?? self::DEFAULT_THEME['sidebar_section_text'],
+                'sidebar_footer_text' => $theme->sidebar_footer_text ?? self::DEFAULT_THEME['sidebar_footer_text'],
+                'sidebar_active_background' =>
+                    $theme->sidebar_active_background ?? self::DEFAULT_THEME['sidebar_active_background'],
+                'sidebar_icon_background' =>
+                    $theme->sidebar_icon_background ?? self::DEFAULT_THEME['sidebar_icon_background'],
+                'sidebar_hover_background' =>
+                    $theme->sidebar_hover_background ?? self::DEFAULT_THEME['sidebar_hover_background'],
             ];
         } catch (QueryException) {
             return self::DEFAULT_THEME;
@@ -103,6 +141,21 @@ class ThemeService
             'topbar_text' => $theme->topbar_text,
             'footer_background' => $theme->footer_background,
             'footer_text' => $theme->footer_text,
+            'dashboard_panel_background' => $theme->dashboard_panel_background,
+            'dashboard_panel_border' => $theme->dashboard_panel_border,
+            'dashboard_stat_background' => $theme->dashboard_stat_background,
+            'dashboard_stat_border' => $theme->dashboard_stat_border,
+            'dashboard_search_background' => $theme->dashboard_search_background,
+            'dashboard_search_border' => $theme->dashboard_search_border,
+            'dashboard_online_text' => $theme->dashboard_online_text,
+            'dashboard_offline_text' => $theme->dashboard_offline_text,
+            'sidebar_text' => $theme->sidebar_text,
+            'sidebar_text_active' => $theme->sidebar_text_active,
+            'sidebar_section_text' => $theme->sidebar_section_text,
+            'sidebar_footer_text' => $theme->sidebar_footer_text,
+            'sidebar_active_background' => $theme->sidebar_active_background,
+            'sidebar_icon_background' => $theme->sidebar_icon_background,
+            'sidebar_hover_background' => $theme->sidebar_hover_background,
         ];
     }
 
@@ -135,6 +188,21 @@ class ThemeService
             '--theme-topbar-text' => $theme['topbar_text'],
             '--theme-footer-background' => $theme['footer_background'],
             '--theme-footer-text' => $theme['footer_text'],
+            '--theme-dashboard-panel-background' => $theme['dashboard_panel_background'],
+            '--theme-dashboard-panel-border' => $theme['dashboard_panel_border'],
+            '--theme-dashboard-stat-background' => $theme['dashboard_stat_background'],
+            '--theme-dashboard-stat-border' => $theme['dashboard_stat_border'],
+            '--theme-dashboard-search-background' => $theme['dashboard_search_background'],
+            '--theme-dashboard-search-border' => $theme['dashboard_search_border'],
+            '--theme-dashboard-online-text' => $theme['dashboard_online_text'],
+            '--theme-dashboard-offline-text' => $theme['dashboard_offline_text'],
+            '--theme-sidebar-text' => $theme['sidebar_text'],
+            '--theme-sidebar-text-active' => $theme['sidebar_text_active'],
+            '--theme-sidebar-section-text' => $theme['sidebar_section_text'],
+            '--theme-sidebar-footer-text' => $theme['sidebar_footer_text'],
+            '--theme-sidebar-active-background' => $theme['sidebar_active_background'],
+            '--theme-sidebar-icon-background' => $theme['sidebar_icon_background'],
+            '--theme-sidebar-hover-background' => $theme['sidebar_hover_background'],
         ];
     }
 

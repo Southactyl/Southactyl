@@ -117,49 +117,61 @@ export default () => {
                                     <span className={'sidebar-brand-name'}>{appName}</span>
                                 </div>
                             </div>
-                            <NavLink to={'/'} exact>
-                                <div className='icon'>
-                                    <FontAwesomeIcon icon={faHome} />
-                                </div>
-                                Dashboard
-                            </NavLink>
-                            {routes.server
-                                .filter((route) => {
-                                    if (route.path === '/subdomains') {
-                                        return subdomainsAvailable;
-                                    }
+                            <div className={'sidebar-section-label'}>Overview</div>
+                            <div className={'sidebar-nav'}>
+                                <NavLink to={'/'} exact>
+                                    <div className='icon'>
+                                        <FontAwesomeIcon icon={faHome} />
+                                    </div>
+                                    Dashboard
+                                </NavLink>
+                            </div>
+                            <div className={'sidebar-section-label'}>Management</div>
+                            <div className={'sidebar-nav'}>
+                                {routes.server
+                                    .filter((route) => {
+                                        if (route.path === '/subdomains') {
+                                            return subdomainsAvailable;
+                                        }
 
-                                    return true;
-                                })
-                                .filter((route) => !!route.name)
-                                .map((route) =>
-                                    route.permission ? (
-                                        <Can key={route.path} action={route.permission} matchAny>
-                                            <NavLink to={to(route.path, true)} exact={route.exact}>
+                                        return true;
+                                    })
+                                    .filter((route) => !!route.name)
+                                    .map((route) =>
+                                        route.permission ? (
+                                            <Can key={route.path} action={route.permission} matchAny>
+                                                <NavLink to={to(route.path, true)} exact={route.exact}>
+                                                    <div className='icon'>
+                                                        <FontAwesomeIcon icon={route.iconProp as IconProp} />
+                                                    </div>
+                                                    {route.name}
+                                                </NavLink>
+                                            </Can>
+                                        ) : (
+                                            <NavLink key={route.path} to={to(route.path, true)} exact={route.exact}>
                                                 <div className='icon'>
                                                     <FontAwesomeIcon icon={route.iconProp as IconProp} />
                                                 </div>
-                                                {route.name}
+                                                {route.name}{' '}
                                             </NavLink>
-                                        </Can>
-                                    ) : (
-                                        <NavLink key={route.path} to={to(route.path, true)} exact={route.exact}>
-                                            <div className='icon'>
-                                                <FontAwesomeIcon icon={route.iconProp as IconProp} />
-                                            </div>
-                                            {route.name}{' '}
-                                        </NavLink>
-                                    )
-                                )}
+                                        )
+                                    )}
+                            </div>
                             {rootAdmin && (
-                                // eslint-disable-next-line react/jsx-no-target-blank
-                                <a href={`/admin/servers/view/${serverId}`} target={'_blank'}>
-                                    <div className='icon'>
-                                        <FontAwesomeIcon icon={faExternalLinkAlt} />
+                                <>
+                                    <div className={'sidebar-section-label'}>Admin</div>
+                                    <div className={'sidebar-nav'}>
+                                        {/* eslint-disable-next-line react/jsx-no-target-blank */}
+                                        <a href={`/admin/servers/view/${serverId}`} target={'_blank'}>
+                                            <div className='icon'>
+                                                <FontAwesomeIcon icon={faExternalLinkAlt} />
+                                            </div>
+                                            Admin Server
+                                        </a>
                                     </div>
-                                    Admin
-                                </a>
+                                </>
                             )}
+                            <div className={'sidebar-section-label'}>System</div>
                             <div className={'sidebar-utilities'}>
                                 <SearchContainer asSidebarLink className={'sidebar-utility-link'} />
                                 {rootAdmin && (
@@ -183,7 +195,13 @@ export default () => {
                                         <FontAwesomeIcon icon={faSignOutAlt} />
                                     </div>
                                     Sign Out
-                                </NavLink>
+                                    </NavLink>
+                            </div>
+                            <div className={'sidebar-footer'}>
+                                <a href={'https://pterodactyl.io'} rel={'noreferrer'} target={'_blank'}>
+                                    pterodactyl.io
+                                </a>
+                                <span>v1.0.0</span>
                             </div>
                         </Sidebar>
                     </CSSTransition>

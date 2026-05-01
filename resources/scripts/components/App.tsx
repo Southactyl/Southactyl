@@ -89,6 +89,21 @@ const App = () => {
             topbar_text: '--theme-topbar-text',
             footer_background: '--theme-footer-background',
             footer_text: '--theme-footer-text',
+            dashboard_panel_background: '--theme-dashboard-panel-background',
+            dashboard_panel_border: '--theme-dashboard-panel-border',
+            dashboard_stat_background: '--theme-dashboard-stat-background',
+            dashboard_stat_border: '--theme-dashboard-stat-border',
+            dashboard_search_background: '--theme-dashboard-search-background',
+            dashboard_search_border: '--theme-dashboard-search-border',
+            dashboard_online_text: '--theme-dashboard-online-text',
+            dashboard_offline_text: '--theme-dashboard-offline-text',
+            sidebar_text: '--theme-sidebar-text',
+            sidebar_text_active: '--theme-sidebar-text-active',
+            sidebar_section_text: '--theme-sidebar-section-text',
+            sidebar_footer_text: '--theme-sidebar-footer-text',
+            sidebar_active_background: '--theme-sidebar-active-background',
+            sidebar_icon_background: '--theme-sidebar-icon-background',
+            sidebar_hover_background: '--theme-sidebar-hover-background',
         };
 
         Object.keys(extraMap).forEach((key) => {

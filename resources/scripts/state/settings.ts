@@ -32,6 +32,21 @@ export interface SiteSettings {
         topbar_text?: string;
         footer_background?: string;
         footer_text?: string;
+        dashboard_panel_background?: string;
+        dashboard_panel_border?: string;
+        dashboard_stat_background?: string;
+        dashboard_stat_border?: string;
+        dashboard_search_background?: string;
+        dashboard_search_border?: string;
+        dashboard_online_text?: string;
+        dashboard_offline_text?: string;
+        sidebar_text?: string;
+        sidebar_text_active?: string;
+        sidebar_section_text?: string;
+        sidebar_footer_text?: string;
+        sidebar_active_background?: string;
+        sidebar_icon_background?: string;
+        sidebar_hover_background?: string;
     };
 }
 

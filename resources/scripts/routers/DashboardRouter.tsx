@@ -40,23 +40,29 @@ export default () => {
                         <span className={'sidebar-brand-name'}>{name}</span>
                     </div>
                 </div>
-                <NavLink to={'/'} exact>
-                    <div className='icon'>
-                        <FontAwesomeIcon icon={faHome} />
-                    </div>
-                    Dashboard
-                </NavLink>
-                {routes.account
-                    .filter((route) => !!route.name)
-                    .map(({ path, name, exact = false, iconProp }) => (
-                        <NavLink key={path} to={`/account/${path}`.replace('//', '/')} exact={exact}>
-                            <div className='icon'>
-                                <FontAwesomeIcon icon={iconProp as IconProp} />
-                            </div>
-                            {name}
-                        </NavLink>
-                    ))}
-
+                <div className={'sidebar-section-label'}>Overview</div>
+                <div className={'sidebar-nav'}>
+                    <NavLink to={'/'} exact>
+                        <div className='icon'>
+                            <FontAwesomeIcon icon={faHome} />
+                        </div>
+                        Dashboard
+                    </NavLink>
+                </div>
+                <div className={'sidebar-section-label'}>Account</div>
+                <div className={'sidebar-nav'}>
+                    {routes.account
+                        .filter((route) => !!route.name)
+                        .map(({ path, name, exact = false, iconProp }) => (
+                            <NavLink key={path} to={`/account/${path}`.replace('//', '/')} exact={exact}>
+                                <div className='icon'>
+                                    <FontAwesomeIcon icon={iconProp as IconProp} />
+                                </div>
+                                {name}
+                            </NavLink>
+                        ))}
+                </div>
+                <div className={'sidebar-section-label'}>System</div>
                 <div className={'sidebar-utilities'}>
                     <SearchContainer asSidebarLink className={'sidebar-utility-link'} />
                     {rootAdmin && (
@@ -79,8 +85,14 @@ export default () => {
                         <div className='icon'>
                             <FontAwesomeIcon icon={faSignOutAlt} />
                         </div>
-                        Sign Out
-                    </NavLink>
+                            Sign Out
+                        </NavLink>
+                </div>
+                <div className={'sidebar-footer'}>
+                    <a href={'https://pterodactyl.io'} rel={'noreferrer'} target={'_blank'}>
+                        pterodactyl.io
+                    </a>
+                    <span>v1.0.0</span>
                 </div>
             </Sidebar>
 

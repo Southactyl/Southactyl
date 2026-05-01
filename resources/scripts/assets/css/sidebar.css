@@ -37,13 +37,8 @@
     flex-direction: column;
     gap: var(--sidebar-gap);
 
-    background:
-        linear-gradient(
-            180deg,
-            color-mix(in srgb, var(--theme-sidebar, #030b1f) 92%, #0f172a 8%) 0%,
-            color-mix(in srgb, var(--theme-sidebar, #030b1f) 84%, #020617 16%) 100%
-        );
-    border-right: 1px solid color-mix(in srgb, var(--theme-sidebar, #030b1f) 58%, #475569 42%);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--theme-sidebar) 94%, #0a1022 6%) 0%, var(--theme-sidebar) 100%);
+    border-right: 1px solid var(--theme-dashboard-panel-border);
     box-shadow: var(--sidebar-shadow);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -86,7 +81,7 @@ body.has-client-sidebar .content-container {
     padding: 8px 12px;
     border-radius: var(--sidebar-item-radius);
     text-decoration: none;
-    color: color-mix(in srgb, var(--theme-secondary-content, #9bb0d0) 88%, #ffffff 12%);
+    color: var(--theme-sidebar-text);
 
     transition:
         background-color var(--sidebar-transition),
@@ -127,16 +122,29 @@ body.has-client-sidebar .content-container {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--theme-secondary-content, #9bb0d0) 82%, #ffffff 18%);
+    color: var(--theme-sidebar-section-text);
 }
 
 .sidebar-utilities {
-    margin-top: auto;
     display: flex;
     flex-direction: column;
     gap: var(--sidebar-gap);
-    padding-top: 0.5rem;
-    border-top: 1px solid color-mix(in srgb, var(--theme-card-border) 60%, transparent);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-section-label {
+    margin: 0.35rem 0 0.15rem;
+    padding: 0 12px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--theme-sidebar-section-text);
 }
 
 .sidebar .sidebar-action-button,
@@ -151,7 +159,7 @@ body.has-client-sidebar .content-container {
     width: 100%;
     text-align: left;
     background: transparent;
-    color: color-mix(in srgb, var(--theme-secondary-content, #9bb0d0) 88%, #ffffff 12%);
+    color: var(--theme-sidebar-text);
 }
 
 .sidebar .sidebar-action-button {
@@ -160,8 +168,8 @@ body.has-client-sidebar .content-container {
 
 .sidebar .sidebar-action-button:hover,
 .sidebar .sidebar-utility-link:hover {
-    background: color-mix(in srgb, var(--theme-primary-content, #3d8bff) 8%, transparent 92%);
-    color: #fff;
+    background: var(--theme-sidebar-hover-background);
+    color: var(--theme-sidebar-text-active);
 }
 
 .sidebar .sidebar-utility-link .navigation-link {
@@ -171,12 +179,7 @@ body.has-client-sidebar .content-container {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background:
-        linear-gradient(
-            180deg,
-            color-mix(in srgb, var(--theme-background, #050b1a) 88%, #1f2937 12%) 0%,
-            color-mix(in srgb, var(--theme-background, #050b1a) 78%, #0f172a 22%) 100%
-        );
+    background: var(--theme-sidebar-icon-background);
 }
 
 /* Better click/tap feedback */
@@ -216,13 +219,8 @@ body.has-client-sidebar .content-container {
     align-items: center;
     justify-content: center;
 
-    background:
-        linear-gradient(
-            180deg,
-            color-mix(in srgb, var(--theme-background, #050b1a) 88%, #1f2937 12%) 0%,
-            color-mix(in srgb, var(--theme-background, #050b1a) 78%, #0f172a 22%) 100%
-        );
-    color: color-mix(in srgb, var(--theme-secondary-content, #9bb0d0) 85%, #ffffff 15%);
+    background: var(--theme-sidebar-icon-background);
+    color: var(--theme-sidebar-text);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.04),
         0 4px 10px rgba(0, 0, 0, 0.18);
@@ -240,34 +238,29 @@ body.has-client-sidebar .content-container {
 
 /* Hover */
 .sidebar a:hover:not(.active) {
-    background: color-mix(in srgb, var(--theme-primary-content, #3d8bff) 8%, transparent 92%);
-    color: #fff;
+    background: var(--theme-sidebar-hover-background);
+    color: var(--theme-sidebar-text-active);
 }
 
 .sidebar a:hover:not(.active) > .icon {
     background: transparent;
-    color: #fff;
+    color: var(--theme-sidebar-text-active);
     transform: translateY(-1px);
 }
 
 /* Active item - entire row, not just icon */
 .sidebar a.active,
 .sidebar .active {
-    background:
-        linear-gradient(
-            90deg,
-            color-mix(in srgb, var(--theme-primary-content, #3d8bff) 16%, transparent 84%) 0%,
-            color-mix(in srgb, var(--theme-primary-content, #3d8bff) 6%, transparent 94%) 100%
-        );
-    color: #fff;
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-primary-content, #3d8bff) 28%, transparent 72%);
+    background: var(--theme-sidebar-active-background);
+    color: var(--theme-sidebar-text-active);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--theme-primary-content) 36%, transparent);
 }
 
 .sidebar a.active::before,
 .sidebar .active::before {
     content: "";
     position: absolute;
-    left: -14px;
+    left: -8px;
     top: 10px;
     bottom: 10px;
     width: 4px;
@@ -277,10 +270,31 @@ body.has-client-sidebar .content-container {
 
 .sidebar a.active > .icon,
 .sidebar .active > .icon {
-    border-radius: 0;
     background: transparent;
-    color: #fff;
+    color: var(--theme-sidebar-text-active);
     box-shadow: none;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid color-mix(in srgb, var(--theme-dashboard-panel-border) 72%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.75rem;
+    color: var(--theme-sidebar-footer-text);
+}
+
+.sidebar-footer a {
+    padding: 0;
+    border-radius: 0;
+    color: var(--theme-sidebar-footer-text);
+}
+
+.sidebar-footer a:hover {
+    background: transparent !important;
+    color: var(--theme-sidebar-text-active);
 }
 
 /* Keyboard focus */

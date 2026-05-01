@@ -41,6 +41,12 @@
                                 <li role="presentation">
                                     <a href="#theme-tab-footer" aria-controls="theme-tab-footer" role="tab" data-toggle="tab">Footer</a>
                                 </li>
+                                <li role="presentation">
+                                    <a href="#theme-tab-dashboard" aria-controls="theme-tab-dashboard" role="tab" data-toggle="tab">Dashboard</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#theme-tab-sidebar" aria-controls="theme-tab-sidebar" role="tab" data-toggle="tab">Sidebar</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="theme-tab-core">
@@ -169,6 +175,65 @@
                                         @foreach ([
                                             'footer_background' => 'Footer Background',
                                             'footer_text' => 'Footer Text',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                                <div role="tabpanel" class="tab-pane" id="theme-tab-dashboard">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'dashboard_panel_background' => 'Panel Background',
+                                            'dashboard_panel_border' => 'Panel Border',
+                                            'dashboard_stat_background' => 'Stat Card Background',
+                                            'dashboard_stat_border' => 'Stat Card Border',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'dashboard_search_background' => 'Search Background',
+                                            'dashboard_search_border' => 'Search Border',
+                                            'dashboard_online_text' => 'Online Text',
+                                            'dashboard_offline_text' => 'Offline Text',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                                <div role="tabpanel" class="tab-pane" id="theme-tab-sidebar">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'sidebar_text' => 'Sidebar Text',
+                                            'sidebar_text_active' => 'Sidebar Active Text',
+                                            'sidebar_section_text' => 'Sidebar Section Label',
+                                            'sidebar_footer_text' => 'Sidebar Footer Text',
+                                        ] as $key => $label)
+                                            <div class="form-group">
+                                                <label for="{{ $key }}">{{ $label }}</label>
+                                                <input id="{{ $key }}" name="{{ $key }}" type="color" class="form-control js-theme-input" value="{{ old($key, $theme[$key]) }}" />
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        @foreach ([
+                                            'sidebar_active_background' => 'Sidebar Active Background',
+                                            'sidebar_icon_background' => 'Sidebar Icon Background',
+                                            'sidebar_hover_background' => 'Sidebar Hover Background',
                                         ] as $key => $label)
                                             <div class="form-group">
                                                 <label for="{{ $key }}">{{ $label }}</label>
@@ -386,7 +451,22 @@
                 topbar_background: '--theme-topbar-background',
                 topbar_text: '--theme-topbar-text',
                 footer_background: '--theme-footer-background',
-                footer_text: '--theme-footer-text'
+                footer_text: '--theme-footer-text',
+                dashboard_panel_background: '--theme-dashboard-panel-background',
+                dashboard_panel_border: '--theme-dashboard-panel-border',
+                dashboard_stat_background: '--theme-dashboard-stat-background',
+                dashboard_stat_border: '--theme-dashboard-stat-border',
+                dashboard_search_background: '--theme-dashboard-search-background',
+                dashboard_search_border: '--theme-dashboard-search-border',
+                dashboard_online_text: '--theme-dashboard-online-text',
+                dashboard_offline_text: '--theme-dashboard-offline-text',
+                sidebar_text: '--theme-sidebar-text',
+                sidebar_text_active: '--theme-sidebar-text-active',
+                sidebar_section_text: '--theme-sidebar-section-text',
+                sidebar_footer_text: '--theme-sidebar-footer-text',
+                sidebar_active_background: '--theme-sidebar-active-background',
+                sidebar_icon_background: '--theme-sidebar-icon-background',
+                sidebar_hover_background: '--theme-sidebar-hover-background'
             };
 
             var initPreview = function () {

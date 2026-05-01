@@ -27,6 +27,21 @@ namespace Pterodactyl\Models;
  * @property string $topbar_text
  * @property string $footer_background
  * @property string $footer_text
+ * @property string $dashboard_panel_background
+ * @property string $dashboard_panel_border
+ * @property string $dashboard_stat_background
+ * @property string $dashboard_stat_border
+ * @property string $dashboard_search_background
+ * @property string $dashboard_search_border
+ * @property string $dashboard_online_text
+ * @property string $dashboard_offline_text
+ * @property string $sidebar_text
+ * @property string $sidebar_text_active
+ * @property string $sidebar_section_text
+ * @property string $sidebar_footer_text
+ * @property string $sidebar_active_background
+ * @property string $sidebar_icon_background
+ * @property string $sidebar_hover_background
  * @property bool $is_active
  */
 class ThemeSetting extends Model
@@ -58,6 +73,21 @@ class ThemeSetting extends Model
         'topbar_text',
         'footer_background',
         'footer_text',
+        'dashboard_panel_background',
+        'dashboard_panel_border',
+        'dashboard_stat_background',
+        'dashboard_stat_border',
+        'dashboard_search_background',
+        'dashboard_search_border',
+        'dashboard_online_text',
+        'dashboard_offline_text',
+        'sidebar_text',
+        'sidebar_text_active',
+        'sidebar_section_text',
+        'sidebar_footer_text',
+        'sidebar_active_background',
+        'sidebar_icon_background',
+        'sidebar_hover_background',
         'is_active',
     ];
 
@@ -87,6 +117,21 @@ class ThemeSetting extends Model
         'topbar_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         'footer_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         'footer_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_panel_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_panel_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_stat_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_stat_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_search_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_search_border' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_online_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'dashboard_offline_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'sidebar_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'sidebar_text_active' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'sidebar_section_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'sidebar_footer_text' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'sidebar_active_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'sidebar_icon_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+        'sidebar_hover_background' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
         'is_active' => ['required', 'boolean'],
     ];
 }
